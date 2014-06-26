@@ -1,0 +1,29 @@
+=meta: 0.0.1
+
+name: Inline-C
+version: 0.54
+abstract: C Language Support for Inline
+homepage: https://metacpan.org/release/Inline-C
+
+license: perl
+copyright: 2000-2014. Ingy döt Net.
+author:
+  name: Ingy döt Net
+  email: ingy@cpan.org
+  github: ingydotnet
+  twitter: ingydotnet
+  freenode: ingy
+  homepage: http://ingy.net
+
+requires:
+  perl: 5.8.1
+  Inline: 0
+
+devel:
+  git: git@github.org/ingydotnet/inline-c-pm
+  irc: irc.perl.org#inline
+  bug: https://github.com/ingydotnet/inline-c-pm/issues/
+
+=travis:
+  type: perl
+  irc: irc.perl.org#inline
