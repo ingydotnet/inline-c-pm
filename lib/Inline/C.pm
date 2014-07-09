@@ -1,17 +1,16 @@
 package Inline::C;
 
-$Inline::C::VERSION = '0.54';
-$Inline::C::VERSION = '0.54';
+our $VERSION = '0.56_01';
 
 use strict;
-require Inline;
+use Inline 0.56_01;
 use Config;
 use Data::Dumper;
 use Carp;
 use Cwd qw(cwd abs_path);
 use File::Spec;
 
-@Inline::C::ISA = qw(Inline);
+our @ISA = qw(Inline);
 
 #==============================================================================
 # Register this module as an Inline language support module
