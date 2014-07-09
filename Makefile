@@ -119,7 +119,7 @@ upgrade:
 	cp `zild sharedir`/Makefile ./
 
 clean purge:
-	rm -fr cpan .build $(DIST) $(DISTDIR)
+	rm -fr cpan .build _Inline_test* $(DIST) $(DISTDIR)
 
 #------------------------------------------------------------------------------
 check-release:
