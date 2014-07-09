@@ -1,6 +1,6 @@
 package Inline::C;
-
-our $VERSION = '0.56_01';
+our $VERSION = "0.56_01";
+$VERSION = eval $VERSION;
 
 use strict;
 use Inline 0.56_01;
@@ -9,6 +9,7 @@ use Data::Dumper;
 use Carp;
 use Cwd qw(cwd abs_path);
 use File::Spec;
+use Fcntl ':flock';
 
 our @ISA = qw(Inline);
 
@@ -300,12 +301,17 @@ sub build {
         croak "You need Time::HiRes for BUILD_TIMERS option:\n$@" if $@;
         $total_build_time = Time::HiRes::time();
     }
+    open my $lockfh, '>', File::Spec->catfile($o->{API}{directory},'.lock')
+      or die "lockfile: $!";
+    flock($lockfh, LOCK_EX) if $^O !~ /^VMS|riscos|VOS$/;
+    $o->mkpath($o->{API}{build_dir});
     $o->call('preprocess', 'Build Preprocess');
     $o->call('parse', 'Build Parse');
     $o->call('write_XS', 'Build Glue 1');
     $o->call('write_Inline_headers', 'Build Glue 2');
     $o->call('write_Makefile_PL', 'Build Glue 3');
     $o->call('compile', 'Build Compile');
+    flock($lockfh, LOCK_UN) if $^O !~ /^VMS|riscos|VOS$/;
     if ($o->{CONFIG}{BUILD_TIMERS}) {
         $total_build_time = Time::HiRes::time() - $total_build_time;
         printf STDERR "Total Build Time: %5.4f secs\n", $total_build_time;
@@ -504,7 +510,6 @@ sub write_XS {
     my $o = shift;
     my $modfname = $o->{API}{modfname};
     my $module = $o->{API}{module};
-    $o->mkpath($o->{API}{build_dir});
     open XS, "> ".File::Spec->catfile($o->{API}{build_dir},"$modfname.xs")
       or croak $!;
     if ($o->{ILSM}{XSMODE}) {
@@ -804,6 +809,7 @@ sub makefile_pl {
     -f ($perl = $Config::Config{perlpath})
       or ($perl = $^X)
       or croak "Can't locate your perl binary";
+    $perl = qq{"$perl"} if $perl =~ m/\s/;
     $o->system_call("$perl Makefile.PL", 'out.Makefile_PL');
     $o->fix_make;
 }
@@ -811,12 +817,17 @@ sub make {
     my ($o) = @_;
     my $make = $o->{ILSM}{MAKE} || $Config::Config{make}
       or croak "Can't locate your make binary";
+    local $ENV{MAKEFLAGS} = $ENV{MAKEFLAGS} =~ s/(--jobserver-fds=[\d,]+)//
+      if $ENV{MAKEFLAGS};
     $o->system_call("$make", 'out.make');
 }
 sub make_install {
     my ($o) = @_;
     my $make = $o->{ILSM}{MAKE} || $Config::Config{make}
       or croak "Can't locate your make binary";
+    if($ENV{MAKEFLAGS}) { # Avoid uninitialized warnings
+      local $ENV{MAKEFLAGS} = $ENV{MAKEFLAGS} =~ s/(--jobserver-fds=[\d,]+)//;
+    }
     $o->system_call("$make pure_install", 'out.make_install');
 }
 sub cleanup {
@@ -841,6 +852,8 @@ sub system_call {
       defined $ENV{PERL_INLINE_BUILD_NOISY}
       ? $ENV{PERL_INLINE_BUILD_NOISY}
       : $o->{CONFIG}{BUILD_NOISY};
+    # test this functionality with:
+    #perl -MInline=C,Config,BUILD_NOISY,1,FORCE_BUILD,1 -e "use Inline C => q[void inline_warner() { int *x = 2; }]"
     if (not $build_noisy) {
         $cmd = "$cmd > $output_file 2>&1";
     }
@@ -861,11 +874,12 @@ sub build_error_message {
         close OUTPUT;
     }
 
-    return $output . <<END;
+    my $errcode = $? >> 8;
+    $output .= <<END;
 
 A problem was encountered while attempting to compile and install your Inline
 $o->{API}{language} code. The command that failed was:
-  $cmd
+  \"$cmd\" with error code $errcode
 
 The build directory was:
 $build_dir
@@ -873,6 +887,12 @@ $build_dir
 To debug the problem, cd to the build directory, and inspect the output files.
 
 END
+   if ($cmd =~ /^make >/) {
+     for (sort keys %ENV) {
+       $output .= "Environment $_ = '$ENV{$_}'\n" if /^(?:MAKE|PATH)/;
+     }
+   }
+   return $output;
 }
 
 #==============================================================================
