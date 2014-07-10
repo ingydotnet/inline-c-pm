@@ -17,7 +17,7 @@ author:
 
 requires:
   perl: 5.8.1
-  Inline: 0
+  Inline: 0.56
 
 devel:
   git: git@github.org/ingydotnet/inline-c-pm
