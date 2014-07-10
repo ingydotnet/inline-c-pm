@@ -4,7 +4,6 @@ name: Inline-C
 version: 0.56_01
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
-branch: update56_01
 
 license: perl
 copyright: 2000-2014. Ingy döt Net.

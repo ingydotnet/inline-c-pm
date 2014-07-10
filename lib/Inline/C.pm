@@ -1,6 +1,6 @@
 package Inline::C;
 our $VERSION = '0.56_01';
-$VERSION = '0.56_01';
+$VERSION = eval $VERSION;
 
 use strict;
 use Inline 0.56_01;
