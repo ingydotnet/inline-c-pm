@@ -1,8 +1,8 @@
-Soldier *	SOLDIER
+Soldier * SOLDIER
 
 INPUT
 SOLDIER
-       
+
         $var = INT2PTR($type, SvIV(SvRV($arg)))
 
 OUTPUT
