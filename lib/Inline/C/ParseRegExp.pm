@@ -38,7 +38,7 @@ sub code {
     $self->{_the_code_most_recently_parsed} = $code; # Simplifies debugging.
 
     my $normalize_type = sub {
-	# Normalize a type for lookup in a typemap.
+        # Normalize a type for lookup in a typemap.
         my($type) = @_;
 
         # Remove "extern".
@@ -63,11 +63,11 @@ sub code {
     # derived from Inline::C::grammar.pm version 0.30 (Inline 0.43).
 
     my $re_plausible_place_to_begin_a_declaration = qr {
-	# The beginning of a line, possibly indented.
-	# (Accepting indentation allows for C code to be aligned with
-	#  its surrounding perl, and for backwards compatibility with
-	#  Inline 0.43).
-	(?m: ^ ) \s*
+        # The beginning of a line, possibly indented.
+        # (Accepting indentation allows for C code to be aligned with
+        #  its surrounding perl, and for backwards compatibility with
+        #  Inline 0.43).
+        (?m: ^ ) \s*
     }xo;
 
     # Instead of using \s , we don't tolerate blank lines.
@@ -76,14 +76,14 @@ sub code {
     my $sp = qr{[ \t]|\n(?![ \t]*\n)};
 
     my $re_type = qr {(
-			(?: \w+ $sp* )+? # words
-			(?: \*  $sp* )*  # stars
-			)}xo;
+                        (?: \w+ $sp* )+? # words
+                        (?: \*  $sp* )*  # stars
+                        )}xo;
 
     my $re_identifier = qr{ (\w+) $sp* }xo;
 
     while($code =~ m{
-	$re_plausible_place_to_begin_a_declaration
+        $re_plausible_place_to_begin_a_declaration
         ( $re_type $re_identifier $RE_balanced_parens $sp* (\;|\{) )
        }xgo)
     {
@@ -93,7 +93,7 @@ sub code {
         my $is_decl     = $what eq ';';
         my $function    = $identifier;
         my $return_type = &$normalize_type($type);
-	my @arguments   = split ',', $args;
+        my @arguments   = split ',', $args;
 
         goto RESYNC if $is_decl && !$self->{data}{AUTOWRAP};
         goto RESYNC if $self->{data}{done}{$function};
@@ -101,41 +101,41 @@ sub code {
             $self->{data}{typeconv}{valid_rtypes}{$return_type};
 
         my(@arg_names,@arg_types);
-	my $dummy_name = 'arg1';
+        my $dummy_name = 'arg1';
 
-	foreach my $arg (@arguments) {
+        foreach my $arg (@arguments) {
           my $arg_no_space = $arg;
           $arg_no_space =~ s/\s//g;
           # If $arg_no_space is 'void', there will be no identifier.
-	    if(my($type, $identifier) =
-	       $arg =~ /^\s*$re_type(?:$re_identifier)?\s*$/o)
-	    {
-		my $arg_name = $identifier;
-		my $arg_type = &$normalize_type($type);
+            if(my($type, $identifier) =
+               $arg =~ /^\s*$re_type(?:$re_identifier)?\s*$/o)
+            {
+                my $arg_name = $identifier;
+                my $arg_type = &$normalize_type($type);
 
-		if((!defined $arg_name) && ($arg_no_space ne 'void')) {
-		    goto RESYNC if !$is_decl;
-		    $arg_name = $dummy_name++;
-		}
-		goto RESYNC if ((!defined
-		    $self->{data}{typeconv}{valid_types}{$arg_type}) && ($arg_no_space ne 'void'));
+                if((!defined $arg_name) && ($arg_no_space ne 'void')) {
+                    goto RESYNC if !$is_decl;
+                    $arg_name = $dummy_name++;
+                }
+                goto RESYNC if ((!defined
+                    $self->{data}{typeconv}{valid_types}{$arg_type}) && ($arg_no_space ne 'void'));
 
             # Push $arg_name onto @arg_names iff it's defined. Otherwise ($arg_no_space
             # was 'void'), push the empty string onto @arg_names (to avoid uninitialized
             # warnings emanating from C.pm).
-		defined($arg_name) ? push(@arg_names,$arg_name)
+                defined($arg_name) ? push(@arg_names,$arg_name)
                                : push(@arg_names, '');
             if($arg_name) {push(@arg_types,$arg_type)}
             else {push(@arg_types,'')} # $arg_no_space was 'void' - this push() avoids 'uninitialized' warnings from C.pm
-	    }
-	    elsif($arg =~ /^\s*\.\.\.\s*$/) {
-		push(@arg_names,'...');
-		push(@arg_types,'...');
-	    }
-	    else {
-		goto RESYNC;
-	    }
-	}
+            }
+            elsif($arg =~ /^\s*\.\.\.\s*$/) {
+                push(@arg_names,'...');
+                push(@arg_types,'...');
+            }
+            else {
+                goto RESYNC;
+            }
+        }
 
         # Commit.
         push @{$self->{data}{functions}}, $function;

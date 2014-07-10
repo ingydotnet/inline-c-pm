@@ -3,32 +3,32 @@ our %conf;
 BEGIN {
     warn "This test could take a couple of minutes to run\n";
     if (exists $ENV{PERL_INSTALL_ROOT}) {
-	warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-	delete $ENV{PERL_INSTALL_ROOT};
-	}
+        warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
+        delete $ENV{PERL_INSTALL_ROOT};
+        }
     %conf = (
-	main	=> {
-	    foo_	=> -1,
-	    _foo_	=> -3,
-	    _foo	=>  2,
-	    foo		=>  1,
-	    bar		=>  2,
-	    baz		=>  3,
-	    foobar	=>  4,
-	    foobarbaz	=>  5,
-	    },
-	FOO => {
-	    foo		=>  6,
-	    },
-	BAR => {
-	    bar		=>  7,
-	    },
-	BAZ => {
-	    baz		=>  8,
-	    baz_	=> -2,
-	    }
-	)
-    };
+        main => {
+            foo_ => -1,
+            _foo_ => -3,
+            _foo => 2,
+            foo => 1,
+            bar => 2,
+            baz => 3,
+            foobar => 4,
+            foobarbaz => 5,
+        },
+        FOO => {
+            foo => 6,
+        },
+        BAR => {
+            bar => 7,
+        },
+        BAZ => {
+            baz => 8,
+            baz_ => -2,
+        }
+    )
+};
 
 use strict;
 use warnings;
@@ -181,8 +181,8 @@ is ( BAZ::baz_ (),       $conf{BAZ}{baz_},       " BAZ::baz_     ");
 
 my $prod = -483840;
 my $res = main::foo_ () * main::_foo () * main::_foo_ () * main::foo () *
-	  main::bar () * main::baz () * main::foobar () * main::foobarbaz () *
-	  FOO::foo () * BAR::bar () * BAZ::baz () * BAZ::baz_ ();
+          main::bar () * main::baz () * main::foobar () * main::foobarbaz () *
+          FOO::foo () * BAR::bar () * BAZ::baz () * BAZ::baz_ ();
 
 is ($res, $prod, "Returned product");
 

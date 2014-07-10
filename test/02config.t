@@ -13,17 +13,17 @@ use Inline Config => DIRECTORY => '_Inline_test';
 
 BEGIN {
     plan(tests => 3,
-	 todo => [],
-	 onfail => sub {},
-	);
+         todo => [],
+         onfail => sub {},
+        );
 }
 
 # test 1 - Make sure config options are type checked
 BEGIN {
     eval <<'END';
     use Inline(C => "void foo(){}",
-	       LIBS => {X => 'Y'},
-	      );
+               LIBS => {X => 'Y'},
+              );
 END
     ok(1);
 #    ok($@ =~ /must be a string or an array ref/);
@@ -33,8 +33,8 @@ END
 BEGIN {
     eval <<'END';
     use Inline(C => "void foo(){}",
-	       FOO => 'Bar',
-	      );
+               FOO => 'Bar',
+              );
 END
     ok($@ =~ /not a valid config option/);
 }
@@ -42,8 +42,8 @@ END
 # test 3 - Test the PREFIX config option
 BEGIN {
     use Inline(C => 'char* XYZ_Howdy(){return "Hello There";}',
-	       PREFIX => 'XYZ_',
-	      );
+               PREFIX => 'XYZ_',
+              );
     ok(Howdy eq "Hello There");
 }
 

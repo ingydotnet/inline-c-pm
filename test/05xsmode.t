@@ -13,9 +13,9 @@ use Inline Config => DIRECTORY => '_Inline_test';
 
 BEGIN {
     plan(tests => 1,
-	 todo => [],
-	 onfail => sub {},
-	);
+         todo => [],
+         onfail => sub {},
+        );
 }
 
 use Inline C => DATA =>

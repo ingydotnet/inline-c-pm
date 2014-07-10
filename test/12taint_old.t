@@ -27,9 +27,9 @@ use Inline Config =>
 
 BEGIN {
     plan(tests => 5,
-	 todo => [],
-	 onfail => sub {},
-	);
+         todo => [],
+         onfail => sub {},
+        );
     warn "Expect a number of \"Blindly untainting ...\" warnings - these are intended.\n";
 }
 use Inline Config =>
