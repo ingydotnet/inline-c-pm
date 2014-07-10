@@ -14,11 +14,6 @@ Inline::C - Write Perl Subroutines in C
 <a href="https://travis-ci.org/ingydotnet/inline-c-pm"><img src="https://travis-ci.org/ingydotnet/inline-c-pm.png" alt="inline-c-pm"></a>
 <a href="https://coveralls.io/r/ingydotnet/inline-c-pm?branch=master"><img src="https://coveralls.io/repos/ingydotnet/inline-c-pm/badge.png" alt="inline-c-pm"></a>
 
-=head1 WARNING
-
-This module is I<NOT YET> the real L<Inline::C>. See L<Inline> for that. This
-is the first attempt to extract L<Inline::C> into its own distribution.
-
 =head1 DESCRIPTION
 
 C<Inline::C> is a module that allows you to write Perl subroutines in C. Since
@@ -397,9 +392,9 @@ All of this functionality is available through XS macro calls as well. So
 why duplicate the functionality? There are a few reasons why I decided to
 offer this set of macros. First, as a convenient way to access the Stack.
 Second, for consistent, self documenting, non-cryptic coding. Third, for
-future compatibility. It occured to me that if a lot of people started using
-XS macros for their C code, the interface might break under Perl6. By using
-this set, hopefully I will be able to insure future compatibility of
+future compatibility. It occurred to me that if a lot of people started
+using XS macros for their C code, the interface might break under Perl6. By
+using this set, hopefully I will be able to insure future compatibility of
 argument handling.
 
 Of course, if you use the rest of the Perl API, your code will most likely
@@ -494,7 +489,7 @@ perlapi> for more info.
 
 One problem is that C<SvPVX> doesn't automatically convert strings to numbers,
 so we get a little surprise when we try to greet C<42>. The program segfaults,
-a common occurence when delving into the guts of Perl.
+a common occurrence when delving into the guts of Perl.
 
     use Inline C;
     greet('Ingy');

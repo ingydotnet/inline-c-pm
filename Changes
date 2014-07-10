@@ -1,6 +1,11 @@
 # Revision history for Perl extension Inline::C.
 
 ---
+version: 0.56_01
+date:    Thu Jul 10 01:21:08 BST 2014
+changes:
+- Merge in changes to inline-pm repo since this was split off.
+---
 version: 0.54
 date:    Thu Jun 26 10:22:29 PDT 2014
 changes:

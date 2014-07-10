@@ -7,12 +7,16 @@
 
 .PHONY: cpan test
 
-ifeq (,$(shell which zild))
-    $(error "Error: 'zild' command not found. Please install Zilla::Dist from CPAN")
+ifneq (,$(shell which zild))
+    NAME := $(shell zild meta name)
+    VERSION := $(shell zild meta version)
+    RELEASE_BRANCH := $(shell zild meta branch)
+else
+    NAME := No-Name
+    VERSION := 0
+    RELEASE_BRANCH := master
 endif
 
-NAME := $(shell zild meta name)
-VERSION := $(shell zild meta version)
 DISTDIR := $(NAME)-$(VERSION)
 DIST := $(DISTDIR).tar.gz
 NAMEPATH := $(subst -,/,$(NAME))
@@ -27,6 +31,7 @@ help:
 	@echo '    make test      - Run the repo tests'
 	@echo '    make install   - Install the repo'
 	@echo '    make update    - Update generated files'
+	@echo '    make release   - Release the dist to CPAN'
 	@echo ''
 	@echo '    make cpan      - Make cpan/ dir with dist.ini'
 	@echo '    make cpanshell - Open new shell into new cpan/'
@@ -37,14 +42,12 @@ help:
 	@echo '    make distshell - Open new shell into new distdir'
 	@echo '    make disttest  - Run the dist tests'
 	@echo ''
-	@echo '    make release   - Release the dist to CPAN'
-	@echo '    make preflight - Dryrun of release'
-	@echo ''
+	@echo '    make upgrade   - Upgrade the build system (Makefile)'
 	@echo '    make readme    - Make the ReadMe.pod file'
 	@echo '    make travis    - Make a travis.yml file'
-	@echo '    make upgrade   - Upgrade the build system'
 	@echo ''
 	@echo '    make clean     - Clean up build files'
+	@echo '    make help      - Show this help'
 	@echo ''
 
 test:
@@ -56,6 +59,19 @@ install: distdir
 
 update: makefile
 	make readme travis version
+
+release: clean update check-release test disttest
+	make dist
+	[ -n "$$(git status -s)" ] && git commit -am '$(VERSION)'
+	cpan-upload $(DIST)
+	git push
+	git tag $(VERSION)
+	git push --tag
+	make clean
+	git status
+	@echo
+	@[ -n "$$(which cowsay)" ] && cowsay "$(SUCCESS)" || echo "$(SUCCESS)"
+	@echo
 
 cpan:
 	zild-make-cpan
@@ -85,29 +101,8 @@ distshell: distdir
 disttest: cpan
 	(cd cpan; dzil test) && make clean
 
-release: clean update check-release test disttest
-	make dist
-	cpan-upload $(DIST)
-	git push
-	git tag $(VERSION)
-	git push --tag
-	make clean
-	git status
-	@echo
-	@[ -n "$$(which cowsay)" ] && cowsay "$(SUCCESS)" || echo "$(SUCCESS)"
-	@echo
-
-preflight: clean update check-release test disttest
-	make dist
-	@echo cpan-upload $(DIST)
-	@echo git push
-	@echo git tag $(VERSION)
-	@echo git push --tag
-	make clean
-	git status
-	@echo
-	@[ -n "$$(which cowsay)" ] && cowsay "$(SUCCESS)" || echo "$(SUCCESS)"
-	@echo
+upgrade:
+	cp `zild sharedir`/Makefile ./
 
 readme:
 	swim --pod-cpan doc/$(NAMEPATH).swim > ReadMe.pod
@@ -115,16 +110,17 @@ readme:
 travis:
 	zild-make-travis
 
-upgrade:
-	cp `zild sharedir`/Makefile ./
-
 clean purge:
-	rm -fr cpan .build _Inline_test* $(DIST) $(DISTDIR)
+	rm -fr cpan .build $(DIST) $(DISTDIR)
 
 #------------------------------------------------------------------------------
+# Non-pulic-facing targets:
+#------------------------------------------------------------------------------
 check-release:
-	zild-check-release
+	RELEASE_BRANCH=$(RELEASE_BRANCH) zild-check-release
 
+# We don't want to update the Makefile in Zilla::Dist since it is the real
+# source, and would be reverting to whatever was installed.
 ifeq (Zilla-Dist,$(NAME))
 makefile:
 	@echo Skip 'make upgrade'
