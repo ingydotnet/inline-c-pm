@@ -3,6 +3,7 @@ version: 0.56_02
 date:    Thu Jul 10 04:13:56 BST 2014
 changes:
 - Make depend on Inline 0.56.
+- Tidy up after tests.
 ---
 version: 0.56_01
 date:    Thu Jul 10 01:21:08 BST 2014
