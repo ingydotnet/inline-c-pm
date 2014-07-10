@@ -3,7 +3,7 @@ our $VERSION = '0.56_01';
 $VERSION = eval $VERSION;
 
 use strict;
-use Inline 0.56_01;
+use Inline 0.56;
 use Config;
 use Data::Dumper;
 use Carp;
