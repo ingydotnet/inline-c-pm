@@ -1,4 +1,9 @@
 ---
+version: 0.58
+date:    Fri Jul 11 07:02:53 BST 2014
+changes:
+- Fix prereqs
+---
 version: 0.57
 date:    Fri Jul 11 01:51:14 BST 2014
 changes:
