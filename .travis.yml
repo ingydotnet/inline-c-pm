@@ -18,7 +18,11 @@ perl:
 install:
 - cpanm --quiet --notest
   Devel::Cover::Report::Coveralls
+  File::Spec
   Inline
+  Parse::RecDescent
+  Test::More
+  Test::Warn
 
 script:
 - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine
