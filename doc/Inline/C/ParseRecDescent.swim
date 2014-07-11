@@ -1,0 +1,31 @@
+Inline::C::ParseRecDescent
+==========================
+
+The Classic Inline::C Parser
+
+= Synopsis
+
+  use Inline C => DATA =>
+      USING => ParseRecDescent;
+
+= Description
+
+This module is Inline::C's original Parse::RecDescent based parser. It was
+previously packaged as Inline::C::grammar.
+
+Try Inline::C::ParseRegExp for an alternative.
+
+= Author
+
+brian Ingerson <ingy@ttul.org>
+
+= Copyright
+
+Copyright (c) 2000-2014. Ingy döt Net.
+
+Copyright (c) 2008, 2010, 2011. Sisyphus.
+
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+See http://www.perl.com/perl/misc/Artistic.html
