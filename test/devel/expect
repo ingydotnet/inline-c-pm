@@ -1,0 +1,12 @@
+---
+done:
+  JAxH: 1
+function:
+  JAxH:
+    arg_names:
+    - x
+    arg_types:
+    - char *
+    return_type: SV *
+functions:
+- JAxH
