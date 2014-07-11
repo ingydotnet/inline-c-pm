@@ -18,6 +18,10 @@ author:
 requires:
   perl: 5.8.1
   Inline: 0.57
+  File::Spec: 0.8
+  Test::More: 0.88
+  Test::Warn: 0.23
+  Parse::RecDescent: 1.80
 
 devel:
   git: git@github.org/ingydotnet/inline-c-pm
