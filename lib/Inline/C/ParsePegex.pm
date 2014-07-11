@@ -86,8 +86,11 @@ anything_else: / ANY* EOL /
 }
 
 package Inline::C::ParsePegex::AST;
+use Pegex::Base;
 
-use parent 'Pegex::Receiver';
+extends 'Pegex::Tree';
+
+has data => {};
 
 sub initialize {
     my ($self) = @_;
@@ -97,6 +100,11 @@ sub initialize {
         done => {},
     };
     $self->data($data);
+}
+
+sub final {
+    my ($self, $got) = @_;
+    return $self->{data};
 }
 
 sub got_function_definition {
@@ -126,35 +134,3 @@ sub got_arg {
 }
 
 1;
-
-__DATA__
-
-=head1 NAME
-
-Inline::C::ParsePegex - Yet Another Inline::C Parser
-
-=head1 SYNOPSIS
-
-    use Inline C => DATA =>
-               USING => ParsePegex;
-
-=head1 DESCRIPTION
-
-This is another version of Inline::C's parser. It is based on Pegex.
-
-=head2 AUTHOR
-
-Ingy döt Net <ingy@ingy.net>
-
-=head1 COPYRIGHT
-
-Copyright (c) 2002. Brian Ingerson.
-
-Copyright (c) 2008, 2010-2012. Sisyphus.
-
-This program is free software; you can redistribute it and/or modify it
-under the same terms as Perl itself.
-
-See http://www.perl.com/perl/misc/Artistic.html
-
-=cut

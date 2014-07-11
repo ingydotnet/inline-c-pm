@@ -14,5 +14,5 @@ use IO::All;
 use YAML::XS;
 
 io('got')->print(Dump($main::data));
-system('diff -u expect got');
+system('diff -u test/devel/expect got');
 
