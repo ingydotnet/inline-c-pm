@@ -29,7 +29,7 @@ sub code {
     Pegex::Parser->new(
         grammar => $pegex_grammar,
         receiver => Inline::C::ParsePegex::AST->new,
-        debug => 1,
+        # debug => 1,
     )->parse($code);
 
     return 1;
