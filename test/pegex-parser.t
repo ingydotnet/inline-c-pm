@@ -1,5 +1,6 @@
 use strict;
 use Test::More tests => 2;
+
 use IO::All;
 use YAML::XS;
 
@@ -15,15 +16,28 @@ END
 is JAxH('Inline'), "Just Another Inline Hacker";
 
 my $got = Dump($main::data);
-my $expect = io('xt/expect')->all;
+my $want = <<'...';
+---
+done:
+  JAxH: 1
+function:
+  JAxH:
+    arg_names:
+    - x
+    arg_types:
+    - char *
+    return_type: SV *
+functions:
+- JAxH
+...
 
-if ($got eq $expect) {
+if ($got eq $want) {
     pass 'parse worked';
 }
 else {
     fail 'parse failed. (see diff)';
+    io('want')->print($want);
     io('got')->print($got);
-    system('diff -u xt/expect got');
-    system('rm got');
+    system('diff -u want got');
+    system('rm want got');
 }
-
