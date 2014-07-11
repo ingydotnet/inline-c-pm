@@ -1,4 +1,9 @@
 ---
+version: 0.56_03
+date:    Fri Jul 11 01:20:18 BST 2014
+changes:
+- Test of release system.
+---
 version: 0.56_02
 date:    Thu Jul 10 04:13:56 BST 2014
 changes:
