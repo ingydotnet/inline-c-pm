@@ -17,17 +17,18 @@ author:
 
 requires:
   perl: 5.8.1
-  Inline: 0.64
   File::Spec: 0.8
+  Inline: 0.64
   Parse::RecDescent: 1.80
+  Pegex: 0.30
 
 test:
   requires:
+    autodie: 0
+    File::Copy::Recursive: 0
     Test::More: 0.88
     Test::Warn: 0.23
     version: 0.77
-    File::Copy::Recursive: 0
-    autodie: 0
 
 devel:
   git: https://github.com/ingydotnet/inline-c-pm
