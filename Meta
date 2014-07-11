@@ -21,8 +21,13 @@ requires:
   File::Spec: 0.8
   Parse::RecDescent: 1.80
   Pegex: 0.30
-  Test::More: 0.88
-  Test::Warn: 0.23
+
+test:
+  requires:
+    IO::All: 0
+    Test::More: 0.88
+    Test::Warn: 0.23
+    YAML::XS: 0
 
 devel:
   git: git@github.org/ingydotnet/inline-c-pm
