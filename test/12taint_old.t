@@ -1,19 +1,19 @@
 #!perl -T
 
 BEGIN {
-  if($] >= 5.007) {
-    print "1..1\n";
-    warn "Skipped - applies only to perl 5.6.x\n";
-    print "ok 1\n";
-    exit(0);
-  }
+    if($] >= 5.007) {
+        print "1..1\n";
+        warn "Skipped - applies only to perl 5.6.x\n";
+        print "ok 1\n";
+        exit(0);
+    }
 };
 
 BEGIN {
-  if (exists $ENV{PERL_INSTALL_ROOT}) {
-    warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-    delete $ENV{PERL_INSTALL_ROOT};
-  }
+    if (exists $ENV{PERL_INSTALL_ROOT}) {
+        warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
+        delete $ENV{PERL_INSTALL_ROOT};
+    }
 };
 
 use File::Spec;
@@ -26,10 +26,11 @@ use Inline Config =>
     DIRECTORY => '_Inline_test';
 
 BEGIN {
-    plan(tests => 5,
-	 todo => [],
-	 onfail => sub {},
-	);
+    plan(
+        tests => 5,
+        todo => [],
+        onfail => sub {},
+    );
     warn "Expect a number of \"Blindly untainting ...\" warnings - these are intended.\n";
 }
 use Inline Config =>

@@ -3,38 +3,37 @@ our %conf;
 BEGIN {
     warn "This test could take a couple of minutes to run\n";
     if (exists $ENV{PERL_INSTALL_ROOT}) {
-	warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-	delete $ENV{PERL_INSTALL_ROOT};
-	}
+        warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
+        delete $ENV{PERL_INSTALL_ROOT};
+    }
     %conf = (
-	main	=> {
-	    foo_	=> -1,
-	    _foo_	=> -3,
-	    _foo	=>  2,
-	    foo		=>  1,
-	    bar		=>  2,
-	    baz		=>  3,
-	    foobar	=>  4,
-	    foobarbaz	=>  5,
-	    },
-	FOO => {
-	    foo		=>  6,
-	    },
-	BAR => {
-	    bar		=>  7,
-	    },
-	BAZ => {
-	    baz		=>  8,
-	    baz_	=> -2,
-	    }
-	)
-    };
+        main => {
+            foo_ => -1,
+            _foo_ => -3,
+            _foo => 2,
+            foo => 1,
+            bar => 2,
+            baz => 3,
+            foobar => 4,
+            foobarbaz => 5,
+        },
+        FOO => {
+            foo => 6,
+        },
+        BAR => {
+            bar => 7,
+        },
+        BAZ => {
+            baz => 8,
+            baz_ => -2,
+        }
+    )
+};
 
 use strict;
 use warnings;
 
-sub code
-{
+sub code {
     my ($p, $sym) = @_;
     my $code = <<"EOIC";
 package $p;
@@ -46,7 +45,7 @@ EOC
 EOIC
     # warn "Code: $code";
     eval $code;
-    } # code
+} # code
 
 #use Inline Config =>
 #    DIRECTORY => "_Inline_test",
@@ -66,45 +65,45 @@ main::code (__PACKAGE__, "_foo_");
 
 ########## main:_foo ########
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1,
-   USING       => "ParseRecDescent";
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1,
+    USING       => "ParseRecDescent";
 
 main::code (__PACKAGE__, "_foo");
 
 ########## main:foo ########
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1,
-   USING       => "ParseRegExp";
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1,
+    USING       => "ParseRegExp";
 
 main::code (__PACKAGE__, "foo");
 
 # No USING value specified here - will use default (ParseRecDescent).
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1;
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1;
 
 main::code (__PACKAGE__, "bar");
 
 ########## main:baz ########
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1,
-   USING       => "ParseRecDescent";
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1,
+    USING       => "ParseRecDescent";
 
 main::code (__PACKAGE__, "baz");
 
 ########## main:foobar ########
 # No USING value specified here - will use default (ParseRecDescent).
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1;
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1;
 
 main::code (__PACKAGE__, "foobar");
 
@@ -117,10 +116,10 @@ main::code (__PACKAGE__, "foobarbaz");
 package FOO;
 
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1,
-   USING       => "ParseRecDescent";
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1,
+    USING       => "ParseRecDescent";
 
 main::code (__PACKAGE__, "foo");
 
@@ -128,9 +127,9 @@ main::code (__PACKAGE__, "foo");
 package BAR;
 
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1;
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1;
 
 main::code (__PACKAGE__, "bar");
 
@@ -138,10 +137,10 @@ main::code (__PACKAGE__, "bar");
 package BAZ;
 
 use Inline C => Config =>
-   DIRECTORY   => "_Inline_test",
-   FORCE_BUILD => 1,
-   _TESTING    => 1,
-   USING       => "ParseRegExp";
+    DIRECTORY   => "_Inline_test",
+    FORCE_BUILD => 1,
+    _TESTING    => 1,
+    USING       => "ParseRegExp";
 
 main::code (__PACKAGE__, "baz");
 
@@ -180,9 +179,10 @@ is ( BAZ::baz (),        $conf{BAZ}{baz},        " BAZ::baz      ");
 is ( BAZ::baz_ (),       $conf{BAZ}{baz_},       " BAZ::baz_     ");
 
 my $prod = -483840;
-my $res = main::foo_ () * main::_foo () * main::_foo_ () * main::foo () *
-	  main::bar () * main::baz () * main::foobar () * main::foobarbaz () *
-	  FOO::foo () * BAR::bar () * BAZ::baz () * BAZ::baz_ ();
+my $res =
+    main::foo_ () * main::_foo () * main::_foo_ () * main::foo () *
+    main::bar () * main::baz () * main::foobar () * main::foobarbaz () *
+    FOO::foo () * BAR::bar () * BAZ::baz () * BAZ::baz_ ();
 
 is ($res, $prod, "Returned product");
 
@@ -213,7 +213,8 @@ is_deeply (\@p, [
     "Inline::C::ParseRecDescent::get_parser called",
     "Inline::C::ParseRegExp::get_parser called",
     "Inline::C::ParseRegExp::get_parser called",
-    ], "parser log");
+    ], "parser log"
+);
 
 Inline::C::_testing_cleanup();
 
