@@ -40,23 +40,24 @@ sub grammar {
 
 code: part+
 
-part:
-| comment
+part: =ALL (
+  | comment
   | function_definition
   | function_declaration
   | anything_else
+)
 
 comment:
-    /- SLASH SLASH [^ BREAK ]* BREAK / |
-    /- SLASH STAR (: [^ STAR ]+ | STAR (! SLASH))* STAR SLASH ([ TAB ]*)? /
+  /- SLASH SLASH [^ BREAK ]* BREAK / |
+  /- SLASH STAR (: [^ STAR ]+ | STAR (! SLASH))* STAR SLASH ([ TAB ]*)? /
 
 function_definition:
-    rtype /( identifier )/
-    LPAREN arg* % COMMA /- RPAREN - LCURLY -/
+  rtype /( identifier )/
+  LPAREN arg* % COMMA /- RPAREN - LCURLY -/
 
 function_declaration:
-    rtype /( identifier )/
-    LPAREN arg_decl* % COMMA /- RPAREN - SEMI -/
+  rtype /( identifier )/
+  LPAREN arg_decl* % COMMA /- RPAREN - SEMI -/
 
 rtype: / WS*(: rtype1 | rtype2 ) WS* /
 
@@ -80,7 +81,7 @@ identifier: /(: WORD+ )/
 
 type_identifier: /(: WORD+ )/
 
-anything_else: / ANY* EOL /
+anything_else: / ANY* (: EOL | EOS ) /
 
 ...
 }

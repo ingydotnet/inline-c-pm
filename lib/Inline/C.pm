@@ -385,8 +385,8 @@ sub get_parser {
     my $o = shift;
     Inline::C::_parser_test("Inline::C::get_parser called\n")
         if $o->{CONFIG}{_TESTING};
-    require Inline::C::ParseRecDescent;
-    Inline::C::ParseRecDescent::get_parser($o);
+    require Inline::C::ParsePegex;
+    Inline::C::ParsePegex::get_parser($o);
 }
 
 #==============================================================================
