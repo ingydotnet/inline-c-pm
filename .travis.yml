@@ -20,9 +20,12 @@ install:
   Devel::Cover::Report::Coveralls
   File::Spec
   Inline
+  IO::All
   Parse::RecDescent
+  Pegex
   Test::More
   Test::Warn
+  YAML::XS
 
 script:
 - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine
@@ -38,6 +41,7 @@ notifications:
     - irc.perl.org#inline
     on_success: change
     on_failure: always
+    skip_join: true
 
 # Hack to not run on tag pushes:
 branches:
