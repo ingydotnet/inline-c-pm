@@ -15,7 +15,7 @@ sub get_parser {
     Inline::C::_parser_test("Inline::C::ParseRecDescent::get_parser called\n") if $o->{CONFIG}{_TESTING};
     eval { require Parse::RecDescent };
     croak <<END if $@;
-This innvocation of Inline requires the Parse::RecDescent module.
+This invocation of Inline requires the Parse::RecDescent module.
 $@
 END
     $main::RD_HINT++;
