@@ -6,6 +6,12 @@
 #
 #   export PERL_PEGEX_DEBUG=1
 #   export PERL_PEGEX_AUTO_COMPILE=1
+#
+# To recompile the grammar without AUTO COMPILE, just run:
+#
+#   perl -Ilib -MInline::C::ParsePegex::Grammar=compile
+#
+# And that will put changes to this file into Inline::C::ParsePegex::Grammar.
 
 %grammar inline-c
 %version 0.0.1
