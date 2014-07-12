@@ -542,17 +542,15 @@ C<'symbols.perl'>. Avoid using these in your code.
 
 =head1 AUTHOR
 
-Brian Ingerson <INGY@cpan.org>
+Ingy dẗ Net <ingy@cpan.org>
 
 Sisyphus <sisyphus@cpan.org> fixed some bugs and is current co-maintainer.
 
 =head1 COPYRIGHT
 
-Copyright 2000-2002. Brian Ingerson.
+Copyright 2000-2014. Ingy döt Net.
 
 Copyright 2008, 2010-2014. Sisyphus.
-
-Copyright 2014, Ingy döt Net.
 
 This program is free software; you can redistribute it and/or modify it under
 the same terms as Perl itself.

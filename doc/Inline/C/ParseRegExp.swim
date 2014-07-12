@@ -5,8 +5,8 @@ The New and Improved Inline::C Parser
 
 = Synopsis
 
-    use Inline C => DATA =>
-               USING => ParseRegExp;
+  use Inline C => DATA =>
+      USING => ParseRegExp;
 
 = Description
 
@@ -15,11 +15,11 @@ parser. It is based on regular expressions instead.
 
 = Author
 
-mitchell N Charity <mcharity@vendian.org>
+Mitchell N Charity <mcharity@vendian.org>
 
 = Copyright
 
-copyright 2000-2014. Ingy döt Net.
+Copyright 2000-2014. Ingy döt Net.
 
 Copyright 2008, 2010-2012. Sisyphus.
 
