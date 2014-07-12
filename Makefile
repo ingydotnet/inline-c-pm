@@ -57,7 +57,6 @@ help:
 test:
 ifeq ($(wildcard pkg/no-test),)
 	$(PERL) -S prove -lv test
-	prove -lv test
 else
 	@echo "Testing not available. Use 'disttest' instead."
 endif
