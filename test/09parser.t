@@ -35,15 +35,8 @@ use warnings;
 
 sub code {
     my ($p, $sym) = @_;
-    my $code = <<"EOIC";
-package $p;
-
-use Inline C => <<"EOC";
-
-int $sym () { return $conf{$p}{$sym}; }
-EOC
-EOIC
-    # warn "Code: $code";
+    my $code = "package $p; use Inline C => q[int $sym () {return $conf{$p}{$sym};}];";
+#warn "Code: $code";
     eval $code;
 } # code
 
