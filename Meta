@@ -43,6 +43,11 @@ test:
     version: 0.77
     YAML::XS: 0
 
+test:
+  requires:
+    Test::More: 0.88
+    Test::Warn: 0.23
+
 devel:
   git: https://github.com/ingydotnet/inline-c-pm
   bug: https://github.com/ingydotnet/inline-c-pm/issues
