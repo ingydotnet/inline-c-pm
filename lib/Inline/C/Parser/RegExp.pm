@@ -1,5 +1,5 @@
 use strict; use warnings;
-package Inline::C::ParseRegExp;
+package Inline::C::Parser::RegExp;
 
 use Carp;
 
