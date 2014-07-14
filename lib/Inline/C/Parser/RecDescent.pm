@@ -1,5 +1,5 @@
 use strict; use warnings;
-package Inline::C::ParseRecDescent;
+package Inline::C::Parser::RecDescent;
 
 use Carp;
 

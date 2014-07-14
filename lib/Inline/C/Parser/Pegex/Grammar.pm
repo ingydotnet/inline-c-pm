@@ -1,5 +1,5 @@
 use strict; use warnings;
-package Inline::C::ParsePegex::Grammar;
+package Inline::C::Parser::Pegex::Grammar;
 
 use Pegex::Base;
 extends 'Pegex::Grammar';

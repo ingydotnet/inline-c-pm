@@ -1,4 +1,5 @@
-package Inline::C::ParsePegex::AST;
+use strict; use warnings;
+package Inline::C::Parser::Pegex::AST;
 use Pegex::Base;
 
 extends 'Pegex::Tree';

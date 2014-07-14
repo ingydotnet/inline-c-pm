@@ -7,7 +7,7 @@ use YAML::XS;
 BEGIN { system "rm _Inline* -fr" }
 END { system "rm _Inline* -fr" }
 
-use Inline C => <<'END', USING => 'ParsePegex';
+use Inline C => <<'END', USING => '::Parser::Pegex';
 SV* JAxH(char* x) {
     return newSVpvf ("Just Another %s Hacker",x);
 }
