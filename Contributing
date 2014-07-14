@@ -11,20 +11,20 @@ GitHub
 
 The code for this Project is hosted at GitHub. The repository is:
 
-  git@github.org/ingydotnet/inline-c-pm
+  https://github.com/ingydotnet/inline-c-pm
 
 You can get the code with this command:
 
-  git clone git@github.org/ingydotnet/inline-c-pm
+  git clone https://github.com/ingydotnet/inline-c-pm
 
 If you've found a bug or a missing feature that you would like the author to
 know about, report it here:
 
-  https://github.com/ingydotnet/inline-c-pm/issues/
+  https://github.com/ingydotnet/inline-c-pm/issues
 
 or fix it and submit a pull request here:
 
-  git@github.org/ingydotnet/inline-c-pm/pulls
+  https://github.com/ingydotnet/inline-c-pm/pulls
 
 See these links for help on interacting with GitHub:
 

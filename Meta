@@ -1,7 +1,7 @@
 =meta: 0.0.1
 
 name: Inline-C
-version: 0.59
+version: 0.60
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
 
@@ -19,13 +19,16 @@ requires:
   perl: 5.8.1
   Inline: 0.58
   File::Spec: 0.8
-  Test::More: 0.88
-  Test::Warn: 0.23
   Parse::RecDescent: 1.80
 
+test:
+  requires:
+    Test::More: 0.88
+    Test::Warn: 0.23
+
 devel:
-  git: git@github.org/ingydotnet/inline-c-pm
-  bug: https://github.com/ingydotnet/inline-c-pm/issues/
+  git: https://github.com/ingydotnet/inline-c-pm
+  bug: https://github.com/ingydotnet/inline-c-pm/issues
   irc: irc.perl.org#inline
 
 =travis:
