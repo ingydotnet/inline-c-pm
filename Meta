@@ -1,7 +1,7 @@
 =meta: 0.0.1
 
 name: Inline-C
-version: 0.60
+version: 0.61
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
 
@@ -30,6 +30,7 @@ devel:
   git: https://github.com/ingydotnet/inline-c-pm
   bug: https://github.com/ingydotnet/inline-c-pm/issues
   irc: irc.perl.org#inline
+  eml: inline@perl.org
 
 =travis:
   type: perl
