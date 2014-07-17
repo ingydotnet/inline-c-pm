@@ -87,6 +87,8 @@ sub code {
 
     my $re_identifier = qr{ (\w+) $sp* }xo;
 
+    $code =~ s/\bconst\b//g; # Remove "const" qualifier - it's not wanted here.
+
     while ($code =~ m{
             $re_plausible_place_to_begin_a_declaration
             ( $re_type $re_identifier $RE_balanced_parens $sp* (\;|\{) )
