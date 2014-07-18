@@ -19,7 +19,7 @@ sub get_parser {
 }
 
 sub code {
-    my($self,$code) = @_;
+    my ($self, $code) = @_;
 
     $main::data = $self->{data} =
     Pegex::Parser->new(

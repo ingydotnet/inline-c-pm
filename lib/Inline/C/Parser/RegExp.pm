@@ -11,7 +11,8 @@ sub register {
 }
 
 sub get_parser {
-    Inline::C::_parser_test("Inline::C::ParseRegExp::get_parser called\n") if $_[0]->{CONFIG}{_TESTING};
+    Inline::C::_parser_test("Inline::C::ParseRegExp::get_parser called\n")
+        if $_[0]->{CONFIG}{_TESTING};
     bless {}, 'Inline::C::ParseRegExp'
 }
 
