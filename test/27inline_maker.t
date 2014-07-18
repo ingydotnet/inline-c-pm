@@ -18,9 +18,11 @@ if ( -e File::Spec->catdir(File::Spec->curdir(),'eg')) {
 }
 
 plan skip_all => "No 'example' or 'eg' directory." unless $example_modules_dir;
+require Inline;
+plan skip_all => "Inline version 0.64+ required for this." unless $Inline::VERSION >= 0.64;
 
 my $lib_dir  = File::Spec->rel2abs(File::Spec->catdir(File::Spec->curdir(),'lib'));
-my $inst_dir = File::Spec->rel2abs(File::Spec->catdir(File::Spec->curdir(),'_Inline_08inline_maker'));
+my $inst_dir = File::Spec->rel2abs(File::Spec->catdir(File::Spec->curdir(),$TestInlineSetup::DIR));
 
 # loop the list of modules and try to build them.
 for my $module (glob "$example_modules_dir/*") {

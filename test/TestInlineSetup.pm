@@ -9,17 +9,17 @@ sub import {
     $option ||= '';
 }
 
-my $inline_dir;
+our $DIR;
 BEGIN {
-    ($_, $inline_dir) = caller(2);
-    $inline_dir =~ s/.*?(\w+)\.t$/$1/ or die;
-    $inline_dir = "_Inline_$inline_dir";
-    rmtree($inline_dir) if -d $inline_dir;
-    mkdir($inline_dir) or die;
+    ($_, $DIR) = caller(2);
+    $DIR =~ s/.*?(\w+)\.t$/$1/ or die;
+    $DIR = "_Inline_$DIR";
+    rmtree($DIR) if -d $DIR;
+    mkdir($DIR) or die;
 }
 
 END {
-    rmtree($inline_dir);
+    rmtree($DIR);
 }
 
 1;
