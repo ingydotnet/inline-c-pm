@@ -17,7 +17,7 @@ author:
 
 requires:
   perl: 5.8.1
-  Inline: 0.58
+  Inline: 0.64
   File::Spec: 0.8
   Inline: 0.64
   Parse::RecDescent: 1.80
