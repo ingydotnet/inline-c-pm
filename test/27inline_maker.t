@@ -9,14 +9,9 @@ use lib dirname(__FILE__);
 use TestInlineSetup;
 require version;
 
-my $example_modules_dir = undef;
-
-# determine if we are using the eg or example directory
-if ( -e File::Spec->catdir(File::Spec->curdir(),'eg')) {
-  $example_modules_dir = File::Spec->catdir(File::Spec->curdir(),'eg','modules');
-} elsif ( -e File::Spec->catdir(File::Spec->curdir(),'example')) {
-  $example_modules_dir = File::Spec->catdir(File::Spec->curdir(),'example','modules');
-}
+my ($example_modules_dir) = grep { -e } map {
+  File::Spec->catdir(File::Spec->curdir, $_, 'modules')
+} qw(eg example);
 
 plan skip_all => "No 'example' or 'eg' directory." unless $example_modules_dir;
 require Inline;
