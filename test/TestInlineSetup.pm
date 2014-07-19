@@ -3,6 +3,7 @@ package TestInlineSetup;
 
 use diagnostics;
 use File::Path;
+use File::Spec;
 
 sub import {
     my ($package, $option) = @_;
@@ -25,12 +26,13 @@ BEGIN {
     $DIR =~ s/.*?(\w+)\.t$/$1/ or die;
     $DIR = "_Inline_$DIR.$$";
     rmtree($DIR) if -d $DIR;
-    mkdir($DIR) or die;
+    mkdir($DIR) or die "$DIR: $!\n";
 }
+my $absdir = File::Spec->rel2abs($DIR);
 
 my $startpid = $$;
 END {
-    rmtree($DIR) if $$ == $startpid; # only when original process exits
+    rmtree($absdir) if $$ == $startpid; # only when original process exits
 }
 
 1;
