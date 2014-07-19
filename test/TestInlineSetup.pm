@@ -28,8 +28,9 @@ BEGIN {
     mkdir($DIR) or die;
 }
 
+my $startpid = $$;
 END {
-    rmtree($DIR);
+    rmtree($DIR) if $$ == $startpid; # only when original process exits
 }
 
 1;
