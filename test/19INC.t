@@ -1,9 +1,3 @@
-BEGIN {
-  if (exists $ENV{PERL_INSTALL_ROOT}) {
-    warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-    delete $ENV{PERL_INSTALL_ROOT};
-  }
-};
 use File::Spec;
 use strict;
 use warnings;

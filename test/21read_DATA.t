@@ -1,12 +1,6 @@
 # This file checks that a bug in Inline::read_DATA() has been fixed.
 # The bug existed up to and including Inline-0.52.
 
-BEGIN {
-  if (exists $ENV{PERL_INSTALL_ROOT}) {
-    warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-    delete $ENV{PERL_INSTALL_ROOT};
-  }
-}
 use File::Spec;
 use strict;
 use warnings;

@@ -1,12 +1,6 @@
 # Tests handling of the "void" arg with Parse::RecDescent parser.
 # Tests 4 onwards are not expected to pass - so we make them TODO.
 
-BEGIN {
-  if (exists $ENV{PERL_INSTALL_ROOT}) {
-    warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-    delete $ENV{PERL_INSTALL_ROOT};
-  }
-};
 use strict;
 use warnings;
 use diagnostics;

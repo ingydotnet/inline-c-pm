@@ -9,6 +9,16 @@ sub import {
     $option ||= '';
 }
 
+BEGIN {
+  if (exists $ENV{PERL_INSTALL_ROOT}) {
+    warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
+    delete $ENV{PERL_INSTALL_ROOT};
+  }
+  # Suppress "Set up gcc environment ..." warning.
+  # (Affects ActivePerl only.)
+  $ENV{ACTIVEPERL_CONFIG_SILENT} = 1;
+}
+
 our $DIR;
 BEGIN {
     ($_, $DIR) = caller(2);

@@ -2,10 +2,6 @@ our %conf;
 
 BEGIN {
     warn "This test could take a couple of minutes to run\n";
-    if (exists $ENV{PERL_INSTALL_ROOT}) {
-        warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
-        delete $ENV{PERL_INSTALL_ROOT};
-    }
     %conf = (
         main => {
             foo_ => -1,
