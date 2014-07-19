@@ -23,7 +23,7 @@ our $DIR;
 BEGIN {
     ($_, $DIR) = caller(2);
     $DIR =~ s/.*?(\w+)\.t$/$1/ or die;
-    $DIR = "_Inline_$DIR";
+    $DIR = "_Inline_$DIR.$$";
     rmtree($DIR) if -d $DIR;
     mkdir($DIR) or die;
 }

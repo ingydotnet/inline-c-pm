@@ -317,9 +317,9 @@ sub build {
         croak "You need Time::HiRes for BUILD_TIMERS option:\n$@" if $@;
         $total_build_time = Time::HiRes::time();
     }
-    open my $lockfh, '>', File::Spec->catfile($o->{API}{directory},'.lock')
-      or die "lockfile: $!";
-    flock($lockfh, LOCK_EX) if $^O !~ /^VMS|riscos|VOS$/;
+    my $file = File::Spec->catfile($o->{API}{directory},'.lock');
+    open my $lockfh, '>', $file or die "lockfile $file: $!";
+    flock($lockfh, LOCK_EX) or die "flock: $!\n" if $^O !~ /^VMS|riscos|VOS$/;
     $o->mkpath($o->{API}{build_dir});
     $o->call('preprocess', 'Build Preprocess');
     $o->call('parse', 'Build Parse');

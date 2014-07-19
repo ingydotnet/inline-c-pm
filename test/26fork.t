@@ -14,10 +14,9 @@ if($^O =~ /MSWin32/i && $Config{useithreads} ne 'define') {
 
 my $pid = fork;
 eval { Inline->bind(C => 'int add(int x, int y) { return x + y; }'); };
-exit 0 unless $pid;
+kill 'TERM', $$ unless $pid;
 
 wait;
-is($?, 0, 'child exited status 0');
 is($@, '', 'bind was successful');
 my $x = eval { add(7,3) };
 is ($@, '', 'bound func no die()');
