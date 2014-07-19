@@ -12,10 +12,10 @@ sub register {
 
 sub get_parser {
     my $o = shift;
-    Inline::C::_parser_test("Inline::C::ParseRecDescent::get_parser called\n") if $o->{CONFIG}{_TESTING};
+    Inline::C::_parser_test($o->{CONFIG}{DIRECTORY}, "Inline::C::ParseRecDescent::get_parser called\n") if $o->{CONFIG}{_TESTING};
     eval { require Parse::RecDescent };
     croak <<END if $@;
-This innvocation of Inline requires the Parse::RecDescent module.
+This invocation of Inline requires the Parse::RecDescent module.
 $@
 END
     $main::RD_HINT++;

@@ -383,7 +383,7 @@ END
 # Create and initialize a parser
 sub get_parser {
     my $o = shift;
-    Inline::C::_parser_test("Inline::C::get_parser called\n")
+    Inline::C::_parser_test($o->{CONFIG}{DIRECTORY}, "Inline::C::get_parser called\n")
         if $o->{CONFIG}{_TESTING};
     require Inline::C::ParseRecDescent;
     Inline::C::ParseRecDescent::get_parser($o);
@@ -603,14 +603,9 @@ END
 
 sub xs_bindings {
     my $o = shift;
-    my $dir = '_Inline_test';
+    my $dir = $o->{API}{directory};
 
     if ($o->{CONFIG}{_TESTING}) {
-        if (! -d $dir) {
-            my $ok = mkdir $dir;
-            warn $! if !$ok;
-        }
-
         if (! -f "$dir/void_test") {
             warn $! if !open(TEST_FH, '>', "$dir/void_test");
             warn $! if !close(TEST_FH);
@@ -1051,33 +1046,10 @@ sub fix_space {
 #==============================================================================
 
 sub _parser_test {
-    my $dir = '_Inline_test';
-    if (! -d $dir) {
-        my $ok = mkdir $dir;
-        warn $! if !$ok;
-    }
-
-    warn $! if !open(TEST_FH, '>>', "$dir/parser_id");
+    my $dir = shift;
+    warn "$dir/parser_id: $!" if !open(TEST_FH, '>>', "$dir/parser_id");
     print TEST_FH $_[0];
     warn $! if !close(TEST_FH);
-}
-
-#=======================================================================
-# This routine used to cleanup files created by _TESTING (config option)
-#=======================================================================
-
-sub _testing_cleanup {
-    my $dir = '_Inline_test';
-
-    if (-f "$dir/parser_id") {
-        warn "Failed to unlink C/$dir/parser_id\n"
-            if !unlink("$dir/parser_id");
-    }
-
-    if (-f "$dir/void_test") {
-        warn "Failed to unlink C/$dir/void_test\n"
-            if !unlink("$dir/void_test");
-    }
 }
 
 1;
