@@ -535,8 +535,8 @@ sub write_XS {
     my $o = shift;
     my $modfname = $o->{API}{modfname};
     my $module = $o->{API}{module};
-    open XS, "> ".File::Spec->catfile($o->{API}{build_dir},"$modfname.xs")
-        or croak $!;
+    my $file = File::Spec->catfile($o->{API}{build_dir},"$modfname.xs");
+    open XS, ">", $file or croak "$file: $!";
     if ($o->{ILSM}{XSMODE}) {
         warn <<END if $^W and  $o->{ILSM}{code} !~ /MODULE\s*=\s*$module\b/;
 While using Inline XSMODE, your XS code does not have a line with
@@ -606,9 +606,10 @@ sub xs_bindings {
     my $dir = $o->{API}{directory};
 
     if ($o->{CONFIG}{_TESTING}) {
-        if (! -f "$dir/void_test") {
-            warn $! if !open(TEST_FH, '>', "$dir/void_test");
-            warn $! if !close(TEST_FH);
+        my $file = "$dir/void_test";
+        if (! -f $file) {
+            warn "$file: $!" if !open(TEST_FH, '>', $file);
+            warn "$file: $!" if !close(TEST_FH);
         }
     }
 
@@ -1047,9 +1048,10 @@ sub fix_space {
 
 sub _parser_test {
     my $dir = shift;
-    warn "$dir/parser_id: $!" if !open(TEST_FH, '>>', "$dir/parser_id");
+    my $file = "$dir/parser_id";
+    warn "$file: $!" if !open(TEST_FH, '>>', $file);
     print TEST_FH $_[0];
-    warn $! if !close(TEST_FH);
+    warn "$file: $!" if !close(TEST_FH);
 }
 
 1;
