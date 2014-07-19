@@ -1,20 +1,13 @@
 use File::Spec;
 use strict;
-use Test;
+use Test::More;
 use diagnostics;
 use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-plan(tests => 1,
-     todo => [],
-     onfail => sub {},
-    );
-
-use Inline C => Config =>
-    USING => 'ParseRegExp';
-
+use Inline C => Config => USING => 'ParseRegExp';
 use Inline C => <<'EOC';
 
 void foo() {
@@ -39,5 +32,6 @@ EOC
 
 my @z = foo2();
 
-ok(scalar(@z) == 6);
+is(scalar(@z), 6);
 
+done_testing;

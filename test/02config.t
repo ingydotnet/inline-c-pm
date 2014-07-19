@@ -1,48 +1,16 @@
 use File::Spec;
 use strict;
-use Test;
+use Test::More;
 use diagnostics;
 use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-BEGIN {
-    plan(
-        tests => 3,
-        todo => [],
-        onfail => sub {},
-    );
-}
+eval 'use Inline C => "void foo(){}", FOO => "Bar";';
+like($@, qr/not a valid config option/, 'bogus config options croak');
 
-# test 1 - Make sure config options are type checked
-BEGIN {
-    eval <<'END';
-    use Inline(
-        C => "void foo(){}",
-        LIBS => {X => 'Y'},
-    );
-END
-    ok(1);
-# ok($@ =~ /must be a string or an array ref/);
-}
+use Inline C => 'char* XYZ_Howdy(){return "Hello There";}', PREFIX => 'XYZ_';
+is(Howdy, "Hello There", 'PREFIX config option');
 
-# test 2 - Make sure bogus config options croak
-BEGIN {
-    eval <<'END';
-    use Inline(
-        C => "void foo(){}",
-        FOO => 'Bar',
-    );
-END
-    ok($@ =~ /not a valid config option/);
-}
-
-# test 3 - Test the PREFIX config option
-BEGIN {
-    use Inline(
-        C => 'char* XYZ_Howdy(){return "Hello There";}',
-        PREFIX => 'XYZ_',
-    );
-    ok(Howdy eq "Hello There");
-}
+done_testing;

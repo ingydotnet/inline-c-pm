@@ -1,26 +1,16 @@
 use File::Spec;
 use strict;
-use Test;
+use Test::More;
 use diagnostics;
 use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-BEGIN {
-    plan(
-        tests => 1,
-        todo => [],
-        onfail => sub {},
-    );
-}
+use Inline C => DATA => ENABLE => XSMODE => NAME => 'xsmode';
 
-use Inline C => DATA =>
-           ENABLE => XSMODE =>
-           NAME => 'xsmode';
-
-# test 1
-ok(add(5, 10) == 15);
+is(add(5, 10), 15);
+done_testing;
 
 __END__
 

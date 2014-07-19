@@ -1,34 +1,26 @@
 use File::Spec;
 use strict;
-use Test;
+use Test::More;
 use diagnostics;
 use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-plan(tests => 3,
-     todo => [],
-     onfail => sub {},
-    );
-
-
 my $obj = Soldier->new('Benjamin', 'Private', 11111);
 
-ok($obj->get_serial == 11111);
-ok($obj->get_name eq 'Benjamin');
-ok($obj->get_rank eq 'Private');
+is($obj->get_serial, 11111);
+is($obj->get_name, 'Benjamin');
+is($obj->get_rank, 'Private');
+done_testing;
 
 package Soldier;
 
 my $testdir;
-BEGIN {
-    $testdir = -d 'test' ? 'test' : 't';
-}
+BEGIN { $testdir = -d 'test' ? 'test' : 't'; }
 
-use Inline C => Config =>
-    USING => 'ParseRegExp',
-    TYPEMAPS => ["$testdir/typemap", "$testdir/soldier_typemap"];
+use Inline C => Config => USING => 'ParseRegExp',
+  TYPEMAPS => ["$testdir/typemap", "$testdir/soldier_typemap"];
 
 use Inline C => <<'END';
 
@@ -36,9 +28,7 @@ typedef struct {
   char* name;
   char* rank;
   long  serial;
-  } Soldier;
-
-
+} Soldier;
 
 Soldier * new(char* class, char* name, char* rank, long serial) {
     Soldier* soldier;
@@ -69,6 +59,4 @@ void DESTROY(Soldier* obj) {
      Safefree(obj->rank);
      Safefree(obj);
 }
-
 END
-
