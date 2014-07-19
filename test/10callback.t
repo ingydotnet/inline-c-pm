@@ -9,16 +9,19 @@ BEGIN {
   }
 };
 use File::Spec;
-use lib (File::Spec->catdir(File::Spec->updir(),'blib','lib'), File::Spec->catdir(File::Spec->curdir(),'blib','lib'));
-use strict;
+use strict; use warnings;
+use Test::More;
 use diagnostics;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 print "1..4\n";
 
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING => 1,
-    DIRECTORY => '_Inline_test',
     USING => 'ParseRegExp';
 
 
@@ -246,9 +249,9 @@ call_Inc(102,304);
 call_PrintList();
 call_AddSubtract2(23,50);
 
-open RD, '<', '_Inline_test/void_test' or warn "Unable to open _Inline_test/void_test: $!";
+open RD, '<', "$TestInlineSetup::DIR/void_test" or warn "Unable to open $TestInlineSetup::DIR/void_test: $!";
 my @checks = <RD>;
-close RD or warn "Unable to close _Inline_test/void_test: $!";
+close RD or warn "Unable to close $TestInlineSetup::DIR/void_test: $!";
 
 my $expected = 10;
 
@@ -296,8 +299,6 @@ else {
   print "not ok 4\n";
 }
 
-Inline::C::_testing_cleanup();
-
 sub PrintUID {
     print "UID is $<\n";
 }
@@ -326,5 +327,3 @@ sub PrintList {
     my(@list) = @_;
     foreach (@list) { print "$_\n" }
 }
-
-

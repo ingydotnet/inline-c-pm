@@ -3,16 +3,18 @@ BEGIN {
     warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
     delete $ENV{PERL_INSTALL_ROOT};
   }
-  mkdir('_Inline_test', 0777) unless -e '_Inline_test';
 };
 use strict;
 use warnings;
 use diagnostics;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 use Test::More;
 
 use Inline C => Config =>
     FORCE_BUILD => 1,
-    DIRECTORY => '_Inline_test',
     USING => 'ParseRegExp';
 
 my $c_text = <<'EOC';

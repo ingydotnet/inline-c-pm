@@ -1,8 +1,7 @@
 BEGIN {is(${^TAINT}, 1, '2: taint_is_on');};
 
 use Inline Config =>
-    UNTAINT => 1,
-    DIRECTORY => '_Inline_test';
+    UNTAINT => 1;
 
 Inline->bind(C => <<'END');
 

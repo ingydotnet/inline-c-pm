@@ -6,18 +6,14 @@ BEGIN {
     warn "\nIgnoring \$ENV{PERL_INSTALL_ROOT} in $0\n";
     delete $ENV{PERL_INSTALL_ROOT};
   }
-
-
-mkdir('_Inline_test21', 0777) unless -e '_Inline_test21';
-};
+}
 use File::Spec;
-use lib (File::Spec->catdir(File::Spec->updir(),'blib','lib'), File::Spec->catdir(File::Spec->curdir(),'blib','lib'));
 use strict;
 use warnings;
-
-
-use Inline Config =>
-    DIRECTORY => '_Inline_test21';
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 use Inline C => 'DATA';
 

@@ -1,10 +1,15 @@
+use strict;
 use warnings;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 print "1..6\n";
 
 my $testdir = -d 'test' ? 'test' : 't';
 
-$ret = do "$testdir/proto1.p";
+my $ret = do "$testdir/proto1.p";
 
 if(!defined($ret) && $@ =~ /^Too many arguments/) {print "ok 1\n"}
 else {
@@ -51,4 +56,3 @@ else {
   warn "\n$ret: $ret\n\$\@: $@\n";
   print "not ok 6\n";
 }
-

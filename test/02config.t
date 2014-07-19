@@ -6,11 +6,13 @@ BEGIN {
 };
 
 use File::Spec;
-use lib (File::Spec->catdir(File::Spec->updir(),'blib','lib'), File::Spec->catdir(File::Spec->curdir(),'blib','lib'));
 use strict;
 use Test;
 use diagnostics;
-use Inline Config => DIRECTORY => '_Inline_test';
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 BEGIN {
     plan(

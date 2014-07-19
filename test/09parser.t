@@ -32,6 +32,10 @@ BEGIN {
 
 use strict;
 use warnings;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 sub code {
     my ($p, $sym) = @_;
@@ -47,13 +51,8 @@ EOIC
     eval $code;
 } # code
 
-#use Inline Config =>
-#    DIRECTORY => "_Inline_test",
-#    _TESTING  => 1;
-
 ########## main:foo_ ########
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRegExp";
@@ -65,7 +64,6 @@ main::code (__PACKAGE__, "_foo_");
 
 ########## main:_foo ########
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRecDescent";
@@ -74,7 +72,6 @@ main::code (__PACKAGE__, "_foo");
 
 ########## main:foo ########
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRegExp";
@@ -83,7 +80,6 @@ main::code (__PACKAGE__, "foo");
 
 # No USING value specified here - will use default (ParseRecDescent).
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1;
 
@@ -91,7 +87,6 @@ main::code (__PACKAGE__, "bar");
 
 ########## main:baz ########
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRecDescent";
@@ -101,7 +96,6 @@ main::code (__PACKAGE__, "baz");
 ########## main:foobar ########
 # No USING value specified here - will use default (ParseRecDescent).
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1;
 
@@ -116,7 +110,6 @@ main::code (__PACKAGE__, "foobarbaz");
 package FOO;
 
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRecDescent";
@@ -127,7 +120,6 @@ main::code (__PACKAGE__, "foo");
 package BAR;
 
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1;
 
@@ -137,7 +129,6 @@ main::code (__PACKAGE__, "bar");
 package BAZ;
 
 use Inline C => Config =>
-    DIRECTORY   => "_Inline_test",
     FORCE_BUILD => 1,
     _TESTING    => 1,
     USING       => "ParseRegExp";
@@ -186,7 +177,7 @@ my $res =
 
 is ($res, $prod, "Returned product");
 
-chomp (my @p = do { local @ARGV = "_Inline_test/parser_id"; <> });
+chomp (my @p = do { local @ARGV = "$TestInlineSetup::DIR/parser_id"; <> });
 
 is (scalar @p, 21, "Match number of lines in log");
 
@@ -215,7 +206,5 @@ is_deeply (\@p, [
     "Inline::C::ParseRegExp::get_parser called",
     ], "parser log"
 );
-
-Inline::C::_testing_cleanup();
 
 done_testing ();

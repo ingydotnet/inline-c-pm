@@ -6,8 +6,7 @@ use Inline C => 'DATA';
 Inline->init() ;
 
 use Inline Config =>
-    UNTAINT => 1,
-    DIRECTORY => '_Inline_test';
+    UNTAINT => 1;
 
 is(multiply(3, 7), 21, 'multiply_test');
 is(divide(7, -3), -2, 'divide_test');

@@ -22,6 +22,10 @@ use warnings;
 use strict;
 use Test::More tests => 10;
 use Test::Warn;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 # Suppress "Set up gcc environment ..." warning.
 # (Affects ActivePerl only.)

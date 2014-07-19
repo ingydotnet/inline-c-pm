@@ -6,17 +6,19 @@ BEGIN {
 };
 
 use File::Spec;
-use lib (File::Spec->catdir(File::Spec->updir(),'blib','lib'), File::Spec->catdir(File::Spec->curdir(),'blib','lib'));
 use strict;
 use diagnostics;
 use Config;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 print "1..1\n";
 
 use Inline C => Config =>
     #BUILD_NOISY => 1,
     USING => 'ParseRegExp',
-    DIRECTORY => '_Inline_test',
     PREFIX => 'MY_PRE_';
 
 use Inline C => << 'EOC';

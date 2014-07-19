@@ -4,7 +4,6 @@ use strict;
 package PROTO4;
 
 use Inline C => Config =>
-     DIRECTORY => '_Inline_test',
      PROTOTYPES => 'ENABLE',
      PROTOTYPE => {foo => 'DISABLE'},
      #BUILD_NOISY => 1,

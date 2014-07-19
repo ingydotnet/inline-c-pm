@@ -6,9 +6,12 @@ BEGIN {
 };
 
 use File::Spec;
-use lib (File::Spec->catdir(File::Spec->updir(),'blib','lib'), File::Spec->catdir(File::Spec->curdir(),'blib','lib'));
 use strict;
 use diagnostics;
+use File::Basename;
+use lib dirname(__FILE__);
+use TestInlineSetup;
+use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 use Config;
 
 print "1..1\n";
@@ -16,8 +19,7 @@ print "1..1\n";
 use Inline C => Config =>
     #BUILD_NOISY => 1,
     FORCE_BUILD => 1,
-    CCFLAGSEX => "-DEXTRA_DEFINE=1234",
-    DIRECTORY => '_Inline_test';
+    CCFLAGSEX => "-DEXTRA_DEFINE=1234";
 
 use Inline C => <<'EOC';
 
