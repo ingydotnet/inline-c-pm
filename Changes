@@ -1,6 +1,6 @@
 ---
 version: 0.62
-date:    Sat Jul 19 22:15:28 BST 2014
+date:    Sat Jul 19 22:43:12 BST 2014
 changes:
 - eg/modules moved to here as they're C
 - tests each use own dir, and all use Test::More and test/TestInlineSetup.pm.
