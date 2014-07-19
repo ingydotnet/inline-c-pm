@@ -7,6 +7,7 @@ use diagnostics;
 use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
+require version;
 
 my $example_modules_dir = undef;
 
@@ -19,7 +20,8 @@ if ( -e File::Spec->catdir(File::Spec->curdir(),'eg')) {
 
 plan skip_all => "No 'example' or 'eg' directory." unless $example_modules_dir;
 require Inline;
-plan skip_all => "Inline version 0.64+ required for this." unless $Inline::VERSION ge 0.64;
+plan skip_all => "Inline version 0.64+ required for this."
+  unless version->parse($Inline::VERSION) >= version->parse(0.64);
 
 my $lib_dir  = File::Spec->rel2abs(File::Spec->catdir(File::Spec->curdir(),'lib'));
 my $inst_dir = File::Spec->rel2abs(File::Spec->catdir(File::Spec->curdir(),$TestInlineSetup::DIR));
