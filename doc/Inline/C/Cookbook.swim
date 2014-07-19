@@ -151,6 +151,13 @@ Inline?
     > perl vowels.pl /usr/dict/words
     The letters in /usr/dict/words are 37.5% vowels.
 
+  It is very important to note that the examples in this cookbook use
+  `char *` to mean a string. Internally Perl has various mechanisms to
+  deal with strings that contain characters with code points above 255,
+  using Unicode. This means that naively treating strings as `char *`,
+  an array of 8-bit characters, can lead to problems. You need to be
+  aware of this and consider using a UTF-8 library to deal with strings.
+
 - See Also
 
   The Perl Journal vol #19 has an article about Inline which uses this example.
