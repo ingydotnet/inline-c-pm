@@ -26,6 +26,7 @@ test:
     Test::More: 0.88
     Test::Warn: 0.23
     version: 0.77
+    File::Copy::Recursive: 0
 
 devel:
   git: https://github.com/ingydotnet/inline-c-pm
