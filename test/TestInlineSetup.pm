@@ -29,6 +29,7 @@ BEGIN {
     mkdir($DIR) or die "$DIR: $!\n";
 }
 my $absdir = File::Spec->rel2abs($DIR);
+($absdir) = $absdir =~ /(.*)/; # untaint
 
 my $startpid = $$;
 END {
@@ -50,7 +51,7 @@ END {
         }
       }
     }
-  rmtree($absdir) if $$ == $startpid;
+    rmtree($absdir);
   }
 }
 
