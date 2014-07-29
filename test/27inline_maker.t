@@ -18,6 +18,7 @@ my ($example_modules_dir) = grep { -e } map {
 } qw(eg example);
 
 plan skip_all => "No 'example' or 'eg' directory." unless $example_modules_dir;
+plan skip_all => "Not yet ported to MS Windows" if $^O =~ /MSWin32/i;
 require Inline;
 plan skip_all => "Inline version 0.64+ required for this."
   unless version->parse($Inline::VERSION) >= version->parse(0.64);
