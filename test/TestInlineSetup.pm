@@ -32,7 +32,26 @@ my $absdir = File::Spec->rel2abs($DIR);
 
 my $startpid = $$;
 END {
-    rmtree($absdir) if $$ == $startpid; # only when original process exits
+
+  if($$ == $startpid) { # only when original process exits
+
+    # On Windows we need to first unload the dll's we're about to clobber.
+    # (Based on code found in ExtUtils::ParseXS)
+    if ($^O eq 'MSWin32' and defined &DynaLoader::dl_unload_file) {
+      my $match = $0;
+      $match =~ s/\\/\//g;
+      $match = '_' . (split /\//, $match)[-1];
+      $match =~ s/\.(t|p)$//;
+      for (my $i = 0; $i < @DynaLoader::dl_modules; $i++) {
+        if ($DynaLoader::dl_modules[$i] =~
+            /$match|\bxsmode\b|\bSoldier_|\bBAR_|\bBAZ_|\bFOO_|\bPROTO[1-4]_|\beval_/
+            ) {
+          DynaLoader::dl_unload_file($DynaLoader::dl_librefs[$i]);
+        }
+      }
+    }
+  rmtree($absdir) if $$ == $startpid;
+  }
 }
 
 1;
