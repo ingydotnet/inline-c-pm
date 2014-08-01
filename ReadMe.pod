@@ -64,11 +64,12 @@ function definitions.
     void Foo(double num, char* str) {
     void Foo(SV*, ...) {
     long Foo(int i, int j, ...) {
-    SV* Foo(void) { # 'void' arg invalid with the ParseRecDescent parser.
-                    # Works only with the ParseRegExp parser.
+    SV* Foo(void) { # 'void' arg invalid with the Inline::C::Parser::RecDescent parser.
+                    # Works only with the Parser::RegExp parser.
                     # See the section on USING (below).
     SV* Foo() {  # Alternative to specifying 'void' arg. Is valid with
-                 # both the ParseRecDescent and ParseRegExp parsers.
+                 # both the Inline::C::Parser::RecDescent and
+                 # Inline::C::Parser::RegExp parsers.
 
 The following definitions would not be recognized:
 
@@ -247,11 +248,11 @@ at the time the script is loaded).
 
 =head2 USING
 
-Specifies which parser to use. Default is 'ParseRecDescent', which uses the
-Parse::RecDescent module. The only other option is 'ParseRegExp', which uses
-the Inline::C::ParseRegExp module that ships with Inline.
+Specifies which parser to use. Default is 'Inline::C::Parser::RecDescent', which uses the
+Parse::RecDescent module. The only other option is 'Inline::C::Parser::RegExp', which uses
+the Inline::C::Parser::RegExp module that ships with Inline.
 
-      use Inline C => Config => USING => 'ParseRegExp';
+      use Inline C => Config => USING => 'Inline::C::Parser::RegExp';
 
 =head1 C-PERL BINDINGS
 

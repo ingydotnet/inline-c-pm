@@ -76,7 +76,7 @@ sub run_tests {
   for my $f (qw(foo5 foo6)) { no strict 'refs'; is(&$f, 42, $f); }
   for my $f (qw(foo1 foo2 foo3 foo7 foo8 foo9 foo10 foo11 foo12)) {
       TODO: {
-          local $TODO = "Not expected to succeed with ParseRecDescent parser";
+          local $TODO = "Not expected to succeed with Inline::C::Parser::RecDescent parser";
           eval "$f();"; is($@, '', $f);
       };
  }

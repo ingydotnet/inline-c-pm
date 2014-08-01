@@ -5,8 +5,8 @@ use YAML;
 use File::Spec;
 
 use blib;
-require Inline::C::ParseRecDescent;
-require Inline::C::ParseRegExp;
+require Inline::C::Parser::RecDescent;
+require Inline::C::Parser::RegExp;
 
 # Do all the typemap foo that Inline::C does
 require Inline::C;
@@ -19,8 +19,8 @@ push @{$o->{ILSM}{MAKEFILE}{TYPEMAPS}}, $typemap
 $o->get_types;
 
 # Create new instances of each parser
-my $recdescent = Inline::C::ParseRecDescent->get_parser();
-my $regexp = Inline::C::ParseRegExp->get_parser();
+my $recdescent = Inline::C::Parser::RecDescent->get_parser();
+my $regexp = Inline::C::Parser::RegExp->get_parser();
 
 $recdescent->{data}{typeconv} = $o->{ILSM}{typeconv};
 $regexp->{data}{typeconv} = $o->{ILSM}{typeconv};
@@ -46,8 +46,8 @@ for my $case (@test_objects) {
         push @outputs, $output;
     }
 
-    ok($outputs[0], $expect, "ParseRecDescent failed for:$input\n");
-    ok($outputs[1], $expect, "ParseRegExp failed for:$input\n");
+    ok($outputs[0], $expect, "Parser::RecDescent failed for:$input\n");
+    ok($outputs[1], $expect, "Parser::RegExp failed for:$input\n");
 }
 
 use Data::Dumper;
