@@ -32,21 +32,22 @@ comment:
   /- SLASH SLASH [^ BREAK ]* BREAK / |
   /- SLASH STAR (: [^ STAR ]+ | STAR (! SLASH))* STAR SLASH ([ TAB ]*)? /
 
+# int foo_ () { return -1; }\n
 function_definition:
-  rtype /( identifier )/
+  rtype /( identifier )/ -
   LPAREN arg* % COMMA /- RPAREN - LCURLY -/
 
 function_declaration:
-  rtype /( identifier )/
+  rtype /( identifier )/ -
   LPAREN arg_decl* % COMMA /- RPAREN - SEMI -/
 
-rtype: / WS*(: rtype1 | rtype2 ) WS* /
+rtype: /- (: rtype1 | rtype2 ) -/
 
-rtype1: / modifier*( type_identifier ) WS*( STAR*) /
+rtype1: / modifier*( type_identifier ) - ( STAR*) /
 
 rtype2: / modifier+ STAR*/
 
-arg: /(: type WS*( identifier)|( DOT DOT DOT ))/
+arg: /(: type - ( identifier)|( DOT DOT DOT ))/
 
 arg_decl: /( type WS* identifier*| DOT DOT DOT )/
 

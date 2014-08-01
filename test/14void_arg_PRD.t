@@ -13,7 +13,7 @@ use AutoLoader 'AUTOLOAD';
 
 use Inline C => Config =>
     FORCE_BUILD => 1,
-    USING => 'ParseRecDescent';
+    USING => 'Inline::C::Parser::RecDescent';
 
 my $c_text = <<'EOC';
 

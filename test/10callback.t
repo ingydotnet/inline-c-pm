@@ -16,7 +16,7 @@ print "1..4\n";
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING => 1,
-    USING => 'ParseRegExp';
+    USING => 'Inline::C::Parser::RegExp';
 
 
 use Inline C => <<'END';

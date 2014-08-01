@@ -19,7 +19,7 @@ package Soldier;
 my $testdir;
 BEGIN { $testdir = -d 'test' ? 'test' : 't'; }
 
-use Inline C => Config => USING => 'ParseRegExp',
+use Inline C => Config => USING => 'Inline::C::Parser::RegExp',
   TYPEMAPS => ["$testdir/typemap", "$testdir/soldier_typemap"];
 
 use Inline C => <<'END';

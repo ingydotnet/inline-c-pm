@@ -7,7 +7,7 @@ use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-use Inline C => Config => USING => 'ParseRegExp';
+use Inline C => Config => USING => 'Inline::C::Parser::RegExp';
 use Inline C => <<'EOC';
 
 void foo() {

@@ -9,7 +9,7 @@ use Test::More;
 
 use Inline C => Config =>
     FORCE_BUILD => 1,
-    USING => 'ParseRegExp';
+    USING => 'Inline::C::Parser::RegExp';
 
 my $c_text = <<'EOC';
 

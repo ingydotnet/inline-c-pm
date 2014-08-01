@@ -4,9 +4,11 @@ package Inline::C::Parser::Pegex::Grammar;
 use Pegex::Base;
 extends 'Pegex::Grammar';
 
+# Actual Pegex grammar text is in this file:
 use constant file => 'share/inline-c.pgx';
 
-sub make_tree {
+# This method is autocompiled using: `perl -Ilib -MInline::C::Parser::Pegex::Grammar=compile`
+sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
   {
     '+grammar' => 'inline-c',
     '+toprule' => 'code',
@@ -19,6 +21,9 @@ sub make_tree {
     },
     'LPAREN' => {
       '.rgx' => qr/\G\(/
+    },
+    '_' => {
+      '.rgx' => qr/\G\s*/
     },
     'anything_else' => {
       '.rgx' => qr/\G.*(?:\r?\n|\z)/
@@ -50,6 +55,9 @@ sub make_tree {
         },
         {
           '.rgx' => qr/\G((?:\w+))/
+        },
+        {
+          '.ref' => '_'
         },
         {
           '.ref' => 'LPAREN'
@@ -86,6 +94,9 @@ sub make_tree {
         },
         {
           '.rgx' => qr/\G((?:\w+))/
+        },
+        {
+          '.ref' => '_'
         },
         {
           '.ref' => 'LPAREN'

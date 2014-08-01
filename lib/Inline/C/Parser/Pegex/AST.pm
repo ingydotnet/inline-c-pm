@@ -6,7 +6,7 @@ extends 'Pegex::Tree';
 
 has data => {};
 
-sub initialize {
+sub initial {
     my ($self) = @_;
     my $data = {
         functions => [],

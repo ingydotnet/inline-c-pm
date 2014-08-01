@@ -51,7 +51,9 @@ EOIC
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRegExp";
+#     USING       => "Inline::C::Parser::RegExp";
+#     USING       => "Inline::C::Parser::RecDescent";
+    USING       => "Inline::C::Parser::Pegex";
 
 main::code (__PACKAGE__, "foo_");
 
@@ -62,7 +64,7 @@ main::code (__PACKAGE__, "_foo_");
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRecDescent";
+    USING       => "Inline::C::Parser::RecDescent";
 
 main::code (__PACKAGE__, "_foo");
 
@@ -70,11 +72,11 @@ main::code (__PACKAGE__, "_foo");
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRegExp";
+    USING       => "Inline::C::Parser::RegExp";
 
 main::code (__PACKAGE__, "foo");
 
-# No USING value specified here - will use default (ParseRecDescent).
+# No USING value specified here - will use default (Inline::C::Parser::RecDescent).
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1;
@@ -85,12 +87,12 @@ main::code (__PACKAGE__, "bar");
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRecDescent";
+    USING       => "Inline::C::Parser::RecDescent";
 
 main::code (__PACKAGE__, "baz");
 
 ########## main:foobar ########
-# No USING value specified here - will use default (ParseRecDescent).
+# No USING value specified here - will use default (Inline::C::Parser::RecDescent).
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1;
@@ -108,7 +110,7 @@ package FOO;
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRecDescent";
+    USING       => "Inline::C::Parser::RecDescent";
 
 main::code (__PACKAGE__, "foo");
 
@@ -127,7 +129,7 @@ package BAZ;
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
-    USING       => "ParseRegExp";
+    USING       => "Inline::C::Parser::RegExp";
 
 main::code (__PACKAGE__, "baz");
 
@@ -180,26 +182,26 @@ is (scalar @p, 21, "Match number of lines in log");
 # diag "@p";
 is_deeply (\@p, [
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
     "Inline::C::get_parser called",
-    "Inline::C::ParseRecDescent::get_parser called",
-    "Inline::C::ParseRegExp::get_parser called",
-    "Inline::C::ParseRegExp::get_parser called",
+    "Inline::C::Parser::RecDescent::get_parser called",
+    "Inline::C::Parser::RegExp::get_parser called",
+    "Inline::C::Parser::RegExp::get_parser called",
     ], "parser log"
 );
 

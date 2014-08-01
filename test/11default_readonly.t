@@ -29,7 +29,7 @@ else {
 
 sub function {
   use Inline C => Config =>
-    USING => 'ParseRegExp';
+    USING => 'Inline::C::Parser::RegExp';
 
     Inline->bind(C => <<'__CODE__');
     int foo(SV * x) {
