@@ -18,16 +18,12 @@ perl:
 install:
 - cpanm --quiet --notest
   Devel::Cover::Report::Coveralls
-  File::Copy::Recursive
   File::Spec
   Inline
-  IO::All
   Parse::RecDescent
   Pegex
   Test::More
   Test::Warn
-  version
-  YAML::XS
 
 script:
 - PERL5OPT=-MDevel::Cover=-coverage,statement,branch,condition,path,subroutine

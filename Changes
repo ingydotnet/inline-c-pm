@@ -1,4 +1,9 @@
 ---
+version: 0.62_02
+date:    Fri Aug  1 18:00:01 PDT 2014
+changes:
+- Pegex replaces Parse::RecDescent as the default parser
+---
 version: 0.62_01
 date:    Tue Jul 29 02:22:12 BST 2014
 changes:
