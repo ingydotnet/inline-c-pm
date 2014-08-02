@@ -17,7 +17,6 @@ author:
 
 requires:
   perl: 5.8.1
-  Inline: 0.64
   File::Spec: 0.8
   Inline: 0.64
   Parse::RecDescent: 1.80
@@ -32,21 +31,6 @@ test:
     Test::Warn: 0.23
     version: 0.77
     YAML::XS: 0
-
-test:
-  requires:
-    autodie: 0
-    File::Copy::Recursive: 0
-    IO::All: 0
-    Test::More: 0.88
-    Test::Warn: 0.23
-    version: 0.77
-    YAML::XS: 0
-
-test:
-  requires:
-    Test::More: 0.88
-    Test::Warn: 0.23
 
 devel:
   git: https://github.com/ingydotnet/inline-c-pm
