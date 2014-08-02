@@ -45,15 +45,16 @@ EOC
 EOIC
     # warn "Code: $code";
     eval $code;
+    die $@ if $@;
 } # code
 
 ########## main:foo_ ########
 use Inline C => Config =>
     FORCE_BUILD => 1,
     _TESTING    => 1,
+    USING       => "Inline::C::Parser::Pegex";
 #     USING       => "Inline::C::Parser::RegExp";
 #     USING       => "Inline::C::Parser::RecDescent";
-    USING       => "Inline::C::Parser::Pegex";
 
 main::code (__PACKAGE__, "foo_");
 
