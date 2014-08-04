@@ -9,7 +9,6 @@ use File::Basename;
 use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
-use AutoLoader 'AUTOLOAD';
 
 use Inline C => Config =>
     FORCE_BUILD => 1,
