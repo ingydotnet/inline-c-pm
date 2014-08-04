@@ -366,11 +366,12 @@ sub preprocess {
 #==============================================================================
 # Parse the function definition information out of the C code
 #==============================================================================
+use XXX;
 sub parse {
     my $o = shift;
     return if $o->{ILSM}{parser};
     return if $o->{ILSM}{XSMODE};
-    my $parser = $o->{ILSM}{parser} = $o->get_parser;
+    warn my $parser = $o->{ILSM}{parser} = $o->get_parser;
     $parser->{data}{typeconv} = $o->{ILSM}{typeconv};
     $parser->{data}{AUTOWRAP} = $o->{ILSM}{AUTOWRAP};
     Inline::Struct::parse($o) if $o->{STRUCT}{'.any'};
@@ -378,6 +379,8 @@ sub parse {
         or croak <<END;
 Bad $o->{API}{language} code passed to Inline at @{[caller(2)]}
 END
+    warn $parser . "\n";
+    XXX $parser->{data} if ref($parser) eq 'Parse::RecDescent';
 }
 
 # Create and initialize a parser
