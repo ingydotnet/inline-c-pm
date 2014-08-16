@@ -1,7 +1,7 @@
 =meta: 0.0.1
 
 name: Inline-C
-version: 0.62_04
+version: 0.62_05
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
 
@@ -31,6 +31,8 @@ test:
     Test::Warn: 0.23
     version: 0.77
     YAML::XS: 0
+  generate:
+    000-require-modules.t: true
 
 devel:
   git: https://github.com/ingydotnet/inline-c-pm

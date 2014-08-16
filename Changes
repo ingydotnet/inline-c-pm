@@ -1,4 +1,9 @@
 ---
+version: 0.62_05
+date:    Fri Aug 15 19:58:53 PDT 2014
+changes:
+- Add t/000-require-modules.t
+---
 version: 0.62_04
 date:    Fri Aug 15 18:24:39 PDT 2014
 changes:
