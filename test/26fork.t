@@ -1,10 +1,8 @@
-use warnings;
-use strict;
-use Config;
-use Test::More;
-use File::Basename;
-use lib dirname(__FILE__);
+use strict; use warnings;
+use lib -e 't' ? 't' : 'test';
 use TestInlineSetup;
+use Test::More;
+use Config;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 if($^O =~ /MSWin32/i && $Config{useithreads} ne 'define') {

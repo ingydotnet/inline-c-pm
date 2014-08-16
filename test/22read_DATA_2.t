@@ -1,11 +1,8 @@
 # This file checks that a bug in Inline::read_DATA() has been fixed.
 # The bug existed up to and including Inline-0.52.
 
-use File::Spec;
-use strict;
-use warnings;
-use File::Basename;
-use lib dirname(__FILE__);
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 

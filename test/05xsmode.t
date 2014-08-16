@@ -1,9 +1,6 @@
-use File::Spec;
-use strict;
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use Test::More;
-use diagnostics;
-use File::Basename;
-use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 

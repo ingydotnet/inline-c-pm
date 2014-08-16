@@ -1,12 +1,9 @@
 # Tests handling of the "void" arg with Parse::RecDescent parser.
 # Tests 4 onwards are not expected to pass - so we make them TODO.
 
-use strict;
-use warnings;
-use diagnostics;
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use Test::More;
-use File::Basename;
-use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 

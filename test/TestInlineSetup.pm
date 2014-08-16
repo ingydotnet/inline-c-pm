@@ -1,7 +1,6 @@
-use strict; use warnings;
+use strict; use warnings; use diagnostics;
 package TestInlineSetup;
 
-use diagnostics;
 use File::Path;
 use File::Spec;
 

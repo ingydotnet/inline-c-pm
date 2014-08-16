@@ -1,4 +1,9 @@
 ---
+version: 0.62_06
+date:    Sat Aug 16 01:25:40 PDT 2014
+changes:
+- Clean up test code
+---
 version: 0.62_05
 date:    Fri Aug 15 19:58:53 PDT 2014
 changes:

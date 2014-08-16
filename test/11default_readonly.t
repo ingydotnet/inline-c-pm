@@ -1,11 +1,8 @@
 # Checks that Inline's bind function still works when $_ is readonly. (Bug #55607)
 # Thanks Marty O'Brien.
 
-use File::Spec;
-use strict;
-use diagnostics;
-use File::Basename;
-use lib dirname(__FILE__);
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 

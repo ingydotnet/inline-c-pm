@@ -1,12 +1,9 @@
-use File::Spec;
-use strict;
-use IPC::Cmd qw/run/;
-use Config;
-use Test::More;
-use diagnostics;
-use File::Basename;
-use lib dirname(__FILE__);
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use TestInlineSetup;
+use Test::More;
+use Config;
+use IPC::Cmd qw/run/;
 require version;
 use File::Path;
 use Cwd;

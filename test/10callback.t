@@ -2,12 +2,9 @@
 # are truly void or not. (In response to bug #55543.)
 # This test script plagiarises the perlcall documentation.
 
-use File::Spec;
-use strict; use warnings;
+use strict; use warnings; use diagnostics;
+use lib -e 't' ? 't' : 'test';
 use Test::More;
-use diagnostics;
-use File::Basename;
-use lib dirname(__FILE__);
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
