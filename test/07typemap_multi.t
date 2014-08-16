@@ -1,5 +1,5 @@
 use strict; use warnings; use diagnostics;
-use lib -e 't' ? 't' : 'test';
+my $t; use lib ($t = -e 't' ? 't' : 'test');
 use Test::More;
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
@@ -13,11 +13,10 @@ done_testing;
 
 package Soldier;
 
-my $testdir;
-BEGIN { $testdir = -d 'test' ? 'test' : 't'; }
+BEGIN { $t = -d 'test' ? 'test' : 't'; }
 
 use Inline C => Config => USING => 'Inline::C::Parser::RegExp',
-  TYPEMAPS => ["$testdir/typemap", "$testdir/soldier_typemap"];
+  TYPEMAPS => ["$t/typemap", "$t/soldier_typemap"];
 
 use Inline C => <<'END';
 

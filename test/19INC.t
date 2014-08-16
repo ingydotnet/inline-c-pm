@@ -1,14 +1,13 @@
 use strict; use warnings; use diagnostics;
-use lib -e 't' ? 't' : 'test';
+my $t; use lib ($t = -e 't' ? 't' : 'test');
 use Cwd;
 use TestInlineSetup;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 BEGIN {
-  my $testdir = -d 'test' ? 'test' : 't';
   my $cwd = Cwd::getcwd();
-  my $incdir1 = $cwd . "/$testdir/foo/";
-  my $incdir2 = $cwd . "/$testdir/bar/";
+  my $incdir1 = $cwd . "/$t/foo/";
+  my $incdir2 = $cwd . "/$t/bar/";
   $main::includes = "-I$incdir1  -I$incdir2";
 };
 

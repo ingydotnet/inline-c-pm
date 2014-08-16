@@ -1,21 +1,16 @@
 use strict; use warnings; use diagnostics;
-use lib -e 't' ? 't' : 'test';
+my $t; use lib ($t = -e 't' ? 't' : 'test');
 use TestInlineSetup;
 use Config;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
 print "1..1\n";
 
-my $testdir;
-BEGIN {
-    $testdir = -d 'test' ? 'test' : 't';
-}
-
 use Inline C => Config =>
     #BUILD_NOISY => 1,
     #CLEAN_AFTER_BUILD => 0,
     FORCE_BUILD => 1,
-    PRE_HEAD => "$testdir/prehead.in";
+    PRE_HEAD => "$t/prehead.in";
 
 use Inline C => <<'EOC';
 
