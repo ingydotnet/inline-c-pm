@@ -1,6 +1,6 @@
 use strict; use warnings;
 package Inline::C;
-our $VERSION = '0.62_06';
+our $VERSION = '0.62_07';
 
 use Inline 0.56;
 use Config;
