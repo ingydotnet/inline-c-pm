@@ -94,9 +94,9 @@ BEGIN {
       - new
 
 - input: |
-    unsigned foo (unsigned int a, 
+    unsigned foo (unsigned int a,
                   unsigned short b,
-                  unsigned char c, 
+                  unsigned char c,
                   unsigned char * d) {
   expect: |
     done:
