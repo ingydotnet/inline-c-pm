@@ -20,7 +20,7 @@ else {
 
   __DATA__
 
-	__C__
+  __C__
 
 #define __SYMBOL1__
 

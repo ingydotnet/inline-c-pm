@@ -16,7 +16,7 @@ my @t1 = (
     ' -I/foo -I" - I/? ',
     '   -I/for-Ian -I/for-Ingy    -I/for-some-Idiocy  ',
     'some_crap -I-I-I -I/for-Ian -I/for-Ingy    -I/for-some-Idiocy  -I/foo -I/bar ',
-    '	-I/foo	-I/bar	-I/fubar',
+    '  -I/foo   -I/bar  -I/fubar',
 );
 
 for my $e1(@t1) {
