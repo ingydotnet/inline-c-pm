@@ -852,8 +852,9 @@ How do I create a Hash of Lists from C?
 
         while (fgets(pos = buffer, sizeof(buffer), fh)) {
             if (next_word(&pos, word)) {
+                array = newAV();
                 hv_store(hash, word, strlen(word),
-                        newRV_noinc((SV*)array = newAV()), 0);
+                        newRV_noinc((SV*)array), 0);
                 while (next_word(&pos, word))
                     av_push(array, newSVpvf("%s", word));
             }
