@@ -178,6 +178,8 @@ chomp (my @p = do { local @ARGV = "$TestInlineSetup::DIR/parser_id"; <> });
 
 is (scalar @p, 21, "Match number of lines in log");
 
+TODO: {
+local $TODO = 'Until pegex is default';
 # diag "@p";
 is_deeply (\@p, [
     "Inline::C::get_parser called",
@@ -203,5 +205,6 @@ is_deeply (\@p, [
     "Inline::C::Parser::RegExp::get_parser called",
     ], "parser log"
 );
+}
 
 done_testing ();

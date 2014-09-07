@@ -1,4 +1,10 @@
 ---
+version: 0.62_12
+date:    Sun Sep  7 00:37:23 MDT 2014
+changes:
+- Add issue/27 TODO test
+- Switch back to Parse::Recdescent for now
+---
 version: 0.62_11
 date:    Tue Aug 19 16:14:10 PDT 2014
 changes:
