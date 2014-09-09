@@ -13,22 +13,44 @@ __DATA__
 
 Title = 'Rigorous function definition and declaration tests not yet passing.'
 
-Label = "(RecDescent/RegExp) $BlockLabel"
-*code.parse_recdescent.dump == *code.parse_regexp.dump
-Label = "(Pegex/RecDescent) $BlockLabel"
-*code.parse_pegex.dump == *code.parse_recdescent.dump
-Label = "(Pegex/RegExp) $BlockLabel"
-*code.parse_pegex.dump == *code.parse_regexp.dump
+Diff = 1
+
+Label = "(RecDescent) $BlockLabel"
+*code.parse_recdescent.dump == *want
+Label = "(RegExp) $BlockLabel"
+*code.parse_regexp.dump == *want
+Label = "(Pegex) $BlockLabel"
+*code.parse_pegex.dump == *want
 
 === Basic def
 --- code
 void foo(int a, int b) {
     a + b;
 }
+--- want
+foo:
+  arg_names:
+  - a
+  - b
+  arg_types:
+  - int
+  - int
+  return_type: voidXXX
 
 === Basic decl
+--- LAST
 --- code
 void foo(int a, int b);
+--- want
+foo:
+  arg_names:
+  - a
+  - b
+  arg_types:
+  - int
+  - int
+  return_type: void
+
 
 === Basic decl, no identifiers
 --- code
