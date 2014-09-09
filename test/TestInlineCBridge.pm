@@ -1,21 +1,12 @@
-BEGIN {
-    $ENV{PERL_PEGEX_AUTO_COMPILE} = 'Inline::C::Parser::Pegex::Grammar';
-}
-
 package TestInlineCBridge;
 use base 'TestML::Bridge';
 use TestML::Util;
 
-use YAML::XS;
-use IO::All;
-
-use Parse::RecDescent;
-use Inline::C::Parser::RecDescent;
-
+# Pegex parser:
+BEGIN { $ENV{PERL_PEGEX_AUTO_COMPILE} = 'Inline::C::Parser::Pegex::Grammar'; }
 use Pegex::Parser;
 use Inline::C::Parser::Pegex::Grammar;
 use Inline::C::Parser::Pegex::AST;
-
 sub parse_pegex {
     my ($self, $code) = @_;
     my $input = $code->value;
@@ -27,6 +18,9 @@ sub parse_pegex {
     return native $parser->parse($input)->{function};
 }
 
+# Parse::RecDescent parser:
+use Parse::RecDescent;
+use Inline::C::Parser::RecDescent;
 sub parse_recdescent {
     my ($self, $code) = @_;
     my $input = $code->value;
@@ -48,6 +42,28 @@ sub parse_recdescent {
     return native $parser->{data}{function};
 }
 
+# Regexp parser:
+use Inline::C::Parser::RegExp;
+sub parse_regexp {
+    my ($self, $code) = @_;
+    my $input = $code->value;
+    my $parser = Inline::C::Parser::RegExp::get_parser({});
+    $parser->{data}{typeconv} = TYPECONV();
+    $parser->code($input);
+
+    my $data = $parser->{data};
+    my $functions = $data->{function};
+    for my $name (keys %$functions) {
+        if ($functions->{$name}{args}) {
+            for my $arg (@{$functions->{$name}{args}}) {
+                delete $arg->{offset};
+            }
+        }
+    }
+    return native $parser->{data}{function};
+}
+
+use YAML::XS;
 sub dump {
     my ($self, $string) = @_;
     my $dump = YAML::XS::Dump $string->value;

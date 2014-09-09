@@ -1,4 +1,4 @@
-use strict;
+use strict; use warnings;
 use lib (-e 't' ? 't' : 'test'), 'inc';
 use TestML;
 use TestInlineCBridge;
@@ -10,11 +10,16 @@ TestML->new(
 
 __DATA__
 %TestML 0.1.0
-# local $TODO = 'Rigorous function definition and declaration tests not yet passing.';
 
+Title = 'Rigorous function definition and declaration tests not yet passing.'
+
+Label = "(Pegex/RecDescent) $BlockLabel"
 *code.parse_pegex.dump == *code.parse_recdescent.dump
+Label = "(Pegex/RegExp) $BlockLabel"
+*code.parse_pegex.dump == *code.parse_regexp.dump
 
 === Basic def
+--- ONLY
 --- code
 void foo(int a, int b) {
     a + b;
