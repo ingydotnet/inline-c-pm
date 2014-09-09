@@ -1,5 +1,5 @@
 use strict; use warnings;
-use lib (-e 't' ? 't' : 'test'), 'inc';
+use lib (-e 't' ? 't' : 'test'), 'inc', 'pkg/inc';
 use TestML;
 use TestInlineCBridge;
 
@@ -35,9 +35,10 @@ foo:
   arg_types:
   - int
   - int
-  return_type: voidXXX
+  return_type: void
 
 === Basic decl
+--- TODO
 --- LAST
 --- code
 void foo(int a, int b);
