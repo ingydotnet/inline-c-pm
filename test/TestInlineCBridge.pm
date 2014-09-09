@@ -1,11 +1,11 @@
-use strict; use warnings;
-package TestInlineC;
-
 BEGIN {
     $ENV{PERL_PEGEX_AUTO_COMPILE} = 'Inline::C::Parser::Pegex::Grammar';
 }
 
-use Test::More();
+package TestInlineCBridge;
+use base 'TestML::Bridge';
+use TestML::Util;
+
 use YAML::XS;
 use IO::All;
 
@@ -16,49 +16,20 @@ use Pegex::Parser;
 use Inline::C::Parser::Pegex::Grammar;
 use Inline::C::Parser::Pegex::AST;
 
-use base 'Exporter';
-our @EXPORT = qw(test);
-
-use XXX;
-
-sub test {
-    my ($input, $label) = @_;
-    my $prd_data = prd_parse($input);
+sub parse_pegex {
+    my ($self, $code) = @_;
+    my $input = $code->value;
     my $parser = Pegex::Parser->new(
         grammar => Inline::C::Parser::Pegex::Grammar->new,
         receiver => Inline::C::Parser::Pegex::AST->new,
-        debug => $ENV{DEBUG} # || 1,
+        # debug => 1,
     );
-    my $pegex_data = $parser->parse($input)->{function};
-    my $prd_dump = Dump $prd_data;
-    my $pegex_dump = Dump $pegex_data;
-
-    $label = "Pegex matches PRD: $label";
-
-    # Carry over TODO from caller.
-    local $TestInlineC::TODO = do {
-      no strict 'refs';
-      ${ caller . '::TODO' };
-    };
-
-    if ($pegex_dump eq $prd_dump) {
-        Test::More::pass $label;
-    }
-    else {
-        Test::More::fail $label;
-        io->file('got')->print($pegex_dump);
-        io->file('want')->print($prd_dump);
-        Test::More::diag(`diff -u want got`);
-        unlink('want', 'got');
-    }
-
-    ($prd_data, $pegex_data);
+    return native $parser->parse($input)->{function};
 }
 
-use XXX;
-require Inline::C;
-sub prd_parse {
-    my ($input) = @_;
+sub parse_recdescent {
+    my ($self, $code) = @_;
+    my $input = $code->value;
     $main::RD_HINT++;
     my $grammar = Inline::C::Parser::RecDescent::grammar();
     my $parser = Parse::RecDescent->new( $grammar );
@@ -74,7 +45,14 @@ sub prd_parse {
             }
         }
     }
-    $parser->{data}{function};
+    return native $parser->{data}{function};
+}
+
+sub dump {
+    my ($self, $string) = @_;
+    my $dump = YAML::XS::Dump $string->value;
+    $dump =~ s/^---\n//;
+    return str $dump;
 }
 
 use constant TYPECONV => eval q{
@@ -599,7 +577,5 @@ use constant TYPECONV => eval q{
   }
 }
 };
-
-
 
 1;

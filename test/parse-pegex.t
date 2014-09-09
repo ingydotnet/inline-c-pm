@@ -1,141 +1,141 @@
-use Test::More;
+use strict;
+use lib (-e 't' ? 't' : 'test'), 'inc';
+use TestML;
+use TestInlineCBridge;
 
-use lib -e 't' ? 't' : 'test';
-use TestInlineC;
+TestML->new(
+    testml => do { local $/; <DATA> },
+    bridge => 'TestInlineCBridge',
+)->run;
 
-test <<'...', 'Basic def';
+__DATA__
+%TestML 0.1.0
+# local $TODO = 'Rigorous function definition and declaration tests not yet passing.';
+
+*code.parse_pegex.dump == *code.parse_recdescent.dump
+
+=== Basic def
+--- code
 void foo(int a, int b) {
     a + b;
 }
-...
 
-TODO: {
-
-local $TODO = 'Rigorous function definition and declaration tests not yet passing.';
-
-test <<'...', 'Basic decl';
+=== Basic decl
+--- code
 void foo(int a, int b);
-...
 
-test <<'...', 'Basic decl, no identifiers';
+=== Basic decl, no identifiers
+--- code
 void foo(int,int);
-...
 
-test <<'...', 'char* param';
+=== char* param
+--- code
 void foo(char* ch) {
 }
-...
 
-test <<'...', 'char* param decl';
+=== char* param decl
+--- code
 void foo(char* ch);
-...
 
-test <<'...', 'char * decl';
+=== char * decl
+--- code
 void foo(char *);
-...
 
 
-test <<'...', 'char *param';
+=== char *param
+--- code
 void foo(char *ch) {
 }
-...
 
-test <<'...', 'char** param';
+=== char** param
+--- code
 void foo( char** ch ) {
 }
-...
 
-test <<'...', 'char* rv, char* param';
+=== char* rv, char* param
+--- code
 char* foo(char* ch) {
   return ch;
 }
-...
 
-test <<'...', 'const char*';
+=== const char*
+--- code
 const char* foo(const char* ch) {
   return ch;
 }
-...
 
-test <<'...', 'char* const param';
+=== char* const param
+--- code
 char* const foo(char * const ch ) {
   return ch;
 }
-...
 
-test <<'...', 'const char* const param';
+=== const char* const param
+--- code
 const char* const foo(const char* const ch) {
   return ch;
 }
-...
 
-test <<'...', 'const char* const no-id decl';
+=== const char* const no-id decl
+--- code
 const char * const foo( const char * const);
-...
 
-test <<'...', 'long int';
+=== long int
+--- code
 long int foo( long int a ) {
   return a + a;
 }
-...
 
-test <<'...', 'long long';
+=== long long
+--- code
 long long foo ( long long a ) {
   return a + a;
 }
-...
 
-test <<'...', 'long long int';
+=== long long int
+--- code
 long long int foo ( long long int a ) {
   return a + a;
 }
-...
 
-test <<'...', 'unsigned long long int';
+=== unsigned long long int
+--- code
 unsigned long long int foo ( unsigned long long int abc ) {
   return abc + abc;
 }
-...
 
-test <<'...', 'unsigned long long int decl no-id';
+=== unsigned long long int decl no-id
+--- code
 unsigned long long int foo( unsigned long long int );
-...
 
-test <<'...', 'unsigned long long decl no-id';
+=== unsigned long long decl no-id
+--- code
 unsigned long long foo(unsigned long long);
-...
 
-test <<'...', 'unsigned int';
+=== unsigned int
+--- code
 unsigned int _foo ( unsigned int abcd ) {
   return abcd + abcd;
 }
-...
 
-test <<'...', 'unsigned long';
+=== unsigned long
+--- code
 unsigned long _bar1( unsigned long abcd ) {
   return abcd + abcd;
 }
-...
 
-test <<'...', 'unsigned';
+=== unsigned
+--- code
 unsigned baz2(unsigned abcd) {
   return abcd+abcd;
 }
-...
 
-test <<'...', 'unsigned decl no-id';
+=== unsigned decl no-id
+--- code
 unsigned baz2(unsigned);
-...
 
-}
-
-TODO: {
-local $TODO = 'Failing tests for Pegex Parser';
-test <<'...', 'Issue/27';
+=== Issue/27
+--- code
 void _dump_ptr(long d1, long d2, int use_long_output) {
     printf("hello, world! %d %d %d\n", d1, d2, use_long_output);
 }
-...
-}
-
-done_testing;
