@@ -13,13 +13,14 @@ __DATA__
 
 Title = 'Rigorous function definition and declaration tests not yet passing.'
 
+Label = "(RecDescent/RegExp) $BlockLabel"
+*code.parse_recdescent.dump == *code.parse_regexp.dump
 Label = "(Pegex/RecDescent) $BlockLabel"
 *code.parse_pegex.dump == *code.parse_recdescent.dump
 Label = "(Pegex/RegExp) $BlockLabel"
 *code.parse_pegex.dump == *code.parse_regexp.dump
 
 === Basic def
---- ONLY
 --- code
 void foo(int a, int b) {
     a + b;

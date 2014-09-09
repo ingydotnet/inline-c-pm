@@ -9,6 +9,7 @@ use Inline::C::Parser::Pegex::Grammar;
 use Inline::C::Parser::Pegex::AST;
 sub parse_pegex {
     my ($self, $code) = @_;
+    $self->{parser_class} = 'Parser::Pegex';
     my $input = $code->value;
     my $parser = Pegex::Parser->new(
         grammar => Inline::C::Parser::Pegex::Grammar->new,
@@ -23,10 +24,12 @@ use Parse::RecDescent;
 use Inline::C::Parser::RecDescent;
 sub parse_recdescent {
     my ($self, $code) = @_;
+    $self->{parser_class} = 'Parser::RecDescent';
     my $input = $code->value;
     $main::RD_HINT++;
     my $grammar = Inline::C::Parser::RecDescent::grammar();
     my $parser = Parse::RecDescent->new( $grammar );
+    $parser->{data}{AUTOWRAP} = 1;
     $parser->{data}{typeconv} = TYPECONV();
     $parser->code($input);
 
@@ -46,8 +49,10 @@ sub parse_recdescent {
 use Inline::C::Parser::RegExp;
 sub parse_regexp {
     my ($self, $code) = @_;
+    $self->{parser_class} = 'Parser::RegExp';
     my $input = $code->value;
     my $parser = Inline::C::Parser::RegExp::get_parser({});
+    $parser->{data}{AUTOWRAP} = 1;
     $parser->{data}{typeconv} = TYPECONV();
     $parser->code($input);
 
@@ -66,6 +71,8 @@ sub parse_regexp {
 use YAML::XS;
 sub dump {
     my ($self, $string) = @_;
+    return str "$self->{parser_class} returned undef"
+        unless $string->value;
     my $dump = YAML::XS::Dump $string->value;
     $dump =~ s/^---\n//;
     return str $dump;
