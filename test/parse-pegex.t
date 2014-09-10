@@ -311,6 +311,44 @@ baz2:
   - unsigned
   return_type: unsigned
 
+=== vert ws definition
+--- code
+int
+add
+(
+int a,
+int b
+) {
+  return a + b;
+}
+--- want
+add:
+  arg_names:
+  - a
+  - b
+  arg_types:
+  - int
+  - int
+  return_type: int
+
+=== vert ws declaration, no-id.
+--- code
+int
+add
+(
+int,
+int
+);
+--- want
+add:
+  arg_names:
+  - arg1
+  - arg2
+  arg_types:
+  - int
+  - int
+  return_type: int
+
 === Issue/27
 --- code
 void _dump_ptr(long d1, long d2, int use_long_output) {
