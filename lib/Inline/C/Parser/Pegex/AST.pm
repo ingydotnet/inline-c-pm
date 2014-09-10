@@ -40,6 +40,24 @@ sub got_function_definition {
     return;
 }
 
+sub got_function_declaration {
+    my ($self, $ast) = @_;
+    my ($rtype, $name, $args) = @$ast;
+    my ($rname, $rstars) = @$rtype;
+    my $data = $self->data;
+    my $def = $data->{function}{$name} = {};
+    push @{$data->{functions}}, $name;
+    $def->{return_type} = $rname . ($rstars ? " $rstars" : '');
+    $def->{arg_names} = [];
+    $def->{arg_types} = [];
+    for my $arg (@$args) {
+        my ($type, $stars, $name) = @$arg;
+        push @{$def->{arg_names}}, $name;
+        push @{$def->{arg_types}}, $type . ($stars ? " $stars" : '');
+    }
+    $data->{done}{$name} = 1;
+    return;
+}
 
 sub got_arg {
     my ($self, $ast) = @_;

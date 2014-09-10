@@ -10,7 +10,7 @@ use constant file => 'share/inline-c.pgx';
 #
 #   `perl -Ilib -MInline::C::Parser::Pegex::Grammar=compile`
 #
-sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
+sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.56)
   {
     '+grammar' => 'inline-c',
     '+toprule' => 'code',
@@ -32,9 +32,6 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
     },
     'arg' => {
       '.rgx' => qr/\G(?:\s*(?:(?:(?:unsigned|long|extern|const)\b\s*)*((?:\w+))\s*(\**)|(?:(?:unsigned|long|extern|const)\b\s*)*\**)\s*\s*((?:\w+))|(\.\.\.))/
-    },
-    'arg_decl' => {
-      '.rgx' => qr/\G(\s*(?:(?:(?:unsigned|long|extern|const)\b\s*)*((?:\w+))\s*(\**)|(?:(?:unsigned|long|extern|const)\b\s*)*\**)\s*\s*(?:\w+)*|\.\.\.)/
     },
     'code' => {
       '+min' => 1,
@@ -68,7 +65,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
           '+max' => 1,
           '.all' => [
             {
-              '.ref' => 'arg_decl'
+              '.ref' => 'arg'
             },
             {
               '+min' => 0,
@@ -78,7 +75,7 @@ sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
                   '.ref' => 'COMMA'
                 },
                 {
-                  '.ref' => 'arg_decl'
+                  '.ref' => 'arg'
                 }
               ]
             }

@@ -39,7 +39,7 @@ function_definition:
 
 function_declaration:
   rtype /( identifier )/ -
-  LPAREN arg_decl* % COMMA /- RPAREN - SEMI -/
+  LPAREN arg* % COMMA /- RPAREN - SEMI -/
 
 rtype: /- (: rtype1 | rtype2 ) -/
 
@@ -48,8 +48,6 @@ rtype1: / modifier*( type_identifier ) - ( STAR*) /
 rtype2: / modifier+ STAR*/
 
 arg: /(: type - ( identifier)|( DOT DOT DOT ))/
-
-arg_decl: /( type WS* identifier*| DOT DOT DOT )/
 
 type: / WS*(: type1 | type2 ) WS* /
 
