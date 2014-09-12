@@ -1,4 +1,9 @@
 ---
+version: 0.62_13
+date:    Thu Sep 11 17:37:28 PDT 2014
+changes:
+- Remove XXX debugging
+---
 version: 0.62_12
 date:    Sun Sep  7 00:37:23 MDT 2014
 changes:

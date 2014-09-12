@@ -1,7 +1,7 @@
 =meta: 0.0.2
 
 name: Inline-C
-version: 0.62_12
+version: 0.62_13
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
 language: perl

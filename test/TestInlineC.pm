@@ -19,8 +19,6 @@ use Inline::C::Parser::Pegex::AST;
 use base 'Exporter';
 our @EXPORT = qw(test);
 
-use XXX;
-
 sub test {
     my ($input, $label) = @_;
     my $prd_data = prd_parse($input);
@@ -55,7 +53,6 @@ sub test {
     ($prd_data, $pegex_data);
 }
 
-use XXX;
 require Inline::C;
 sub prd_parse {
     my ($input) = @_;
