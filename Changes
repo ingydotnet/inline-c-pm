@@ -1,4 +1,12 @@
 ---
+version: 0.64
+date:    Fri Sep 19 23:22:49 UTC 2014
+changes:
+- Major release for all the work since 0.62
+- Renamed the parser modules
+- Adjusted the `using` paramater
+- Updated docs
+---
 version: 0.62_13
 date:    Thu Sep 11 17:37:28 PDT 2014
 changes:
