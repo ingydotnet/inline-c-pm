@@ -445,7 +445,7 @@ How do I use Inline with mod_perl?
     use strict;
     use Inline Config =>
                DIRECTORY => '/usr/local/apache/Inline',
-               ENABLE => 'UNTAINT';
+               enable => 'UNTAINT';
     use Inline 'C';
     Inline->init;
 
@@ -707,7 +707,7 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
   Annoyingly, Perl does not let you access it. To print out a small table of
   its values, just say:
 
-    perl -le 'use Inline C => q{ double erf(double); }, ENABLE => "AUTOWRAP"; print "$_ @{[erf($_)]}" for (0..10)'
+    perl -le 'use Inline C => q{ double erf(double); }, enable => "autowrap"; print "$_ @{[erf($_)]}" for (0..10)'
 
   The excellent `Term::ReadLine::Gnu` implements Term::ReadLine using the GNU
   ReadLine library. Here is an easy way to access just `readline()` from that
@@ -716,7 +716,7 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
     package MyTerm;
 
     use Inline C => Config =>
-               ENABLE => AUTOWRAP =>
+               enable => autowrap =>
                LIBS => "-lreadline -lncurses -lterminfo -ltermcap ";
     use Inline C => q{ char * readline(char *); };
 
@@ -737,7 +737,7 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
   requires no additional `LIBS` directive. The second uses the Config option to
   specify the libraries that contain the actual compiled C code.
 
-  This behavior is always disabled by default. You must enable the `AUTOWRAP`
+  This behavior is always disabled by default. You must enable the `autowrap`
   option to make it work.
 
 - See Also
