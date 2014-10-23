@@ -760,6 +760,34 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
   Ariel also first suggested the idea for Inline to support function
   declaration processing.
 
+== Replacing h2xs
+
+- Problem
+
+  You have a complete C library that you want to access from Perl
+  exactly as you would from C.
+
+- Solution
+
+  Just say:
+
+    use IO::All;
+    use Inline C => sub { io('allheaders.h')->all =~ s/LEPT_DLL extern//gr },
+      enable => "autowrap",
+      libs => '-lleptonica';
+
+- Discussion
+
+  In principle, you can use h2xs to wrap a C library into an XS
+  module. One problem with this is that the C parser code is a little
+  out of date. Also, since it works by generating a number of files,
+  maintaining it when the C library changes is a certain amount of
+  work. Using Inline to do the work is much easier.
+
+  If the header file needs some processing, like removing some text
+  that a full C compiler can deal with, but the Inline::C parser cannot,
+  as in the example above? Well, Perl is good at text-processing.
+
 == Complex Data
 
 - Problem
