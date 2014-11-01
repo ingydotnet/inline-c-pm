@@ -27,7 +27,7 @@ plan skip_all => "Inline version 0.64+ required for this."
 my $lib_dir = File::Spec->rel2abs('lib');
 my $base_dir = File::Spec->rel2abs($TestInlineSetup::DIR);
 my $src_dir = File::Spec->catdir($base_dir, 'src dir');
-my $inst_dir = File::Spec->catdir($base_dir, 'instdir');
+my $inst_dir = File::Spec->catdir($base_dir, 'inst dir');
 mkpath $inst_dir;
 
 my $cwd = getcwd;
