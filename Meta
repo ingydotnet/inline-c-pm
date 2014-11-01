@@ -28,6 +28,7 @@ requires:
   Inline: 0.77
   Parse::RecDescent: 1.80
   Pegex: 0.55
+  ExtUtils::MakeMaker: 7.00
 
 test:
   requires:

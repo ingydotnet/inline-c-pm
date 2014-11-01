@@ -777,7 +777,6 @@ sub write_Makefile_PL {
     my $i = 0;
     for (@{$o->{ILSM}{MAKEFILE}{TYPEMAPS}}) {
         $o->{ILSM}{xsubppargs} .= "-typemap \"$_\" ";
-        $o->{ILSM}{MAKEFILE}{TYPEMAPS}->[$i++] = fix_space($_);
     }
 
     my %options = (
@@ -956,7 +955,6 @@ sub fix_make {
             $fix = $fixes{$1}
         ) {
             my $fixed = $o->{ILSM}{$fix};
-            $fixed = fix_space($fixed) if $fix eq 'install_lib';
             print MAKEFILE "$1 = $fixed\n";
         }
         else {
@@ -1035,11 +1033,6 @@ sub quote_space {
     my $out = join '', @in;
     $out =~ s/"\-I\s+\//"\-I\//g;
     $_[0] = $out;
-}
-
-sub fix_space {
-    $_[0] =~ s/ /\\ /g if $_[0] =~ / /;
-    $_[0];
 }
 
 #==============================================================================
