@@ -1,15 +1,5 @@
 use strict;
-use Test;
-
-BEGIN {
-    plan(tests => 2,
-         todo => [],
-         onfail => sub {},
-        );
-}
-
+use Test::More tests => 2;
 use Math::Simple qw(add subtract);
-
-ok(add(5, 7) == 12);
-ok(subtract(5, 7) == -2);
-
+is add(5, 7), 12;
+is subtract(5, 7), -2;
