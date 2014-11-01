@@ -11,7 +11,7 @@ use File::Copy::Recursive qw(rcopy);
 use autodie;
 
 my @make_targets = qw(test install);
-my $CLEANUP = 0;
+my $CLEANUP = 1;
 push @make_targets, qw(realclean) if $CLEANUP;
 
 my ($example_modules_dir) = grep { -e } map {
