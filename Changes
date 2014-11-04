@@ -1,4 +1,11 @@
 ---
+version: 0.65
+date:    Tue Nov  4 04:23:45 GMT 2014
+changes:
+- Changes to example modules' tests
+- Updates for EUMM 7.00's support for PERL IN SPACE
+- Cookbook addition to use autowrap to replace h2xs
+---
 version: 0.64
 date:    Fri Sep 19 23:22:49 UTC 2014
 changes:
