@@ -13,7 +13,7 @@ SV* JAxH(char* x) {
 }
 END
 
-is JAxH('Inline'), "Just Another Inline Hacker";
+is JAxH('Inline'), "Just Another Inline Hacker", 'initial Inline code parsed';
 
 my $got = Dump($main::data);
 my $want = <<'...';
@@ -31,13 +31,10 @@ functions:
 - JAxH
 ...
 
-if ($got eq $want) {
-    pass 'parse worked';
-}
-else {
-    fail 'parse failed. (see diff)';
-    io('want')->print($want);
-    io('got')->print($got);
-    system('diff -u want got');
-    system('rm want got');
-}
+is $got, $want, 'parse worked';
+
+# left in comments per ingy wish
+# io('want')->print($want);
+# io('got')->print($got);
+# system('diff -u want got');
+# system('rm want got');
