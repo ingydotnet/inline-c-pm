@@ -42,3 +42,6 @@ test:
 
 =zild:
   test-000: require
+  metanoindex:
+    lib/Inline/C/Parser: directory
+    lib/Inline/C/Parser.pm: file
