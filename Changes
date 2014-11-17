@@ -1,4 +1,10 @@
 ---
+version: 0.66
+date:    Mon Nov 17 06:09:54 GMT 2014
+changes:
+- Make test/pegex-parser.t less fragile on fail
+- No CPAN index of Inline::C::Parser classes
+---
 version: 0.65
 date:    Tue Nov  4 04:23:45 GMT 2014
 changes:
