@@ -1,4 +1,9 @@
 ---
+version: 0.67
+date:    
+changes:
+- Skip test/pegex-parser.t unless env PERL_INLINE_DEVELOPER_TEST set
+---
 version: 0.66
 date:    Mon Nov 17 06:09:54 GMT 2014
 changes:

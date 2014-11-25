@@ -1,5 +1,7 @@
-use strict;
-use Test::More tests => 2;
+use Test::More;
+plan skip_all => '$ENV{PERL_INLINE_DEVELOPER_TEST} not set'
+  unless defined $ENV{PERL_INLINE_DEVELOPER_TEST};
+plan tests => 2;
 
 use IO::All;
 use YAML::XS;
