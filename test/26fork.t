@@ -9,6 +9,15 @@ if($^O =~ /MSWin32/i && $Config{useithreads} ne 'define') {
   plan skip_all => 'fork() not implemented';
   exit 0;
 }
+if($^O =~ /MSWin32/i) {
+  require Win32;
+  my (undef, $major) = Win32::GetOSVersion();
+  if ($major <= 5) {
+    plan skip_all => 'tests hang on Windows XP';
+    exit 0;
+  }
+}
+
 
     my $pid = fork;
     eval { Inline->bind(C => 'int add(int x, int y) { return x + y; }'); };
