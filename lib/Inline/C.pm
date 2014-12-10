@@ -8,7 +8,9 @@ use Data::Dumper;
 use Carp;
 use Cwd qw(cwd abs_path);
 use File::Spec;
-use Fcntl ':flock';
+use constant IS_WIN32 => $^O eq 'MSWin32';
+use if !IS_WIN32, Fcntl => ':flock';
+use if IS_WIN32, 'Win32::Mutex';
 
 our @ISA = qw(Inline);
 
@@ -317,9 +319,20 @@ sub build {
         croak "You need Time::HiRes for BUILD_TIMERS option:\n$@" if $@;
         $total_build_time = Time::HiRes::time();
     }
-    my $file = File::Spec->catfile($o->{API}{directory},'.lock');
-    open my $lockfh, '>', $file or die "lockfile $file: $!";
-    flock($lockfh, LOCK_EX) or die "flock: $!\n" if $^O !~ /^VMS|riscos|VOS$/;
+    my ($file, $lockfh);
+    if (IS_WIN32) {
+        #this can not look like a file path, or new() fails
+        $file = 'Inline__C_' . $o->{API}{directory} . '.lock';
+        $file =~ s/\\/_/g; #per CreateMutex on MSDN
+        $lockfh = Win32::Mutex->new(0, $file) or die "lockmutex $file: $^E";
+        $lockfh->wait(); #acquire, can't use 1 to new(), since if new() opens
+        #existing instead of create new Muxtex, it is not acquired
+    }
+    else {
+        $file = File::Spec->catfile($o->{API}{directory}, '.lock');
+        open $lockfh, '>', $file or die "lockfile $file: $!";
+        flock($lockfh, LOCK_EX) or die "flock: $!\n" if $^O !~ /^VMS|riscos|VOS$/;
+    }
     $o->mkpath($o->{API}{build_dir});
     $o->call('preprocess', 'Build Preprocess');
     $o->call('parse', 'Build Parse');
@@ -327,7 +340,12 @@ sub build {
     $o->call('write_Inline_headers', 'Build Glue 2');
     $o->call('write_Makefile_PL', 'Build Glue 3');
     $o->call('compile', 'Build Compile');
-    flock($lockfh, LOCK_UN) if $^O !~ /^VMS|riscos|VOS$/;
+    if (IS_WIN32) {
+        $lockfh->release or die "releasemutex $file: $^E";
+    }
+    else {
+        flock($lockfh, LOCK_UN) if $^O !~ /^VMS|riscos|VOS$/;
+    }
     if ($o->{CONFIG}{BUILD_TIMERS}) {
         $total_build_time = Time::HiRes::time() - $total_build_time;
         printf STDERR "Total Build Time: %5.4f secs\n", $total_build_time;

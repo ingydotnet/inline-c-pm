@@ -18,13 +18,9 @@ exit 0 unless $pid;
 wait;
 is($?, 0, 'child exited status 0');
 
-TODO: {
-  local $TODO;
-  $TODO = "Generally fails on MS Windows" if $^O =~ /MSWin32/i;
-  is $@, '', 'bind was successful';
-  my $x = eval { add(7,3) };
-  is $@, '', 'bound func no die()';
-  is $x, 10, 'bound func gave right result';
-}
+is($@, '', 'bind was successful');
+my $x = eval { add(7,3) };
+is ($@, '', 'bound func no die()');
+is($x, 10, 'bound func gave right result');
 
 done_testing;
