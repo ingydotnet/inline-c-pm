@@ -3,6 +3,7 @@ package TestInlineSetup;
 
 use File::Path;
 use File::Spec;
+use constant IS_WIN32 => $^O eq 'MSWin32' ;
 
 sub import {
     my ($package, $option) = @_;
@@ -46,7 +47,10 @@ END {
         if ($DynaLoader::dl_modules[$i] =~
             /$match|\bxsmode\b|\bSoldier_|\bBAR_|\bBAZ_|\bFOO_|\bPROTO[1-4]_|\beval_/
             ) {
-          DynaLoader::dl_unload_file($DynaLoader::dl_librefs[$i]);
+          my $ret; #on Win32, DLLs are ref counted by OS, the DLL may be
+          do { # boot()ed from multiple psuedoforks, and have multiple refs
+            $ret = DynaLoader::dl_unload_file($DynaLoader::dl_librefs[$i]);
+          } while (IS_WIN32 && $ret); # so loop while refcount exhausted to force demapping
         }
       }
     }
