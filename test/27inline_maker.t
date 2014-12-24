@@ -19,7 +19,6 @@ my ($example_modules_dir) = grep { -e } map {
 } qw(eg example);
 
 plan skip_all => "No 'example' or 'eg' directory." unless $example_modules_dir;
-plan skip_all => "Not yet ported to MS Windows" if $^O =~ /MSWin32/i;
 require Inline;
 plan skip_all => "Inline version 0.64+ required for this."
   unless version->parse($Inline::VERSION) >= version->parse(0.64);
@@ -32,7 +31,7 @@ mkpath $inst_dir;
 
 my $cwd = getcwd;
 # loop the list of modules and try to build them.
-for my $module (glob "$example_modules_dir/*") {
+for my $module (lsdir($example_modules_dir)) {
   rcopy $module, $src_dir or die "rcopy $module $src_dir: $!\n";
   chdir $src_dir;
   my $buffer = '';
@@ -43,6 +42,13 @@ for my $module (glob "$example_modules_dir/*") {
   map { do_make($_) } @make_targets;
   chdir $cwd;
   rmtree $src_dir if $CLEANUP;
+}
+
+sub lsdir {
+  my $dir = shift;
+  local *DIR;
+  opendir DIR, $dir or die "$dir: $!";
+  map File::Spec->catdir($dir, $_), grep !/^\./, readdir DIR;
 }
 
 sub do_make {
