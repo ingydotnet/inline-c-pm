@@ -1,4 +1,9 @@
 ---
+version: 0.68
+date:    Wed Dec 24 09:14:31 GMT 2014
+changes:
+- Fixups for Windows test 27, skip 26 on WinXP for now
+---
 version: 0.67
 date:    Tue Nov 25 16:59:41 GMT 2014
 changes:
