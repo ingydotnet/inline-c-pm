@@ -42,6 +42,7 @@ for my $module (lsdir($example_modules_dir)) {
   map { do_make($_) } @make_targets;
   chdir $cwd;
   rmtree $src_dir if $CLEANUP;
+  rmtree $inst_dir if $CLEANUP;
 }
 
 sub lsdir {
