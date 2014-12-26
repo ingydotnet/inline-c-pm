@@ -1,4 +1,9 @@
 ---
+version: 0.69
+date:    Fri Dec 26 23:13:52 GMT 2014
+changes:
+- 27inline_maker.t - remove install-dir after each module, to help Win32
+---
 version: 0.68
 date:    Wed Dec 24 09:14:31 GMT 2014
 changes:
