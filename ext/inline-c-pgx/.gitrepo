@@ -1,0 +1,11 @@
+; DO NOT EDIT (unless you know what you are doing)
+;
+; This subdirectory is a git "subrepo", and this file is maintained by the
+; git-subrepo command. See https://github.com/git-commands/git-subrepo#readme
+;
+[subrepo]
+	remote = git@github.com:ingydotnet/inline-c-pgx
+	branch = master
+	commit = ae1f2da34e8ed721627fd6dc03b436160aa32fc6
+	parent = b09d5cfcd8a07652d59c4081359a7cd3fadb73a6
+	cmdver = 0.1.0
