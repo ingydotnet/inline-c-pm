@@ -26,8 +26,8 @@ requires:
   perl: 5.8.1
   File::Spec: 0.8
   Inline: 0.78
-  Parse::RecDescent: 1.80
-  Pegex: 0.55
+  Parse::RecDescent: 1.967009
+  Pegex: 0.58
   ExtUtils::MakeMaker: 7.00
 
 win32:
