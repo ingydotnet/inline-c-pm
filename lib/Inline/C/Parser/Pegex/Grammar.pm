@@ -4,13 +4,13 @@ use Pegex::Base;
 extends 'Pegex::Grammar';
 
 # Actual Pegex grammar text is in this file:
-use constant file => 'share/inline-c.pgx';
+use constant file => 'ext/inline-c-pgx/inline-c.pgx';
 
 # This method is autocompiled using:
 #
 #   `perl -Ilib -MInline::C::Parser::Pegex::Grammar=compile`
 #
-sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.44)
+sub make_tree {   # Generated/Inlined by Pegex::Grammar (0.58)
   {
     '+grammar' => 'inline-c',
     '+toprule' => 'code',
