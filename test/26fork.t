@@ -5,10 +5,9 @@ use Test::More;
 use Config;
 use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 
-if($^O =~ /MSWin32/i) {
-  plan skip_all => 'fork() not implemented' if $Config{useithreads} ne 'define';
-  plan skip_all => 'Hangs on WinXP'
-    if eval { require Win32; Win32::GetOSName() =~ /^WinXP/ };
+if($^O =~ /MSWin32/i && $Config{useithreads} ne 'define') {
+  plan skip_all => 'fork() not implemented';
+  exit 0;
 }
 
 my $pid = fork;
