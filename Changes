@@ -1,4 +1,9 @@
 ---
+version: 0.71
+date:    Sat Dec 27 00:44:20 PST 2014
+changes:
+- Make tests pass on Win32
+---
 version: 0.70
 date:    Fri Dec 26 21:43:44 PST 2014
 changes:
