@@ -140,6 +140,18 @@ statements or whatever else you please. For example:
 Filters are invoked in the order specified. See [Inline::Filters] for more
 information.
 
+If a filter is an array reference, it is assumed to be a usage of a filter
+plug-in named by the first element of that array reference. The rest of the
+elements of the array reference are used as arguments to the filter. For
+example, consider a C<filters> parameter like this:
+
+  use Inline C => DATA => filters => [ [ Ragel => '-G2' ] ];
+
+In order for Inline::C to process this filter, it will attempt to require
+the module L<Inline::Filters::Ragel> and will then call the C<filter>
+function in that package with the argument C<'-G2'>. This function will
+return the actual filtering function.
+
 == inc
 
 Specifies an include path to use. Corresponds to the MakeMaker parameter.
