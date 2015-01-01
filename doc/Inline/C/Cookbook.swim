@@ -5,15 +5,15 @@ A Cornucopia of Inline C Recipes
 
 = Description
 
-It's a lot easier for most of us to cook a meal from a recipe, rather than just
-throwing things into a pot until something edible forms. So it is with
+It's a lot easier for most of us to cook a meal from a recipe, rather than
+just throwing things into a pot until something edible forms. So it is with
 programming as well. `Inline.pm` makes C programming for Perl as easy as
 possible. Having a set of easy to understand samples, makes it simpler yet.
 
-This Cookbook is intended to be an evergrowing repository of small yet complete
-coding examples; each showing how to accomplish a particular task with Inline.
-Each example is followed by a short discussion, explaining in detail the
-particular features that are being demonstrated.
+This Cookbook is intended to be an evergrowing repository of small yet
+complete coding examples; each showing how to accomplish a particular task
+with Inline. Each example is followed by a short discussion, explaining in
+detail the particular features that are being demonstrated.
 
 Many of these recipes are adapted from email discussions I have had with
 Inline users around the world. It has been my experience so far, that Inline
@@ -33,12 +33,12 @@ Inline?
 
 - Solution
 
-    use Inline C => <<'END_C';
+    use Inline C => <<'...';
 
     void greet() {
-        printf("Hello, world\n");
+      printf("Hello, world\n");
     }
-    END_C
+    ...
 
     greet;
 
@@ -62,8 +62,8 @@ Inline?
 
 - Problem
 
-  A concept is valid in Perl only if it can be shown to work in one line.
-  Can Inline reduce the complexities of Perl/C interaction to a one-liner?
+  A concept is valid in Perl only if it can be shown to work in one line. Can
+  Inline reduce the complexities of Perl/C interaction to a one-liner?
 
 - Solution
 
@@ -113,29 +113,29 @@ Inline?
 
     /* Find percentage of vowels to letters */
     double vowel_scan(char* str) {
-        int letters = 0;
-        int vowels = 0;
-        int i = 0;
-        char c;
-        char normalize = 'a' ^ 'A';
-        /* normalize forces lower case in ASCII; upper in EBCDIC */
-        char A = normalize | 'a';
-        char E = normalize | 'e';
-        char I = normalize | 'i';
-        char O = normalize | 'o';
-        char U = normalize | 'u';
-        char Z = normalize | 'z';
+      int letters = 0;
+      int vowels = 0;
+      int i = 0;
+      char c;
+      char normalize = 'a' ^ 'A';
+      /* normalize forces lower case in ASCII; upper in EBCDIC */
+      char A = normalize | 'a';
+      char E = normalize | 'e';
+      char I = normalize | 'i';
+      char O = normalize | 'o';
+      char U = normalize | 'u';
+      char Z = normalize | 'z';
 
-        while(c = str[i++]) {
-            c |= normalize;
-            if (c >= A && c <= Z) {
-                 letters++;
-                 if (c == A || c == E || c == I || c == O || c == U)
-                     vowels++;
-            }
+      while(c = str[i++]) {
+        c |= normalize;
+        if (c >= A && c <= Z) {
+           letters++;
+           if (c == A || c == E || c == I || c == O || c == U)
+             vowels++;
         }
+      }
 
-        return letters ? ((double) vowels / letters) : 0.0;
+      return letters ? ((double) vowels / letters) : 0.0;
     }
 
 - Discussion
@@ -143,24 +143,25 @@ Inline?
   This script takes a file name from the command line and prints the ratio of
   vowels to letters in that file. `vowels.pl` uses an Inline C function called
   `vowel_scan`, that takes a string argument, and returns the percentage of
-  vowels as a floating point number between 0 and 1. It handles upper and lower
-  case letters, and works with ASCII and EBCDIC.  It is also quite fast.
+  vowels as a floating point number between 0 and 1. It handles upper and
+  lower case letters, and works with ASCII and EBCDIC. It is also quite fast.
 
   Running this script produces:
 
     > perl vowels.pl /usr/dict/words
     The letters in /usr/dict/words are 37.5% vowels.
 
-  It is very important to note that the examples in this cookbook use
-  `char *` to mean a string. Internally Perl has various mechanisms to
-  deal with strings that contain characters with code points above 255,
-  using Unicode. This means that naively treating strings as `char *`,
-  an array of 8-bit characters, can lead to problems. You need to be
-  aware of this and consider using a UTF-8 library to deal with strings.
+  It is very important to note that the examples in this cookbook use `char *`
+  to mean a string. Internally Perl has various mechanisms to deal with
+  strings that contain characters with code points above 255, using Unicode.
+  This means that naively treating strings as `char *`, an array of 8-bit
+  characters, can lead to problems. You need to be aware of this and consider
+  using a UTF-8 library to deal with strings.
 
 - See Also
 
-  The Perl Journal vol #19 has an article about Inline which uses this example.
+  The Perl Journal vol #19 has an article about Inline which uses this
+  example.
 
 - Credits
 
@@ -180,13 +181,13 @@ How do I pass a variable-sized list of arguments to an Inline C function?
     use Inline C => <<'END_OF_C_CODE';
 
     void greet(SV* name1, ...) {
-        Inline_Stack_Vars;
-        int i;
+      Inline_Stack_Vars;
+      int i;
 
-        for (i = 0; i < Inline_Stack_Items; i++)
-            printf("Hello %s!\n", SvPV(Inline_Stack_Item(i), PL_na));
+      for (i = 0; i < Inline_Stack_Items; i++)
+        printf("Hello %s!\n", SvPV(Inline_Stack_Item(i), PL_na));
 
-        Inline_Stack_Void;
+      Inline_Stack_Void;
     }
 
     END_OF_C_CODE
@@ -203,13 +204,13 @@ How do I pass a variable-sized list of arguments to an Inline C function?
   very easy task.
 
   First, we need to begin our function with a "`Inline_Stack_Vars`" statement.
-  This defines a few internal variables that we need to access the *Stack*. Now
-  we can use "`Inline_Stack_Items`", which returns an integer containing the
-  number of arguments passed to us from Perl.
+  This defines a few internal variables that we need to access the *Stack*.
+  Now we can use "`Inline_Stack_Items`", which returns an integer containing
+  the number of arguments passed to us from Perl.
 
   *NOTE:* It is important to /only/ use "`Inline_Stack_`" macros when there is
-  an ellipsis (`...`) in the argument list, /or/ the function has a return type
-  of void.
+  an ellipsis (`...`) in the argument list, /or/ the function has a return
+  type of void.
 
   Second, we use the `Inline_Stack_Item(x)` function to access each argument
   where "0 <= x < items".
@@ -278,8 +279,8 @@ How do I pass a variable-sized list of arguments to an Inline C function?
 
 - Credits
 
-  Richard Anderson <starfire@zipcon.net> contributed the original idea for this
-  snippet.
+  Richard Anderson <starfire@zipcon.net> contributed the original idea for
+  this snippet.
 
 == Multiple Return Values (Another Way)
 
@@ -301,23 +302,23 @@ How do I pass a variable-sized list of arguments to an Inline C function?
     __C__
 
     int change(SV* var1, SV* var2) {
-        sv_setpvn(var1, "Perl Rocks!", 11);
-        sv_setpvn(var2, "Inline Rules!", 13);
-        return 1;
+      sv_setpvn(var1, "Perl Rocks!", 11);
+      sv_setpvn(var2, "Inline Rules!", 13);
+      return 1;
     }
 
 - Discussion
 
-  Most perl function interfaces return values as a list of one or more scalars.
-  Very few like `chomp`, will modify an input scalar in place.  On the other
-  hand, in C you do this quite often. Values are passed in by reference and
-  modified in place by the called function.
+  Most perl function interfaces return values as a list of one or more
+  scalars. Very few like `chomp`, will modify an input scalar in place. On
+  the other hand, in C you do this quite often. Values are passed in by
+  reference and modified in place by the called function.
 
   It turns out that we can do that with Inline as well. The secret is to use a
   type of '`SV*`' for each argument that is to be modified. This ensures
   passing by reference, because no typemapping is needed.
 
-  The function can then use the Perl5 API to operate on that argument.  When
+  The function can then use the Perl5 API to operate on that argument. When
   control returns to Perl, the argument will retain the value set by the C
   function. In this example we passed in 2 empty scalars and assigned values
   directly to them.
@@ -344,7 +345,7 @@ How do I pass a variable-sized list of arguments to an Inline C function?
     use Inline C => <<'END_OF_C_CODE';
 
     SV* greeting(SV* sv_name) {
-        return (newSVpvf("Hello %s!\n", SvPV(sv_name, PL_na)));
+      return (newSVpvf("Hello %s!\n", SvPV(sv_name, PL_na)));
     }
 
     END_OF_C_CODE
@@ -352,23 +353,23 @@ How do I pass a variable-sized list of arguments to an Inline C function?
 - Discussion
 
   In this example we will return the greeting to the caller, rather than
-  printing it. This would seem mighty easy, except for the fact that we need to
-  allocate a small buffer to create the greeting.
+  printing it. This would seem mighty easy, except for the fact that we need
+  to allocate a small buffer to create the greeting.
 
   I would urge you to stay away from `malloc`ing your own buffer. Just use
   Perl's built in memory management. In other words, just create a new Perl
-  string scalar. The function `newSVpv` does just that. And `newSVpvf` includes
-  `sprintf` functionality.
+  string scalar. The function `newSVpv` does just that. And `newSVpvf`
+  includes `sprintf` functionality.
 
   The other problem is getting rid of this new scalar. How will the ref count
   get decremented after we pass the scalar back? Perl also provides a function
-  called `sv_2mortal`. Mortal variables die when the context goes out of scope.
-  In other words, Perl will wait until the new scalar gets passed back and then
-  decrement the ref count for you, thereby making it eligible for garbage
-  collection. See `perldoc perlguts`.
+  called `sv_2mortal`. Mortal variables die when the context goes out of
+  scope. In other words, Perl will wait until the new scalar gets passed back
+  and then decrement the ref count for you, thereby making it eligible for
+  garbage collection. See `perldoc perlguts`.
 
-  In this example the `sv_2mortal` call gets done under the hood by XS, because
-  we declared the return type to be `SV*`.
+  In this example the `sv_2mortal` call gets done under the hood by XS,
+  because we declared the return type to be `SV*`.
 
   To view the generated XS code, run the command "`perl
   -MInline=INFO,FORCE,NOCLEAN example004.pl`". This will leave the build
@@ -391,19 +392,18 @@ How do I pass a variable-sized list of arguments to an Inline C function?
     #!/usr/bin/perl
 
     use CGI qw(:standard);
-    use Inline (Config =>
-                DIRECTORY => '/usr/local/apache/Inline',
-               );
+    use Inline Config =>
+      DIRECTORY => '/usr/local/apache/Inline';
 
-    print (header,
-           start_html('Inline CGI Example'),
-           h1(JAxH('Inline')),
-           end_html
-          );
+    print
+      header,
+      start_html('Inline CGI Example'),
+      h1(JAxH('Inline')),
+      end_html;
 
     use Inline C => <<END;
     SV* JAxH(char* x) {
-        return newSVpvf("Just Another %s Hacker", x);
+      return newSVpvf("Just Another %s Hacker", x);
     }
     END
 
@@ -418,9 +418,9 @@ How do I pass a variable-sized list of arguments to an Inline C function?
   'use Inline Config => DIRECTORY => ...' line. Then you need to give write
   access to that directory from the web server (CGI script).
 
-  If you see this as a security hole, then there is another option.  Give write
+  If you see this as a security hole, then there is another option. Give write
   access to yourself, but read-only access to the CGI script. Then run the
-  script once by hand (from the command line).  This will cause Inline to
+  script once by hand (from the command line). This will cause Inline to
   precompile the C code. That way the CGI will only need read access to the
   build directory (to load in the shared library from there).
 
@@ -450,18 +450,18 @@ How do I use Inline with mod_perl?
     Inline->init;
 
     sub handler {
-        my $r = shift;
-        $r->send_http_header('text/plain');
-        printf "%3d! = %10d\n", $_, factorial($_) for 1..100;
-        return Apache::Constants::OK;
+      my $r = shift;
+      $r->send_http_header('text/plain');
+      printf "%3d! = %10d\n", $_, factorial($_) for 1..100;
+      return Apache::Constants::OK;
     }
 
     1;
     __DATA__
     __C__
     double factorial(double x) {
-        if (x < 2)  return 1;
-        return x * factorial(x - 1)
+      if (x < 2) return 1;
+      return x * factorial(x - 1)
     }
 
 - Discussion
@@ -472,20 +472,18 @@ How do I use Inline with mod_perl?
 
   First, mod_perl handlers are usually run with `-T` taint detection.
   Therefore, we need to enable the UNTAINT option. The next thing to deal with
-  is the fact that this handler will most likely be loaded after Perl's compile
-  time. Since we are using the DATA section, we need to use the special
-  `init()` call. And of course we need to specify a DIRECTORY that mod_perl can
-  compile into. /See the above CGI example for more info./
+  is the fact that this handler will most likely be loaded after Perl's
+  compile time. Since we are using the DATA section, we need to use the
+  special `init()` call. And of course we need to specify a DIRECTORY that
+  mod_perl can compile into. /See the above CGI example for more info./
 
-  Other than that, this is a pretty straightforward mod_perl handler, tuned for
-  even more speed!
+  Other than that, this is a pretty straightforward mod_perl handler, tuned
+  for even more speed!
 
 - See Also
 
   See Stas Bekman's upcoming O'Reilly book on mod_perl to which this example
   was contributed.
-
-- Credits
 
 == Object Oriented Inline
 
@@ -500,9 +498,9 @@ How do I implement Object Oriented programming in Perl using C objects?
     my $obj3 = Soldier->new('Matt', 'Sergeant', 33333);
 
     for my $obj ($obj1, $obj2, $obj3) {
-        print  $obj->get_serial, ") ",
-               $obj->get_name, " is a ",
-               $obj->get_rank, "\n";
+      print $obj->get_serial, ") ",
+            $obj->get_name, " is a ",
+            $obj->get_rank, "\n";
     }
 
     #---------------------------------------------------------
@@ -527,9 +525,8 @@ How do I implement Object Oriented programming in Perl using C objects?
       long  serial;
     } Soldier;
 
-
-
-    SV* new(const char * classname, const char * name, const char * rank, long serial) {
+    SV* new(const char * classname, const char * name,
+            const char * rank, long serial) {
       Soldier * soldier;
       SV      * obj;
       SV      * obj_ref;
@@ -570,8 +567,8 @@ How do I implement Object Oriented programming in Perl using C objects?
 
 - Discussion
 
-Damian Conway has given us myriad ways of implementing OOP in Perl. This is one
-he might not have thought of.
+Damian Conway has given us myriad ways of implementing OOP in Perl. This is
+one he might not have thought of.
 
 The interesting thing about this example is that it uses Perl for all the OO
 bindings while using C for the attributes and methods.
@@ -596,7 +593,8 @@ The accessor methods are pretty straightforward. They return the current value
 of their attribute.
 
 The last method `DESTROY()` is called automatically by Perl whenever an object
-goes out of scope. This is where we can free all the memory used by the object.
+goes out of scope. This is where we can free all the memory used by the
+object.
 
 That's it. It's a very simplistic example. It doesn't show off any advanced OO
 features, but it is pretty cool to see how easy the implementation can be. The
@@ -604,13 +602,11 @@ important Perl call is `newSVrv()` which creates a blessed scalar.
 
 - See Also
 
-Read "Object Oriented Perl" by Damian Conway, for more useful ways of doing OOP
-in Perl.
+Read "Object Oriented Perl" by Damian Conway, for more useful ways of doing
+OOP in Perl.
 
 You can learn more Perl calls in [perlapi]. If you don't have Perl 5.6.0 or
 higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
-
-- Credits
 
 = The Main Course
 
@@ -632,23 +628,23 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
     #include <ghttp.h>
 
     char *get(SV* uri) {
-       SV* buffer;
-       ghttp_request* request;
+      SV* buffer;
+      ghttp_request* request;
 
-       buffer = NEWSV(0,0);
-       request = ghttp_request_new();
-       ghttp_set_uri(request, SvPV(uri, PL_na));
+      buffer = NEWSV(0,0);
+      request = ghttp_request_new();
+      ghttp_set_uri(request, SvPV(uri, PL_na));
 
-       ghttp_set_header(request, http_hdr_Connection, "close");
+      ghttp_set_header(request, http_hdr_Connection, "close");
 
-       ghttp_prepare(request);
-       ghttp_process(request);
+      ghttp_prepare(request);
+      ghttp_process(request);
 
-       sv_catpv(buffer, ghttp_get_body(request));
+      sv_catpv(buffer, ghttp_get_body(request));
 
-       ghttp_request_destroy(request);
+      ghttp_request_destroy(request);
 
-       return SvPV(buffer, PL_na);
+      return SvPV(buffer, PL_na);
     }
 
     END_OF_C_CODE
@@ -703,9 +699,9 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
 
 - Solution
 
-  The error function `erf()` is probably defined in your standard math library.
-  Annoyingly, Perl does not let you access it. To print out a small table of
-  its values, just say:
+  The error function `erf()` is probably defined in your standard math
+  library. Annoyingly, Perl does not let you access it. To print out a small
+  table of its values, just say:
 
     perl -le 'use Inline C => q{ double erf(double); }, enable => "autowrap"; print "$_ @{[erf($_)]}" for (0..10)'
 
@@ -734,15 +730,16 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
   the `LIBS` option.
 
   The first example wraps a function from the standard math library, so Inline
-  requires no additional `LIBS` directive. The second uses the Config option to
-  specify the libraries that contain the actual compiled C code.
+  requires no additional `LIBS` directive. The second uses the Config option
+  to specify the libraries that contain the actual compiled C code.
 
   This behavior is always disabled by default. You must enable the `autowrap`
   option to make it work.
 
 - See Also
 
-  `readline`, `Term::ReadLine::Gnu`
+  * `readline`
+  * `Term::ReadLine::Gnu`
 
 - Credits
 
@@ -751,21 +748,21 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
   <hiroo.hayashi@computer.org>. Both are far richer than the slim interface
   given here!
 
-  The idea of producing wrapper code given only a function declaration is taken
-  from Swig by David M. Beazley <beazley@cs.uchicago.edu>.
+  The idea of producing wrapper code given only a function declaration is
+  taken from Swig by David M. Beazley <beazley@cs.uchicago.edu>.
 
   Ingy's inline editorial insight:
 
-  This entire entry was contributed by Ariel Scolnicov <ariels@compugen.co.il>.
-  Ariel also first suggested the idea for Inline to support function
-  declaration processing.
+  This entire entry was contributed by Ariel Scolnicov
+  <ariels@compugen.co.il>. Ariel also first suggested the idea for Inline to
+  support function declaration processing.
 
 == Replacing h2xs
 
 - Problem
 
-  You have a complete C library that you want to access from Perl
-  exactly as you would from C.
+  You have a complete C library that you want to access from Perl exactly as
+  you would from C.
 
 - Solution
 
@@ -778,15 +775,15 @@ higher, visit http://www.perldoc.com/perl5.6/pod/perlapi.html
 
 - Discussion
 
-  In principle, you can use h2xs to wrap a C library into an XS
-  module. One problem with this is that the C parser code is a little
-  out of date. Also, since it works by generating a number of files,
-  maintaining it when the C library changes is a certain amount of
-  work. Using Inline to do the work is much easier.
+  In principle, you can use h2xs to wrap a C library into an XS module. One
+  problem with this is that the C parser code is a little out of date. Also,
+  since it works by generating a number of files, maintaining it when the C
+  library changes is a certain amount of work. Using Inline to do the work is
+  much easier.
 
-  If the header file needs some processing, like removing some text
-  that a full C compiler can deal with, but the Inline::C parser cannot,
-  as in the example above? Well, Perl is good at text-processing.
+  If the header file needs some processing, like removing some text that a
+  full C compiler can deal with, but the Inline::C parser cannot, as in the
+  example above? Well, Perl is good at text-processing.
 
 == Complex Data
 
@@ -799,34 +796,34 @@ How do I deal with complex data types like hashes in Inline C?
     use Inline C => <<'END_OF_C_CODE';
 
     void dump_hash(SV* hash_ref) {
-        HV* hash;
-        HE* hash_entry;
-        int num_keys, i;
-        SV* sv_key;
-        SV* sv_val;
+      HV* hash;
+      HE* hash_entry;
+      int num_keys, i;
+      SV* sv_key;
+      SV* sv_val;
 
-        if (! SvROK(hash_ref))
-            croak("hash_ref is not a reference");
+      if (! SvROK(hash_ref))
+        croak("hash_ref is not a reference");
 
-        hash = (HV*)SvRV(hash_ref);
-        num_keys = hv_iterinit(hash);
-        for (i = 0; i < num_keys; i++) {
-            hash_entry = hv_iternext(hash);
-            sv_key = hv_iterkeysv(hash_entry);
-            sv_val = hv_iterval(hash, hash_entry);
-            printf("%s => %s\n", SvPV(sv_key, PL_na), SvPV(sv_val, PL_na));
-        }
-        return;
+      hash = (HV*)SvRV(hash_ref);
+      num_keys = hv_iterinit(hash);
+      for (i = 0; i < num_keys; i++) {
+        hash_entry = hv_iternext(hash);
+        sv_key = hv_iterkeysv(hash_entry);
+        sv_val = hv_iterval(hash, hash_entry);
+        printf("%s => %s\n", SvPV(sv_key, PL_na), SvPV(sv_val, PL_na));
+      }
+      return;
     }
 
     END_OF_C_CODE
 
     my %hash = (
-        Author => "Ingy döt Net",
-        Nickname => "INGY",
-        Module => "Inline.pm",
-        Version => "0.30",
-        Language => "C",
+      Author => "Ingy döt Net",
+      Nickname => "INGY",
+      Module => "Inline.pm",
+      Version => "0.30",
+      Language => "C",
     );
 
     dump_hash(\%hash);
@@ -834,15 +831,15 @@ How do I deal with complex data types like hashes in Inline C?
 - Discussion
 
   The world is not made of scalars alone, although they are definitely the
-  easiest creatures to deal with, when doing Inline stuff.  Sometimes we need
+  easiest creatures to deal with, when doing Inline stuff. Sometimes we need
   to deal with arrays, hashes, and code references, among other things.
 
-  Since Perl subroutine calls only pass scalars as arguments, we'll need to use
-  the argument type `SV*` and pass references to more complex types.
+  Since Perl subroutine calls only pass scalars as arguments, we'll need to
+  use the argument type `SV*` and pass references to more complex types.
 
-  The above program dumps the key/value pairs of a hash. To figure it out, just
-  curl up with [perlapi] for a couple hours. Actually, its fairly straight
-  forward once you are familiar with the calls.
+  The above program dumps the key/value pairs of a hash. To figure it out,
+  just curl up with [perlapi] for a couple hours. Actually, its fairly
+  straight forward once you are familiar with the calls.
 
   Note the `croak` function call. This is the proper way to die from your C
   extensions.
@@ -873,38 +870,38 @@ How do I create a Hash of Lists from C?
     static int next_word(char**, char*);
 
     SV* load_data(char* file_name) {
-        char buffer[100], word[100], * pos;
-        AV* array;
-        HV* hash = newHV();
-        FILE* fh = fopen(file_name, "r");
+      char buffer[100], word[100], * pos;
+      AV* array;
+      HV* hash = newHV();
+      FILE* fh = fopen(file_name, "r");
 
-        while (fgets(pos = buffer, sizeof(buffer), fh)) {
-            if (next_word(&pos, word)) {
-                array = newAV();
-                hv_store(hash, word, strlen(word),
-                        newRV_noinc((SV*)array), 0);
-                while (next_word(&pos, word))
-                    av_push(array, newSVpvf("%s", word));
-            }
+      while (fgets(pos = buffer, sizeof(buffer), fh)) {
+        if (next_word(&pos, word)) {
+          array = newAV();
+          hv_store(hash, word, strlen(word),
+            newRV_noinc((SV*)array), 0);
+          while (next_word(&pos, word))
+            av_push(array, newSVpvf("%s", word));
         }
-        fclose(fh);
-        return newRV_noinc((SV*) hash);
+      }
+      fclose(fh);
+      return newRV_noinc((SV*) hash);
     }
 
     static int next_word(char** text_ptr, char* word) {
-        char* text = *text_ptr;
-        while(*text != '\0' &&
-              *text <= ' ')
-            text++;
-        if (*text <= ' ')
-            return 0;
-        while(*text != '\0' &&
-              *text > ' ') {
-            *word++ = *text++;
-        }
-        *word = '\0';
-        *text_ptr = text;
-        return 1;
+      char* text = *text_ptr;
+      while(*text != '\0' &&
+            *text <= ' ')
+        text++;
+      if (*text <= ' ')
+        return 0;
+      while(*text != '\0' &&
+            *text > ' ') {
+        *word++ = *text++;
+      }
+      *word = '\0';
+      *text_ptr = text;
+      return 1;
     }
 
 - Discussion
@@ -946,8 +943,8 @@ How do I create a Hash of Lists from C?
 - Credits
 
   Al Danial <alnd@pacbell.net> requested a solution to this on
-  comp.lang.perl.misc. He borrowed the idea from the "Hash of Lists" example in
-  the Camel book.
+  comp.lang.perl.misc. He borrowed the idea from the "Hash of Lists" example
+  in the Camel book.
 
 = Just Desserts
 
@@ -1007,15 +1004,13 @@ How do I create a Hash of Lists from C?
     #!/usr/bin/cpr
 
     int main(void) {
+      printf("Using Perl version %s from a C program!\n\n",
+             CPR_eval("use Config; $Config{version};"));
 
-        printf("Using Perl version %s from a C program!\n\n",
-               CPR_eval("use Config; $Config{version};"));
+      CPR_eval("use Data::Dumper;");
+      CPR_eval("print Dumper \\%INC;");
 
-        CPR_eval("use Data::Dumper;");
-        CPR_eval("print Dumper \\%INC;");
-
-        return 0;
-
+      return 0;
     }
 
 - Discussion
@@ -1045,20 +1040,20 @@ How do I create a Hash of Lists from C?
 
   Randal Schwartz <merlyn@stonehenge.com>, Randolph Bentson
   <bentson@grieg.holmsjoen.com>, Richard Anderson <starfire@zipcon.net>, and
-  Tim Maher <tim@consultix-inc.com> helped me figure out how to write a program
-  that would work as a hashbang.
+  Tim Maher <tim@consultix-inc.com> helped me figure out how to write a
+  program that would work as a hashbang.
 
 = Entertaining Guests
 
-As of version 0.30, Inline has the ability to work in cooperation with
-other modules that want to expose a C API of their own. The general
-syntax for doing this is:
+As of version 0.30, Inline has the ability to work in cooperation with other
+modules that want to expose a C API of their own. The general syntax for doing
+this is:
 
   use Inline with => 'Module';
   use Inline C => ... ;
 
-This tells `Module` to pass configuration options to Inline. Options
-like typemaps, include paths, and external libraries, are all resolved
+This tells `Module` to pass configuration options to Inline. Options like
+typemaps, include paths, and external libraries, are all resolved
 automatically so you can just concentrate on writing the functions.
 
 == Event handling with Event.pm
@@ -1087,13 +1082,13 @@ automatically so you can just concentrate on writing the functions.
 
     use Inline C => <<'END';
     void my_callback(pe_event* event) {
-        pe_timer * watcher = event->up;
+      pe_timer * watcher = event->up;
 
-        printf("%s\n\tEvent priority = %d\n\tWatcher priority = %d\n\n",
-               SvPVX(watcher->base.desc),
-               event->prio,
-               watcher->base.prio
-              );
+      printf("%s\n\tEvent priority = %d\n\tWatcher priority = %d\n\n",
+             SvPVX(watcher->base.desc),
+             event->prio,
+             watcher->base.prio
+            );
     }
     END
 
@@ -1110,9 +1105,9 @@ automatically so you can just concentrate on writing the functions.
     AUTO_INCLUDE => '#include "EventAPI.h"',
     BOOT => 'I_EVENT_API("Inline");',
 
-  Doing all of this automatically allows you, the programmer, to simply write a
-  function that receives a pointer of type `'pe_event*'`. This gives you access
-  to the `Event` structure that was passed to you.
+  Doing all of this automatically allows you, the programmer, to simply write
+  a function that receives a pointer of type `'pe_event*'`. This gives you
+  access to the `Event` structure that was passed to you.
 
   In this example, I simply print values out of the structure. The Perl code
   defines 2 timer events which each invoke the same callback. The first one,
@@ -1139,8 +1134,8 @@ automatically so you can just concentrate on writing the functions.
 
 - Problem
 
-  I'd like to be able to call the same C function from both Perl and C.  Also I
-  like to define a C function that *doesn't* get bound to Perl.  How do I do
+  I'd like to be able to call the same C function from both Perl and C. Also I
+  like to define a C function that *doesn't* get bound to Perl. How do I do
   that?
 
 - Solution
@@ -1151,13 +1146,13 @@ automatically so you can just concentrate on writing the functions.
 
     use Inline C => <<'END_C';
     int add(int x, int y) {
-        return x + y;
+      return x + y;
     }
     static int mult(int x, int y) {
-        return x * y;
+      return x * y;
     }
     double pyth(int x, int y) {
-        return sqrt(add(mult(x, x), mult(y, y)));
+      return sqrt(add(mult(x, x), mult(y, y)));
     }
     END_C
 
@@ -1177,12 +1172,8 @@ automatically so you can just concentrate on writing the functions.
   Of course if your function manipulates the Perl Stack, you probably don't
   want to call it from C (unless you /really/ know what you're doing).
 
-  If you declare a function as `static`, Inline won't bind it to Perl.  That's
+  If you declare a function as `static`, Inline won't bind it to Perl. That's
   why we were able to call `mult()` from C but the call failed from Perl.
-
-- See Also
-
-- Credits
 
 == Calling Perl from C
 
@@ -1196,35 +1187,35 @@ automatically so you can just concentrate on writing the functions.
     use Inline C;
 
     for(1..5) {
-       c_func_1('This is the first line');
-       c_func_2('This is the second line');
-       print "\n";
+      c_func_1('This is the first line');
+      c_func_2('This is the second line');
+      print "\n";
     }
 
     sub perl_sub_1 {
-        print map "$_\n", @_;
+      print map "$_\n", @_;
     }
 
     __DATA__
     __C__
 
     void c_func_2(SV* text) {
-         dSP;
+      dSP;
 
-         ENTER;
-         SAVETMPS;
+      ENTER;
+      SAVETMPS;
 
-         XPUSHs(sv_2mortal(newSVpvf("Plus an extra line")));
-         PUTBACK;
+      XPUSHs(sv_2mortal(newSVpvf("Plus an extra line")));
+      PUTBACK;
 
-         call_pv("perl_sub_1", G_DISCARD);
+      call_pv("perl_sub_1", G_DISCARD);
 
-         FREETMPS;
-         LEAVE;
+      FREETMPS;
+      LEAVE;
     }
 
     void c_func_1(SV* text) {
-         c_func_2(text);
+      c_func_2(text);
     }
 
 
@@ -1244,23 +1235,21 @@ automatically so you can just concentrate on writing the functions.
   management, and then calls your C function.
 
   The first time we call `c_func_1` which calls `c_func_2`. The second time we
-  call `c_func_2` directly. `c_func_2` calls the Perl subroutine (`perl_sub_1`)
-  using the internal `perl_call_pv` function. It has to put arguments on the
-  stack by hand. Since there is already one argument on the stack when we enter
-  the function, the `XPUSHs` ( which is equivalent to an `Inline_Stack_Push` )
-  adds a second argument.
+  call `c_func_2` directly. `c_func_2` calls the Perl subroutine
+  (`perl_sub_1`) using the internal `perl_call_pv` function. It has to put
+  arguments on the stack by hand. Since there is already one argument on the
+  stack when we enter the function, the `XPUSHs` ( which is equivalent to an
+  `Inline_Stack_Push` ) adds a second argument.
 
-  We iterate through a 'for' loop 5 times just to demonstrate that things still
-  work correctly when we do that. (This was where the previous rendition,
-  making use solely of Inline Stack macros, fell down.)
+  We iterate through a 'for' loop 5 times just to demonstrate that things
+  still work correctly when we do that. (This was where the previous
+  rendition, making use solely of Inline Stack macros, fell down.)
 
 - See Also
 
   See [Inline::C] for more information about Stack macros.
 
   See [perlapi] for more information about the Perl5 internal API.
-
-- Credits
 
 == Evaling C
 
@@ -1283,11 +1272,11 @@ automatically so you can just concentrate on writing the functions.
 - Discussion
 
   I can't think of a real life application where you would want to generate C
-  code on the fly, but at least I know how I would do it.  :)
+  code on the fly, but at least I know how I would do it. :)
 
   The `bind()` function of Inline let's you bind (compile/load/execute) C
-  functions at run time. It takes all of the same arguments as 'use Inline C =>
-  ...'.
+  functions at run time. It takes all of the same arguments as `use Inline C
+  => ...`.
 
   The nice thing is that once a particular snippet is compiled, it remains
   cached so that it doesn't need to be compiled again. I can imagine that
@@ -1296,17 +1285,13 @@ automatically so you can just concentrate on writing the functions.
 
   If you know such a person, have them drop me a line.
 
-- See Also
-
-- Credits
-
 == Providing a pure perl alternative
 
 - Problem
 
   I want to write a script that will use a C subroutine if Inline::C is
   installed, but will otherwise use an equivalent pure perl subroutine if
-  Inline::C is not already installed.  How do I do this?
+  Inline::C is not already installed. How do I do this?
 
 - Solution
 
@@ -1314,20 +1299,20 @@ automatically so you can just concentrate on writing the functions.
     use warnings;
 
     eval {
-     require Inline;
-     Inline->import (C => Config =>
-                     BUILD_NOISY => 1);
-     Inline->import (C =><<'EOC');
+      require Inline;
+      Inline->import (C => Config =>
+                      BUILD_NOISY => 1);
+      Inline->import (C =><<'EOC');
 
-     int foo() {
-       warn("Using Inline\n");
-       return 42;
-     }
+      int foo() {
+        warn("Using Inline\n");
+        return 42;
+      }
 
     EOC
     };
 
-    if($@) {
+    if ($@) {
       *foo =\&bar;
     }
 
@@ -1353,9 +1338,9 @@ automatically so you can just concentrate on writing the functions.
 - Problem
 
   I've been given a neat little sub written in fortran that takes, as its
-  args, two integers and returns their product. And I would like to use
-  that sub as is from Inline::C. By way of example, let's say that the
-  fortran source file is named 'prod.f', and that it looks like this:
+  args, two integers and returns their product. And I would like to use that
+  sub as is from Inline::C. By way of example, let's say that the fortran
+  source file is named 'prod.f', and that it looks like this:
 
     integer function sqarea(r,s)
     integer r, s
@@ -1365,9 +1350,8 @@ automatically so you can just concentrate on writing the functions.
 
 - Solution
 
-  We can't access that code directly, but we can compile it into a
-  library which we *can* then access from Inline::C.
-  Using gcc we could run:
+  We can't access that code directly, but we can compile it into a library
+  which we *can* then access from Inline::C. Using gcc we could run:
 
     gfortran -c prod.f -o prod.o
     ar cru libprod.a prod.o
@@ -1382,7 +1366,7 @@ automatically so you can just concentrate on writing the functions.
     use Inline C => <<'  EOC';
 
     int wrap_sqarea(int a, int b) {
-        return sqarea_(&a, &b);
+      return sqarea_(&a, &b);
     }
 
     EOC
@@ -1421,17 +1405,4 @@ Inline's mailing list is inline@perl.org
 
 To subscribe, send email to inline-subscribe@perl.org
 
-= Author
-
-Ingy döt Net <ingy@cpan.org>
-
-= Copyright
-
-Copyright 2000-2014. Ingy döt Net.
-
-Copyright 2008, 2010-2014. Sisyphus.
-
-This program is free software; you can redistribute it and/or modify it under
-the same terms as Perl itself.
-
-See http://www.perl.com/perl/misc/Artistic.html
+<<<cpan-tail>>>
