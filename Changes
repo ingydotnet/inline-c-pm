@@ -1,4 +1,9 @@
 ---
+version: 0.73
+date:    Thu Jan  1 17:10:15 PST 2015
+changes:
+- Fix Swim plugins and Meta to include Sisyphus in Authors and Copyright
+---
 version: 0.72
 date:    Thu Jan  1 15:43:37 PST 2015
 changes:
