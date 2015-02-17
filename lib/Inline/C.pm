@@ -905,9 +905,9 @@ sub cleanup {
         my $autodir = File::Spec->catdir($install_lib,'auto',$modpname);
         unlink (
             File::Spec->catfile($autodir,'.packlist'),
-            File::Spec->catfile($autodir,'$modfname.bs'),
-            File::Spec->catfile($autodir,'$modfname.exp'), #MSWin32
-            File::Spec->catfile($autodir,'$modfname.lib'), #MSWin32
+            File::Spec->catfile($autodir,"$modfname.bs"),
+            File::Spec->catfile($autodir,"$modfname.exp"), #MSWin32
+            File::Spec->catfile($autodir,"$modfname.lib"), #MSWin32
         );
     }
 }
