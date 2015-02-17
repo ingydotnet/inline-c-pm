@@ -903,12 +903,9 @@ sub cleanup {
             $modpname
         );
         my $autodir = File::Spec->catdir($install_lib,'auto',$modpname);
-        unlink (
-            File::Spec->catfile($autodir,'.packlist'),
-            File::Spec->catfile($autodir,"$modfname.bs"),
-            File::Spec->catfile($autodir,"$modfname.exp"), #MSWin32
-            File::Spec->catfile($autodir,"$modfname.lib"), #MSWin32
-        );
+        my @files = ( ".packlist", map "$modfname.$_", qw( bs exp lib ) );
+        my @paths = grep { -e } map { File::Spec->catfile($autodir,$_) } @files;
+        unlink($_) || die "Can't delete file $_: $!" for @paths;
     }
 }
 
