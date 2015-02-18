@@ -1,4 +1,9 @@
 ---
+version: 0.74
+date:    Tue Feb 17 16:19:00 PST 2015
+changes:
+- Windows fixes. Mithaldu++
+---
 version: 0.73
 date:    Thu Jan  1 17:10:15 PST 2015
 changes:
