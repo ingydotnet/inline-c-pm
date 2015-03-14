@@ -1,4 +1,9 @@
 ---
+version: 0.75
+date:    Sat Mar 14 01:03:49 GMT 2015
+changes:
+- Doc fixes - links from Inline::C to Cookbook
+---
 version: 0.74
 date:    Tue Feb 17 16:19:00 PST 2015
 changes:
