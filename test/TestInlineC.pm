@@ -74,8 +74,7 @@ sub prd_parse {
     $parser->{data}{function};
 }
 
-use constant TYPECONV => eval q{
-{
+use constant TYPECONV => {
   'valid_rtypes' => {
     'wchar_t' => 1,
     'int' => 1,
@@ -594,7 +593,6 @@ use constant TYPECONV => eval q{
     'SysRet' => 'T_SYSRET',
     'unsigned int' => 'T_UV'
   }
-}
 };
 
 
