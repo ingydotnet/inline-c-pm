@@ -332,6 +332,36 @@ How do I pass a variable-sized list of arguments to an Inline C function?
   (http://www.microship.com), but he is close (http://bike-nomad.com). Thanks
   Ned.
 
+== Taking an array-ref as an argument
+
+- Problem
+
+  How can I take a Perl array-ref as an argument in my C function?
+
+- Solution
+
+    SV *sum(SV *array) {
+        int total = 0;
+        int numelts, i;
+        SvGETMAGIC(array);
+        if ((!SvROK(array))
+            || (SvTYPE(SvRV(array)) != SVt_PVAV)
+            || ((numelts = av_len((AV *)SvRV(array))) < 0)
+        ) {
+            return &PL_sv_undef;
+        }
+        for (i = 0; i <= numelts; i++) {
+            total += SvIV(*av_fetch((AV *)SvRV(array), i, 0));
+        }
+        return newSViv(total);
+    }
+
+- Discussion
+
+  This example returns `undef` if given a non-ref, or a non-array-ref,
+  or a ref to an empty array. You can see how you might expand this to
+  take more than one array-ref.
+
 == Using Memory
 
 - Problem
