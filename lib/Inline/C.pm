@@ -53,6 +53,8 @@ sub validate {
     $o->{ILSM}{AUTOWRAP} = 0 if not defined $o->{ILSM}{AUTOWRAP};
     $o->{ILSM}{XSMODE} = 0 if not defined $o->{ILSM}{XSMODE};
     $o->{ILSM}{AUTO_INCLUDE} ||= <<END;
+#define PERL_CORE
+#define PERL_NO_GET_CONTEXT
 #include "EXTERN.h"
 #include "perl.h"
 #include "XSUB.h"
