@@ -1,6 +1,6 @@
 use strict; use warnings;
 package Inline::C;
-our $VERSION = '0.75';
+our $VERSION = '0.76';
 
 use Inline 0.56;
 use Config;
@@ -239,6 +239,11 @@ END
             $o->{CONFIG}{PROTOTYPE} = $value;
             next;
         }
+        if ($key eq 'CPPFLAGS') {
+            # C preprocessor flags, used by Inline::Filters::Preprocess()
+            next;
+        }
+        
         my $class = ref $o; # handles subclasses correctly.
         croak "'$key' is not a valid config option for $class\n";
     }
