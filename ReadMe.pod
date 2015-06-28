@@ -15,7 +15,7 @@ Inline::C - C Language Support for Inline
 
 =head1 Version
 
-This document describes L<Inline::C> version B<0.75>.
+This document describes L<Inline::C> version B<0.76>.
 
 =head1 Description
 
@@ -137,6 +137,14 @@ Extend compiler flags. Sets C<CCFLAGS> to $Config{ccflags} followed by a
 space, followed by the specified value:
 
     use Inline C => config => ccflagsex => "-DXTRA -DTOO";
+
+=item C<cppflags>
+
+Specify preprocessor flags.
+Passed to 'cpp' C preprocessor by Preprocess() in Inline::Filters.
+
+    use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE'      => FILTERS => 'Preprocess';
+    use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE=4321' => FILTERS => 'Preprocess';
 
 =item C<filters>
 
