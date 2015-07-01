@@ -243,7 +243,7 @@ END
             # C preprocessor flags, used by Inline::Filters::Preprocess()
             next;
         }
-        
+
         my $class = ref $o; # handles subclasses correctly.
         croak "'$key' is not a valid config option for $class\n";
     }
