@@ -140,11 +140,20 @@ space, followed by the specified value:
 
 =item C<cppflags>
 
-Specify preprocessor flags.
-Passed to 'cpp' C preprocessor by Preprocess() in Inline::Filters.
 
-    use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE'      => FILTERS => 'Preprocess';
-    use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE=4321' => FILTERS => 'Preprocess';
+=back
+
+Specify preprocessor flags. Passed to C<cpp> C preprocessor by C<Preprocess()>
+in L<Inline::Filters>.
+
+    use Inline C => <<'END',
+        CPPFLAGS => ' -DPREPROCESSOR_DEFINE',
+        FILTERS => 'Preprocess';
+    use Inline C => <<'END',
+        CPPFLAGS => ' -DPREPROCESSOR_DEFINE=4321',
+        FILTERS => 'Preprocess';
+
+=over
 
 =item C<filters>
 

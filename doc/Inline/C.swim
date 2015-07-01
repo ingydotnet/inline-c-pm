@@ -119,6 +119,18 @@ See [ExtUtils::MakeMaker] and [perlxs].
 
     use Inline C => config => ccflagsex => "-DXTRA -DTOO";
 
+- `cppflags`
+
+Specify preprocessor flags. Passed to `cpp` C preprocessor by `Preprocess()`
+in [Inline::Filters].
+
+  use Inline C => <<'END',
+      CPPFLAGS => ' -DPREPROCESSOR_DEFINE',
+      FILTERS => 'Preprocess';
+  use Inline C => <<'END',
+      CPPFLAGS => ' -DPREPROCESSOR_DEFINE=4321',
+      FILTERS => 'Preprocess';
+
 - `filters`
 
   Allows you to specify a list of source code filters. If more than one is
