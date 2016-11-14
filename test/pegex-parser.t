@@ -7,7 +7,7 @@ use IO::All;
 use YAML::XS;
 
 BEGIN { system "rm _Inline* -fr" }
-END { system "rm _Inline* -fr" }
+END { local $?; system "rm _Inline* -fr" }
 
 use Inline C => <<'END', USING => '::Parser::Pegex';
 SV* JAxH(char* x) {
