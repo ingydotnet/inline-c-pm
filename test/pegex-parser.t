@@ -6,8 +6,9 @@ plan tests => 2;
 use IO::All;
 use YAML::XS;
 
-BEGIN { system "rm _Inline* -fr" }
-END { local $?; system "rm _Inline* -fr" }
+#even if test is skipped, BEGIN and END blocks are executed and print warnings in case rm is not available
+BEGIN { if (defined $ENV{PERL_INLINE_DEVELOPER_TEST}) { system "rm _Inline* -fr" } }
+END { if (defined $ENV{PERL_INLINE_DEVELOPER_TEST}) { local $?; system "rm _Inline* -fr" } }
 
 use Inline C => <<'END', USING => '::Parser::Pegex';
 SV* JAxH(char* x) {
