@@ -379,6 +379,86 @@ How do I pass a variable-sized list of arguments to an Inline C function?
 
 - Credits
 
+== Direct Access to Perl variables
+
+- Problem
+
+  Can I write an Inline C function that can access a Perl variable
+  directly without having to pass it as an argument?
+
+- Solution
+
+    use strict;
+    use warnings;
+    use Inline C => "DATA";
+
+    our $mesh_data = "MESH-POINTS 0.0 0.0 0.5 0.25 1.0 0.5 1.5 0.75";
+    CalcSurfaceHeights();
+
+    __DATA__
+    __C__
+    #define N_MP 4
+
+    void CalcSurfaceHeights() {
+       double x[N_MP], y[N_MP], z;
+       int    ix;
+       char   *mesh_data = SvPV_nolen(get_sv("main::mesh_data", 0));
+
+       sscanf(mesh_data, "MESH-POINTS %lf%lf%lf%lf%lf%lf%lf%lf",
+                         x, y, x+1, y+1, x+2, y+2, x+3, y+3);
+
+       for (ix=0; ix < N_MP; ix++) {
+          z = 0.5*( sin(x[ix]) + sin(y[ix]) );
+
+          printf("Surface-Height: %6.3f Mesh-Point: %6.2f, %6.2f\n",
+                 z, x[ix], y[ix]);
+       }
+    }
+
+- Discussion
+
+  There are really only two points that need an explanation to understand
+  why the above code works. In the Perl section, you will notice the
+  declaration
+
+    our $mesh_data = "...";
+
+  For Perl variables to be directly accessible from Inline::C functions,
+  they must be declared as package variables. Lexical variables, those
+  declared with *my*, cannot be accessed this way.
+
+  In the C code section of the example, the following line is what makes
+  direct access to the Perl variable work;
+
+    char *mesh_data = SvPV_nolen(get_sv("main::mesh_data", 0))
+
+  Here SvPV_nolen() returns a pointer to the C string contained in the
+  scalar variable. The "_nolen" variation ignores the length of the C string.
+  Hence, the function takes only a single argument, which is the SV* of
+  the scalar variable.
+
+  We could have used the usual two-argument form of *SvPV()* and, since
+  we don't care about the string length, specified *PL_na* for the second
+  argument. The function call would then change to,
+
+    SvPV(get_sv("main::mesh_data", 0), PL_na)
+
+  The function *get_sv()* returns the SV* of a named scalar package
+  variable. It takes a C string, containing the fully qualified name of
+  the variable, as the first argument. The second argument contains flag
+  values related to data type. Since we are only reading the scalar
+  variable, in our example, a value of 0 can be used.
+
+- See Also
+
+  * perldoc perlguts
+  * perldoc perlapi
+
+- Credits
+
+  The code example and description were inspired by a discussion thread
+  on the Inline mailing list (inline@perl.org).
+
 = Fast Food
 
 == Inline CGI
