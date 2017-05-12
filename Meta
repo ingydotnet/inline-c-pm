@@ -26,7 +26,7 @@ devel:
   eml: inline@perl.org
 
 requires:
-  perl: 5.8.1
+  perl: 5.10.0
   File::Spec: 0.8
   Inline: 0.79
   Parse::RecDescent: 1.967009
