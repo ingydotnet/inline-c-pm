@@ -7,7 +7,6 @@ BEGIN {
 
 use Test::More();
 use YAML::XS;
-use IO::All;
 
 use Parse::RecDescent;
 use Inline::C::Parser::RecDescent;

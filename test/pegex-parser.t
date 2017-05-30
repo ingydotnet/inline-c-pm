@@ -5,7 +5,6 @@ plan skip_all => '$ENV{PERL_INLINE_DEVELOPER_TEST} not set'
 plan tests => 2;
 }
 
-use IO::All;
 use YAML::XS;
 use File::Path qw/ rmtree /;
 
