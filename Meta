@@ -24,6 +24,8 @@ devel:
   bug: https://github.com/ingydotnet/inline-c-pm/issues
   irc: irc.perl.org#inline
   eml: inline@perl.org
+  requires:
+    Swim: 0.1.46
 
 requires:
   perl: 5.10.0
@@ -48,6 +50,9 @@ test:
     YAML::XS: 0
 
 badge: travis
+
+repo:
+  contributing: 1
 
 =zild:
   test-000: require
