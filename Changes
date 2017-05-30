@@ -4,6 +4,8 @@ date:    Tue 30 May 22:56:30 CEST 2017
 changes:
 - Apply PR#66 (TINITA++)
   Remove system calls `rm` and `diff`
+- Apply PR#65 (TINITA++)
+  Use FindBin in tests (Dot gets removed from @INC in perl 5.26)
 ---
 version: 0.77
 date:    Fri 12 May 17:57:36 CEST 2017
