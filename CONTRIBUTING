@@ -1,0 +1,60 @@
+Contributing
+============
+
+This file lists the software and systems that currently contribute to
+the Inline::C project. It is recommended that you become familiar with
+these if you intend to contribute to this project.
+
+GitHub
+------
+
+The code for this project is hosted at GitHub. The URL is:
+
+  https://github.com/ingydotnet/inline-c-pm
+
+Swim
+----
+
+The documentation for this project, such as the C-Cookbook, is written
+in (.swim) format. When working with (.swim) format files we recommend
+installing the Swim module.
+
+  perldoc Swim
+
+gives you a detailed description of the (.swim) format.
+To generate a preview of a (.swim) document, you can convert it to
+(.pod) format using the "swim" utility program. Again using the C-Cookbook
+as an example, the command to use would be;
+
+  swim --to=pod Cookbook.swim > Cookbook.pod
+
+Then use the command "perldoc Cookbook.pod" to view the formatted
+document.
+
+Mailing List
+------------
+
+An email discussion list exists where various issues and requests
+concerning Inline and Inline::C may be posted.
+
+The email address is: inline@perl.org
+
+For a description of the mailing list send a blank email to
+
+  inline-info@perl.org
+
+IRC Chat Room
+-------------
+
+An IRC chatroom exists that allows you to connect with real people to
+discuss Inline and its ILSMs.
+
+To enter the chatroom, specify the following details into your IRC
+client;
+
+   Server  ... irc.perl.org
+   Channel ... #inline
+
+
+We look forward to your contribution!
+ 
