@@ -25,9 +25,9 @@ install:
   autodie
   ExtUtils::MakeMaker
   File::Copy::Recursive
+  File::Path
   File::Spec
   Inline
-  IO::All
   Parse::RecDescent
   Pegex
   Test::More

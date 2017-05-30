@@ -1,8 +1,14 @@
 ---
+version: 0.78
+date:    Tue 30 May 22:56:30 CEST 2017
+changes:
+- Apply PR#66 (TINITA++)
+  Remove system calls `rm` and `diff`
+---
 version: 0.77
 date:    Fri 12 May 17:57:36 CEST 2017
 changes:
-- Apply PR#63 (@mohawk2)
+- Apply PR#63 (@mohawk2++)
 ---
 version: 0.76
 date:    Wed Jul  1 08:09:50 PDT 2015
