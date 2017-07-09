@@ -329,7 +329,7 @@ How do I pass a variable-sized list of arguments to an Inline C function?
 
   Ned Konz <ned@bike-nomad.com> brought this behavior to my attention. He also
   pointed out that he is not the world famous computer cyclist Steve Roberts
-  (http://www.microship.com), but he is close (http://bike-nomad.com). Thanks
+  ( http://www.microship.com ), but he is close ( http://bike-nomad.com ). Thanks
   Ned.
 
 == Using Memory
