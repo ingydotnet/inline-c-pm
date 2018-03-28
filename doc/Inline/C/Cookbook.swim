@@ -98,7 +98,7 @@ Inline?
 - Solution
 
     # vowels.pl
-    use Inline C;
+    use Inline 'C';
 
     $filename = $ARGV[0];
     die "Usage: perl vowels.pl filename\n" unless -f $filename;
@@ -291,7 +291,7 @@ How do I pass a variable-sized list of arguments to an Inline C function?
 - Solution
 
     use Inline::Files;
-    use Inline C;
+    use Inline 'C';
 
     my ($foo, $bar);
     change($foo, $bar);
@@ -938,7 +938,7 @@ How do I create a Hash of Lists from C?
 
 - Solution
 
-    use Inline C;
+    use Inline 'C';
     use Data::Dumper;
 
     $hash_ref = load_data("./cartoon.txt");
@@ -1264,7 +1264,7 @@ automatically so you can just concentrate on writing the functions.
 
 - Solution
 
-    use Inline C;
+    use Inline 'C';
 
     for(1..5) {
       c_func_1('This is the first line');
