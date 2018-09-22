@@ -26,11 +26,11 @@ devel:
   eml: inline@perl.org
 
 requires:
-  perl: 5.10.0
+  perl: 5.8.1
   File::Spec: 0.8
   Inline: 0.81
   Parse::RecDescent: 1.967009
-  Pegex: 0.58
+  Pegex: 0.66
   ExtUtils::MakeMaker: 7.00
 
 win32:
