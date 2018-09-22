@@ -9,7 +9,6 @@ my $c_text = <<'EOC';
 SV *sum(SV *array) {
     int total = 0;
     int numelts, i;
-    SvGETMAGIC(array);
     if ((!SvROK(array))
         || (SvTYPE(SvRV(array)) != SVt_PVAV)
         || ((numelts = av_len((AV *)SvRV(array))) < 0)
