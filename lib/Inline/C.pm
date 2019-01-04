@@ -47,7 +47,7 @@ sub validate {
     $o->{ILSM}{MAKEFILE} ||= {};
     if (not $o->UNTAINT) {
         require FindBin;
-        $o->{ILSM}{MAKEFILE}{INC} = "-I\"$FindBin::Bin\""
+        $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\""
             if not defined $o->{ILSM}{MAKEFILE}{INC};
     }
     $o->{ILSM}{AUTOWRAP} = 0 if not defined $o->{ILSM}{AUTOWRAP};
