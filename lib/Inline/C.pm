@@ -47,8 +47,15 @@ sub validate {
     $o->{ILSM}{MAKEFILE} ||= {};
     if (not $o->UNTAINT) {
         require FindBin;
-        $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\""
-            if not defined $o->{ILSM}{MAKEFILE}{INC};
+        if (not defined $o->{ILSM}{MAKEFILE}{INC}) {
+            if ($Config{cc} =~ /\b(?:cl|icl)/) {
+                $o->{ILSM}{MAKEFILE}{INC} = "-I\"$FindBin::Bin\"";
+                warn q{WARNING: Microsoft compiler detected, unable to utilize '-iquote' compiler option, falling back to '-I' which may produce incorrect results or errors for files included in angle brackets, such as compiling '#include <stdio.h>' when a user-defined file 'stdio.h' exists in the calling script's directory and is wrongly located via '-I' instead of locating the standard library file of the same name}, "\n";
+            }
+            else {
+                $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\"";
+            }
+        }
     }
     $o->{ILSM}{AUTOWRAP} = 0 if not defined $o->{ILSM}{AUTOWRAP};
     $o->{ILSM}{XSMODE} = 0 if not defined $o->{ILSM}{XSMODE};
