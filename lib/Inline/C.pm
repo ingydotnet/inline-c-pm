@@ -48,12 +48,18 @@ sub validate {
     if (not $o->UNTAINT) {
         require FindBin;
         if (not defined $o->{ILSM}{MAKEFILE}{INC}) {
-            if ($Config{cc} =~ /\b(?:cl|icl)/) {
-                $o->{ILSM}{MAKEFILE}{INC} = "-I\"$FindBin::Bin\"";
+            # detect Microsoft Windows OS, and either Microsoft Visual Studio compiler "clarm.exe" or Intel C compiler "icl.exe"
+            if (($Config{osname} eq 'MSWin32') and ($Config{cc} =~ /\b(?:cl|icl)/)) {
+                $o->{ILSM}{MAKEFILE}{INC} = "-I\"$FindBin::Bin\"";      # angle-bracket includes WILL incorrectly search -I dirs
                 warn q{WARNING: Microsoft compiler detected, unable to utilize '-iquote' compiler option, falling back to '-I' which may produce incorrect results or errors for files included in angle brackets, such as compiling '#include <stdio.h>' when a user-defined file 'stdio.h' exists in the calling script's directory and is wrongly located via '-I' instead of locating the standard library file of the same name}, "\n";
             }
+            # detect Oracle Solaris/SunOS OS, and Oracle Developer Studio compiler "cc" (and double check it is not GCC)
+            elsif ((($Config{osname} eq 'solaris') or ($Config{osname} eq 'sunos')) and ($Config{cc} eq 'cc') and (not $Config{gccversion})) {
+                $o->{ILSM}{MAKEFILE}{INC} = "-I\"$FindBin::Bin\" -I-";   # angle-bracket includes will NOT incorrectly search -I dirs given before -I-
+                warn q{NOTE: Oracle compiler detected, unable to utilize '-iquote' compiler option, falling back to '-I-' which should produce correct results for files included in angle brackets}, "\n";
+            }
             else {
-                $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\"";
+                $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\"";  # angle-bracket includes will NOT incorrectly search -iquote dirs
             }
         }
     }
