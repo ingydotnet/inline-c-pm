@@ -30,20 +30,23 @@ eval $eval_string;
 
 #print 'AFTER eval(), have $@ = ', "\n", '[[[ BEGIN $@ ]]]', "\n", $@, "\n", '[[[ END $@ ]]]', "\n";
 
-my $expected_error_0 = 'PURPOSEFUL COMPILER ERROR!';
-my $expected_error_1 = 'A problem was encountered while attempting to compile and install your Inline';
-my $expected_error_2 = 'C code. The command that failed was:';
-#my $expected_error_3 = '"make" with error code 2';                  # when BUILD_NOISY is  enabled
-my $expected_error_3 = '"make > out.make 2>&1" with error code 2';  # when BUILD_NOISY is disabled
+# GCC error messages, not found w/ other compilers
+#my $expected_error_0 = 'PURPOSEFUL COMPILERERROR FOUND!';
+#my $expected_error_1 = 'A problem was encountered while attempting to compile and install your Inline';
+#my $expected_error_2 = 'C code. The command that failed was:';
+##my $expected_error_3 = '"make" with error code 2';                  # when BUILD_NOISY is  enabled
+#my $expected_error_3 = '"make > out.make 2>&1" with error code 2';  # when BUILD_NOISY is disabled
+
+# generic error messaages, should work w/ any compiler
+my $expected_error_0 = 'error';
+my $expected_error_1 = 'COMPILERERROR';
 
 if (($@ =~ m/$expected_error_0/) and
-    ($@ =~ m/$expected_error_1/) and
-    ($@ =~ m/$expected_error_2/) and
-    ($@ =~ m/$expected_error_3/)) {
+    ($@ =~ m/$expected_error_1/)) {
     print "ok 1\n";
 }
 else {
-    warn "\nExpected:\n[[[ BEGIN EXPECTED ERRORS ]]]\n$expected_error_0\n$expected_error_1\n$expected_error_2\n$expected_error_3\n[[[ END EXPECTED ERRORS ]]]\n";
+    warn "\nExpected:\n[[[ BEGIN EXPECTED ERRORS ]]]\n$expected_error_0\n$expected_error_1\n[[[ END EXPECTED ERRORS ]]]\n";
     warn "\nGot:\n[[[ BEGIN RECEIVED ERRORS ]]]\n$@\n[[[ END RECEIVED ERRORS ]]]\n";
     print "not ok 1\n";
 }
