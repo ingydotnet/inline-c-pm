@@ -19,7 +19,13 @@ use Inline C => Config =>
 # see t/Preprocess_cppflags.t in Inline::Filters for real tests
 use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE';
 #include <stdio.h>
-int foo() { return 4321; }
+#include <time.h>
+#include <stdint.h>
+ 
+int foo() { 
+    time_t result = time(NULL);
+    return 4321;
+}
 END
 
 my $foo_retval = foo();
