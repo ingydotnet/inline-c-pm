@@ -10,7 +10,7 @@ use Inline Config => DIRECTORY => $TestInlineSetup::DIR;
 print "1..1\n";
 
 use Inline C => Config =>
-    #BUILD_NOISY => 1,
+#    BUILD_NOISY => 1,
     FORCE_BUILD => 1,
     CCFLAGS     => $Config{ccflags};
 
@@ -18,7 +18,7 @@ use Inline C => Config =>
 # only test the ability to pass CPPFLAGS argument through Inline::C;
 # see t/Preprocess_cppflags.t in Inline::Filters for real tests
 use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE';
-#include "testheader.h"
+#include "test_header.h"
 int foo() { return TEST_DEFINE; }
 END
 
