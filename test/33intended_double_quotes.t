@@ -11,10 +11,23 @@ use Config;
 BEGIN {
   use Cwd;
   $cwd = getcwd;
+  my $separator = $^O =~ /MSWin32/ ? ';' : ':';
   {
     no warnings 'uninitialized';
-    $ENV{INCLUDE} .= ";" . $cwd . "/t/test_header";            # $ENV{INCLUDE} used by Microsoft toolset
-    $ENV{CPATH} = $cwd . "/t/test_header" . ";" . $ENV{CPATH}; # $ENV{CPATH} used by gcc toolset
+
+    # $ENV{INCLUDE} is used by Microsoft toolset
+    # We can't prepend $Bin/test_header to $ENV{INCLUDE} because the lack of "-iquote" capability
+    # can have unacceptable consequences if we do that. So we append $Bin/test_header to $ENV{INCLUDE}
+    # and then witness (courtesy of this test) that doing so still results in the inclusion
+    # of the unintended header.
+
+    $ENV{INCLUDE} .= ";" . qq{"$Bin/test_header"};
+
+    # $ENV{CPATH} used by gcc toolset
+    # The "-iquote" capability means that we *can* prepend $Bin/test_header to $ENV{CPATH},
+    # so we do just that, and test that the intended "test_header.h" still gets included.
+
+    $ENV{CPATH} = qq{"$Bin/test_header"} . $separator . $ENV{CPATH};
   }
 };
 
