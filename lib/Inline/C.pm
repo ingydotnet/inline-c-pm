@@ -57,7 +57,7 @@ sub validate {
                      "   specified in \$ENV{INCLUDE}).\n",
                      "   Otherwise, that header file \"found elsewhere\" will be included.\n";
                 warn "  ";    # provide filename and line number.
-                $ENV{INCLUDE} .= ";$FindBin::Bin";
+                $ENV{INCLUDE} .= qq{;"$FindBin::Bin"};
             }
             # detect Oracle Solaris/SunOS OS, and Oracle Developer Studio compiler "cc" (and double check it is not GCC)
             elsif ((($Config{osname} eq 'solaris') or ($Config{osname} eq 'sunos')) and ($Config{cc} eq 'cc') and (not $Config{gccversion})) {
@@ -65,7 +65,7 @@ sub validate {
                 warn q{NOTE: Oracle compiler detected, unable to utilize '-iquote' compiler option, falling back to '-I-' which should produce correct results for files included in angle brackets}, "\n";
             }
             else {
-                $o->{ILSM}{MAKEFILE}{INC} = "-iquote\"$FindBin::Bin\"";  # angle-bracket includes will NOT incorrectly search -iquote dirs
+                $o->{ILSM}{MAKEFILE}{INC} = qq{-iquote"$FindBin::Bin"};  # angle-bracket includes will NOT incorrectly search -iquote dirs
             }
         }
     }
