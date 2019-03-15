@@ -17,8 +17,11 @@ use Inline C => Config =>
 # DEV NOTE: do not actually test CPPFLAGS effect on Inline::Filters here,
 # only test the ability to pass CPPFLAGS argument through Inline::C;
 # see t/Preprocess_cppflags.t in Inline::Filters for real tests
+
 use Inline C => <<'END' => CPPFLAGS => ' -DPREPROCESSOR_DEFINE';
+
 #include "test_header.h"
+
 int foo() { return TEST_DEFINE; }
 END
 
