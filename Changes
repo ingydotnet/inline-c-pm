@@ -1,4 +1,15 @@
 ---
+version: 0.80
+date:    Thu 18 Apr 2019 10:42:30 AM CEST
+changes:
+- Apply PR#71 (ETJ++)
+  Support perl 5.8.1 again
+- Apply PR#74 and PR#76 (WBRASWELL++)
+  Fix Include Dir Behavior, replace -I with -iquote or -I- respectively
+- Apply PR#77 (WBRASWELL++)
+  Fix Include Dir Behavior, Non-GCC Compilers
+- More fixes for include dir behaviour (@sisyphus++)
+---
 version: 0.78
 date:    Tue 30 May 22:56:30 CEST 2017
 changes:

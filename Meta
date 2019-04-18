@@ -1,12 +1,12 @@
 =meta: 0.0.2
 
 name: Inline-C
-version: 0.78
+version: 0.80
 abstract: C Language Support for Inline
 homepage: https://metacpan.org/release/Inline-C
 language: perl
 license: perl
-copyright: 2000-2017
+copyright: 2000-2019
 
 author:
 - name: Ingy döt Net
