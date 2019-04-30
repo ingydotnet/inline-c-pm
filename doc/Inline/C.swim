@@ -327,7 +327,7 @@ If ellipsis or `...` is used at the end of an argument list, it means that any
 number of `SV*`s may follow. Again you will need to pop the values off of the
 `Stack` yourself.
 
-See ["Examples"] below.
+See ["EXAMPLES"] below.
 
 = The Inline Stack Macros
 
