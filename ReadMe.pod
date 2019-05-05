@@ -15,7 +15,7 @@ Inline::C - C Language Support for Inline
 
 =head1 Version
 
-This document describes L<Inline::C> version B<0.80>.
+This document describes L<Inline::C> version B<0.80_001>.
 
 =head1 Description
 
@@ -367,7 +367,7 @@ If ellipsis or C<...> is used at the end of an argument list, it means that
 any number of C<SV*>s may follow. Again you will need to pop the values off of
 the C<Stack> yourself.
 
-See L<"Examples"> below.
+See L<"EXAMPLES"> below.
 
 =head1 The Inline Stack Macros
 
