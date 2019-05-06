@@ -28,7 +28,7 @@ devel:
 requires:
   perl: 5.8.1
   File::Spec: 0.8
-  Inline: 0.83
+  Inline: 0.86
   Parse::RecDescent: 1.967009
   Pegex: 0.66
   ExtUtils::MakeMaker: 7.00
