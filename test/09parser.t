@@ -178,7 +178,6 @@ is ($res, $prod, "Returned product");
 chomp (my @p = do { local @ARGV = "$TestInlineSetup::DIR/parser_id"; <> });
 
 my $expected_log_lines = 13;
-$expected_log_lines += 8 if $Inline::VERSION < 0.82_001;
 is (scalar @p, $expected_log_lines, "Match number of lines in log");
 
 TODO: {
