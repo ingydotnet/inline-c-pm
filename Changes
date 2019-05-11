@@ -1,6 +1,6 @@
 ---
-version: 0.80_001
-date:    Sun 05 May 2019 12:46:01 PM CEST
+version: 0.81
+date:    Sat 11 May 2019 12:46:41 PM CEST
 changes:
 - test - Adjust excpected number of lines in log to Inline-0.82_001
   (PR#89 @ppisar++)
