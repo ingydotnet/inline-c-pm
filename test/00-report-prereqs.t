@@ -91,6 +91,14 @@ else {
 my @full_reports;
 my @dep_errors;
 my $req_hash = $HAS_CPAN_META ? $full_prereqs->as_string_hash : $full_prereqs;
+if (-f 'Meta') {
+    # zild land
+    require YAML::XS;
+    $req_hash = YAML::XS::LoadFile('Meta'); $req_hash = {
+        runtime => { requires => $req_hash->{requires} },
+        test => { requires => $req_hash->{test}{requires} },
+    };
+}
 
 # Add static includes into a fake section
 for my $mod (@include) {
