@@ -1165,11 +1165,11 @@ This tells `Module` to pass configuration options to Inline. Options like
 typemaps, include paths, and external libraries, are all resolved
 automatically so you can just concentrate on writing the functions.
 
-== Event handling with Event.pm
+== Event handling with [Event]
 
 - Problem
 
-  You need to write a C callback for the `Event.pm` module. Can this be done
+  You need to write a C callback for the [Event] module. Can this be done
   more easily with Inline?
 
 - Solution
@@ -1203,10 +1203,10 @@ automatically so you can just concentrate on writing the functions.
 
 - Discussion
 
-  The first line tells Inline to load the `Event.pm` module. Inline then
-  queries `Event` for configuration information. It gets the name and location
+  The first line tells Inline to load the [Event] module. Inline then
+  queries [Event} for configuration information. It gets the name and location
   of Event's header files, typemaps and shared objects. The parameters that
-  `Event` returns look like:
+  [Event] returns look like:
 
     INC => "-I $path/Event",
     TYPEMAPS => "$path/Event/typemap",
@@ -1216,26 +1216,27 @@ automatically so you can just concentrate on writing the functions.
 
   Doing all of this automatically allows you, the programmer, to simply write
   a function that receives a pointer of type `'pe_event*'`. This gives you
-  access to the `Event` structure that was passed to you.
+  access to the [Event] structure that was passed to you.
 
   In this example, I simply print values out of the structure. The Perl code
   defines 2 timer events which each invoke the same callback. The first one,
   every two seconds, and the second one, every three seconds.
 
-  As of this writing, `Event.pm` is the only CPAN module that works in
-  cooperation with Inline.
+  As of this writing, [Event] is one of a growing number of CPAN module that work in
+  cooperation with Inline. Any [Alien::Build] module (e.g., [Alien::OpenMP]) works with
+  Inline::C in this way, as does [PDL].
 
 - See Also
 
-  Read the `Event.pm` documentation for more information. It contains a
-  tutorial showing several examples of using Inline with `Event`.
+  Read the [Event] documentation for more information. It contains a
+  tutorial showing several examples of using Inline with [Event].
 
 - Credits
 
   Jochen Stenzel <perl@jochen-stenzel.de> originally came up with the idea of
-  mixing Inline and `Event`. He also authored the `Event` tutorial.
+  mixing Inline and [Event]. He also authored the [Event] tutorial.
 
-  Joshua Pritikin <joshua.pritikin@db.com> is the author of `Event.pm`.
+  Joshua Pritikin <joshua.pritikin@db.com> is the author of [Event].
 
 = Food for Thought
 
