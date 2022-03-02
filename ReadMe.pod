@@ -6,7 +6,16 @@ See http://github.com/ingydotnet/swim-pm#readme
 
 =encoding utf8
 
-<<<cpan-head>>>
+=head1 Name
+
+Inline::C - C Language Support for Inline
+
+=for html
+<a href="https://travis-ci.org/ingydotnet/inline-c-pm"><img src="https://travis-ci.org/ingydotnet/inline-c-pm.png" alt="inline-c-pm"></a>
+
+=head1 Version
+
+This document describes L<Inline::C> version B<0.82>.
 
 =head1 Description
 
@@ -527,8 +536,7 @@ files for you.
 This is similar to the last example except that the name is passed in as a
 C<SV*> (pointer to Scalar Value) rather than a string (C<char*>). That means
 we need to convert the C<SV> to a string ourselves. This is accomplished using
-the C<SvPVX> function which is part of the C<Perl> internal API. See C<perldoc
-perlapi> for more info.
+the C<SvPVX> function which is part of the C<Perl> internal API. See C<perldocperlapi> for more info.
 
 One problem is that C<SvPVX> doesn't automatically convert strings to numbers,
 so we get a little surprise when we try to greet C<42>. The program segfaults,
@@ -583,6 +591,21 @@ prevent this or to warn you. For now, a list of Perl's internal symbols is
 packaged in the Inline module distribution under the filename
 C<'symbols.perl'>. Avoid using these in your code.
 
-<<<cpan-tail>>>
+=head1 Authors
+
+Ingy döt Net <ingy@cpan.org>
+
+Sisyphus <sisyphus@cpan.org>
+
+=head1 Copyright and License
+
+Copyright 2000-2022. Ingy döt Net.
+
+Copyright 2008, 2010-2014. Sisyphus.
+
+This program is free software; you can redistribute it and/or modify it under
+the same terms as Perl itself.
+
+See L<http://www.perl.com/perl/misc/Artistic.html>
 
 =cut
