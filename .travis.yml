@@ -38,6 +38,7 @@ install:
   File::Copy::Recursive
   File::Path
   File::Spec~0.8
+  File::Temp~0.19
   Inline~0.86
   Parse::RecDescent~1.967009
   Pegex~0.66

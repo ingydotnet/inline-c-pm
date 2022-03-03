@@ -1,6 +1,6 @@
 use strict;
 use warnings;
-use Cwd;
+use File::Temp 0.19;
 
 require Inline::C;
 
@@ -126,8 +126,8 @@ else {
 delete $ENV{NO_INSANE_DIRNAMES};
 
 my $have_file_path;
-my $newdir = Cwd::getcwd();
-$newdir .= '/foo -I/';
+my $tempdir = File::Temp->newdir();
+my $newdir = $tempdir . '/foo -I/';
 
 eval {require File::Path;};
 if ($@) {
@@ -159,9 +159,3 @@ else {
     warn "\n\$\@: $@\n";
     print "not ok 10\n";
 }
-
-
-END {
-    File::Path::rmtree($newdir) if $have_file_path;
-    warn "Failed to remove $newdir" if -d $newdir;
-};

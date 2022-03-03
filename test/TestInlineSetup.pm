@@ -1,8 +1,8 @@
 use strict; use warnings; use diagnostics;
 package TestInlineSetup;
 
-use File::Path;
 use File::Spec;
+use File::Temp 0.19;
 use constant IS_WIN32 => $^O eq 'MSWin32' ;
 
 sub import {
@@ -22,14 +22,8 @@ BEGIN {
 
 our $DIR;
 BEGIN {
-    ($_, $DIR) = caller(2);
-    $DIR =~ s/.*?(\w+)\.t$/$1/ or die;
-    $DIR = "_Inline_$DIR.$$";
-    rmtree($DIR) if -d $DIR;
-    mkdir($DIR) or die "$DIR: $!\n";
+    $DIR = File::Temp->newdir();
 }
-my $absdir = File::Spec->rel2abs($DIR);
-($absdir) = $absdir =~ /(.*)/; # untaint
 
 my $startpid = $$;
 END {
@@ -54,7 +48,6 @@ END {
         }
       }
     }
-    rmtree($absdir);
   }
 }
 
