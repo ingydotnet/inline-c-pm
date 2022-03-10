@@ -1,4 +1,9 @@
 ---
+version: 0.82_001
+date:    Thu 10 Mar 19:38:25 GMT 2022
+changes:
+- test improvements from @ppisar
+---
 version: 0.82
 date:    Wed  2 Mar 15:36:50 GMT 2022
 changes:
